@@ -6,6 +6,7 @@ import {
   TextInput,
   View,
   StyleSheet,
+TouchableOpacity
 } from 'react-native';
 
 export default class LoginScreen extends React.Component {
@@ -30,20 +31,35 @@ export default class LoginScreen extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <View>
-          <Text>logo and images here later</Text>
+            <Image 
+                source={require('../assets/images/logo.png')}
+                style={{width:130, height:150, resizeMode:'contain'}}            
+            /> 
+        <View style={styles.inpBox}>
+            <TextInput 
+                style={[styles.inps]}
+                placeholder="User Name / E-mail"
+                keyboardType="default"
+                onChangeText={this.handleNum1}/>
+
+            <TextInput 
+                style={styles.inps}
+                placeholder="Password"
+                keyboardType="phone-pad"
+                onChangeText={this.handleNum2}/>
         </View>
-        
-        <TextInput
-          placeholder="email"
-        />
-        <TextInput
-          placeholder="email"
-        />
-        <Button
-          title="Login"
-          onPress={this.handleLogin}
-        />
+        <View style={styles.butBox}> 
+                <TouchableOpacity onPress={this.handleLogin}> 
+                    <View style={styles.signBut}>
+                        <Text style={styles.buttonText}>SIGN IN</Text>
+                    </View>
+                </TouchableOpacity>
+                <TouchableOpacity onPress={this.handleLogin}> 
+                    <View style={styles.signBut}>
+                        <Text style={styles.buttonText}>Continue with Google</Text>
+                    </View>
+                </TouchableOpacity>
+            </View>
       </View>
     );
   }
@@ -51,9 +67,45 @@ export default class LoginScreen extends React.Component {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: '#fff',
+    width:"100%",
     alignItems: 'center',
     justifyContent: 'center',
+  },
+  inpBox: {
+    flexDirection:"column",
+    width:"75%",
+    margin:30,
+    padding:20,
+    backgroundColor:"#FFF",
+    borderRadius:15,
+    shadowOffset:{  width: 0,  height: 5,  },
+    shadowRadius: 5,
+    shadowColor: "#ccc",
+    shadowOpacity: 0.5,
+  },
+  inps:{
+     margin:18,
+     borderColor:"#000000",
+  },
+  buttonText:{
+      fontSize:18,
+      color:"#fff",
+      fontWeight:"300",
+  },
+  signBut:{
+    alignItems:'center',
+    margin:5,
+    padding:20,
+    backgroundColor:"#138172",
+    borderRadius:40,
+    shadowOffset:{  width: 0,  height: 5,  },
+    shadowRadius: 5,
+    shadowColor: "#ccc",
+    shadowOpacity: 1,
+  },
+  butBox: {
+    flexDirection:"column",
+    width:"80%",
+      
   },
 });
