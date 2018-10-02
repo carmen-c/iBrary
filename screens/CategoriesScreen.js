@@ -12,7 +12,7 @@ export default class CategoriesScreen extends React.Component {
         
         <Text>Categories</Text>
         <Flatlist
-          data={[dictionary]}
+          data={[dictionary]}    
           renderItem={({item}) => <Text>{item.key}</Text>}
         />
       </View>

@@ -10,7 +10,7 @@ export default class WelcomeScreen extends React.Component {
     return (
       <View style={styles.container}>
         
-        <Text>WELCOME</Text>
+        <Text>WELCOMErrrrr</Text>
         
       </View>
     );
