@@ -19,7 +19,7 @@ export default class LoginScreen extends React.Component {
   }
   handleLogin=()=>{
     if(this.state.first == 0){
-      this.setState({ first: 1 })
+//      this.setState({ first: 1 })
       this.props.navigation.navigate('Welcome')
       
     } else if(this.state.first == 1){
@@ -38,7 +38,7 @@ export default class LoginScreen extends React.Component {
         <View style={styles.inpBox}>
             <TextInput 
                 style={[styles.inps]}
-                placeholder="User Name / E-mail"
+                placeholder="E-mail"
                 keyboardType="default"
                 onChangeText={this.handleNum1}/>
 
