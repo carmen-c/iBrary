@@ -1,7 +1,7 @@
 import React from 'react';
-import { View, StyleSheet, Text, Button } from 'react-native';
+import { View, StyleSheet, Text } from 'react-native';
 
-export default class SearchScreen extends React.Component {
+export default class Post extends React.Component {
   static navigationOptions = {
     header: null,
   };
@@ -9,8 +9,13 @@ export default class SearchScreen extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        
-        
+        <View>
+          //user image
+          //username
+        </View>
+        <View>
+          //comment content
+        </View>
       </View>
     );
   }
