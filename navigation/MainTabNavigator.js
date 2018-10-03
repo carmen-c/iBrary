@@ -6,7 +6,7 @@ import TabBarIcon from '../components/TabBarIcon';
 import HomeScreen from '../screens/HomeScreen';
 import LinksScreen from '../screens/LinksScreen';
 import ProfileScreen from '../screens/ProfileScreen';
-import SearchScreen from '../screens/SearchScreen';
+import TrendingScreen from '../screens/TrendingScreen';
 import NotificationScreen from '../screens/NotificationScreen';
 
 const HomeStack = createStackNavigator({
@@ -55,12 +55,12 @@ ProfileStack.navigationOptions = {
   ),
 };
 
-const SearchStack = createStackNavigator({
-  Search: SearchScreen,
+const TrendStack = createStackNavigator({
+  Tred: TrendingScreen,
 });
 
-SearchStack.navigationOptions = {
-  tabBarLabel: 'Search',
+TrendStack.navigationOptions = {
+  tabBarLabel: 'Trending',
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
       focused={focused}
@@ -85,7 +85,7 @@ NotificationStack.navigationOptions = {
 
 export default createBottomTabNavigator({
   HomeStack,
-  SearchStack,
+  TrendStack,
   LinksStack,
   NotificationStack,
   ProfileStack,
