@@ -4,10 +4,8 @@ import { createStackNavigator, createBottomTabNavigator } from 'react-navigation
 
 import TabBarIcon from '../components/TabBarIcon';
 import HomeScreen from '../screens/HomeScreen';
-import LinksScreen from '../screens/LinksScreen';
+import CreatePostScreen from '../screens/CreatePostScreen';
 import ProfileScreen from '../screens/ProfileScreen';
-import TrendingScreen from '../screens/TrendingScreen';
-import NotificationScreen from '../screens/NotificationScreen';
 
 const HomeStack = createStackNavigator({
   Home: HomeScreen,
@@ -27,12 +25,12 @@ HomeStack.navigationOptions = {
   ),
 };
 
-const LinksStack = createStackNavigator({
-  Links: LinksScreen,
+const CreatePostStack = createStackNavigator({
+  CreatePost: CreatePostScreen,
 });
 
-LinksStack.navigationOptions = {
-  tabBarLabel: 'Links',
+CreatePostStack.navigationOptions = {
+  tabBarLabel: 'Create',
   tabBarIcon: ({ focused }) => (
     <TabBarIcon
       focused={focused}
@@ -55,38 +53,8 @@ ProfileStack.navigationOptions = {
   ),
 };
 
-const TrendStack = createStackNavigator({
-  Tred: TrendingScreen,
-});
-
-TrendStack.navigationOptions = {
-  tabBarLabel: 'Trending',
-  tabBarIcon: ({ focused }) => (
-    <TabBarIcon
-      focused={focused}
-      name={Platform.OS === 'ios' ? `ios-options${focused ? '' : '-outline'}` : 'md-options'}
-    />
-  ),
-};
-
-const NotificationStack = createStackNavigator({
-  Notification: NotificationScreen,
-});
-
-NotificationStack.navigationOptions = {
-  tabBarLabel: 'Notifications',
-  tabBarIcon: ({ focused }) => (
-    <TabBarIcon
-      focused={focused}
-      name={Platform.OS === 'ios' ? `ios-options${focused ? '' : '-outline'}` : 'md-options'}
-    />
-  ),
-};
-
 export default createBottomTabNavigator({
+  CreatePostStack,
   HomeStack,
-  TrendStack,
-  LinksStack,
-  NotificationStack,
   ProfileStack,
 });

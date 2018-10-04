@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, StyleSheet, Text, Button, TextInput } from 'react-native';
 
-export default class CreateIdeaScreen extends React.Component {
+export default class CreatePostScreen extends React.Component {
   static navigationOptions = {
     header: null,
   };
