@@ -4,6 +4,7 @@ import { createSwitchNavigator } from 'react-navigation';
 import MainTabNavigator from './MainTabNavigator';
 import Login from '../screens/LoginScreen';
 import Welcome from '../screens/WelcomeScreen';
+import Test from '../test.js'
 
 export default createSwitchNavigator({
   // You could add another route here for authentication.
