@@ -17,7 +17,7 @@ export default class HomeScreen extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <View>
+        <View style={styles.searchBar}>
           <SearchBar/>
           <Button
             title="Settings"
@@ -32,6 +32,13 @@ export default class HomeScreen extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    width:"100%",
+    marginTop:30,
+    backgroundColor:'#e6e6e6',
+    alignItems:'center',
+  },
+  searchBar: {
+     width:'100%'
   },
   developmentModeText: {
     marginBottom: 20,

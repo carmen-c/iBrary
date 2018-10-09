@@ -33,12 +33,12 @@ export default class LoginScreen extends React.Component {
       <View style={styles.container}>
             <Image 
                 source={require('../assets/images/logo.png')}
-                style={{width:130, height:150, resizeMode:'contain'}}            
+                style={styles.logoImg}            
             /> 
         <View style={styles.inpBox}>
             <TextInput 
                 style={[styles.inps]}
-                placeholder="E-mail"
+                placeholder='E-mail'
                 keyboardType="default"
                 onChangeText={this.handleNum1}/>
 
@@ -50,16 +50,20 @@ export default class LoginScreen extends React.Component {
         </View>
         <View style={styles.butBox}> 
                 <TouchableOpacity onPress={this.handleLogin}> 
-                    <View style={styles.signBut}>
+                    <View style={[styles.signBut]}>
                         <Text style={styles.buttonText}>SIGN IN</Text>
                     </View>
                 </TouchableOpacity>
                 <TouchableOpacity onPress={this.handleLogin}> 
-                    <View style={styles.signBut}>
-                        <Text style={styles.buttonText}>Continue with Google</Text>
+                    <View style={[styles.signBut,styles.red] }>
+                        <Text style={[styles.buttonText]}>SIGN IN WITH Google </Text>
                     </View>
                 </TouchableOpacity>
-            </View>
+                <Button
+                    style={styles.buttonText}
+                    title="Create Account"
+                />
+        </View>
       </View>
     );
   }
@@ -67,45 +71,55 @@ export default class LoginScreen extends React.Component {
 
 const styles = StyleSheet.create({
   container: {
-    width:"100%",
+    width:'100%',
     alignItems: 'center',
     justifyContent: 'center',
+    marginTop:100,
+  },
+  logoImg: {
+      marginTop:30,
+      marginBottom:20,
+      width:130, 
+      height:150, 
+      resizeMode:'contain'
   },
   inpBox: {
-    flexDirection:"column",
-    width:"75%",
+    flexDirection:'column',
+    width:'75%',
     margin:30,
     padding:20,
-    backgroundColor:"#FFF",
-    borderRadius:15,
+    backgroundColor:'#FFF',
+    borderRadius:10,
     shadowOffset:{  width: 0,  height: 5,  },
     shadowRadius: 5,
-    shadowColor: "#ccc",
+    shadowColor: '#ccc',
     shadowOpacity: 0.5,
   },
   inps:{
-     margin:18,
-     borderColor:"#000000",
+    margin:18,
+    borderColor:'#000000',
   },
   buttonText:{
-      fontSize:18,
-      color:"#fff",
-      fontWeight:"300",
+    fontSize:17,
+    color:'#fff',
+    fontWeight:"300",
   },
   signBut:{
     alignItems:'center',
     margin:5,
-    padding:20,
-    backgroundColor:"#138172",
-    borderRadius:40,
+    padding:15,
+    borderRadius:10,
+    backgroundColor:'#138172',
     shadowOffset:{  width: 0,  height: 5,  },
     shadowRadius: 5,
-    shadowColor: "#ccc",
+    shadowColor: '#ccc',
     shadowOpacity: 1,
   },
   butBox: {
-    flexDirection:"column",
-    width:"80%",
-      
+    flexDirection:'column',
+    width:'80%'  
   },
+  red: {
+    backgroundColor:'#d34836'
+}
 });
