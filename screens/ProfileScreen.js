@@ -54,7 +54,7 @@ const styles = StyleSheet.create({
     flexDirection:'row'
   },
   box1: {
-    height:'20%',
+    height:'40%',
     backgroundColor:'pink',
     marginTop:30,
   },

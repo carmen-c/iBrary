@@ -14,7 +14,7 @@ export default class CreatePostScreen extends React.Component {
         </View>
         <View style={styles.boxes}>
             <View style={styles.box}><Text>gallery</Text></View>
-            <View style={styles.box}><Text>Camera</Text></View>
+            <View style={styles.box}><Text>Cameras</Text></View>
         </View>
         <View style={[styles.items, styles.title]}>
           <TextInput
@@ -48,6 +48,7 @@ export default class CreatePostScreen extends React.Component {
 
 const styles = StyleSheet.create({
   container: {
+    width:'100%',
     flex:1,
     backgroundColor: '#fff',
     alignItems: 'center',
