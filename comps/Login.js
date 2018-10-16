@@ -29,7 +29,8 @@ class Login extends React.Component {
         
     //sign in using email and password
     return firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.password).catch(error => {
-      this.setState({error: error.message})
+      this.setState()
+//      this.setState({error: error.message})
       
     //navigate to app if there are no errors
     //store token in redux
@@ -110,11 +111,11 @@ const styles = StyleSheet.create({
     width:'100%',
     alignItems: 'center',
     justifyContent: 'center',
-    marginTop:100,
+    backgroundColor:'#e6e6e6'
   },
   logoImg: {
-      marginTop:30,
-      marginBottom:20,
+      marginTop:'5%',
+      marginBottom:'5%',
       width:130, 
       height:150, 
       resizeMode:'contain'
@@ -122,8 +123,8 @@ const styles = StyleSheet.create({
   inpBox: {
     flexDirection:'column',
     width:'75%',
-    margin:30,
-    padding:20,
+    margin:'5%',
+    padding:'3%',
     backgroundColor:'#FFF',
     borderRadius:10,
     shadowOffset:{  width: 0,  height: 5,  },
@@ -132,7 +133,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.5,
   },
   inps:{
-    margin:18,
+    margin:'7%',
     borderColor:'#000000',
   },
   buttonText:{
