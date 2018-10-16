@@ -3,6 +3,11 @@ const pageDefault ={
   page:1
 };
 
+const userInfo = {
+  email: "",
+  
+}
+
 export function Page(state= pageDefault, action) {
   let obj = Object.assign({}, state);
   
