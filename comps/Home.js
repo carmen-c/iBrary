@@ -14,7 +14,6 @@ export default class Home extends React.Component {
     return (
       <View style={styles.container}>
         <View style={styles.searchBar}>
-          <SearchBar/>
           <Button
             title="Settings"
             onPress={this.handleSettings}

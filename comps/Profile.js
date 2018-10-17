@@ -1,7 +1,7 @@
 import React from 'react';
 import { View, StyleSheet, Text, Button, Image, ImageBackground } from 'react-native';
 
-export default class ProfileScreen extends React.Component {
+export default class Profile extends React.Component {
   static navigationOptions = {
     title: 'Profile',
   };
