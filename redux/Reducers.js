@@ -1,12 +1,8 @@
 //update state variables
 const pageDefault ={
-  page:1
+  page:1,
+  tab: 1,
 };
-
-const userInfo = {
-  email: "",
-  
-}
 
 export function Page(state= pageDefault, action) {
   let obj = Object.assign({}, state);
@@ -16,10 +12,15 @@ export function Page(state= pageDefault, action) {
       obj.page = action.curpage;
       return obj;
       
+    case "CHANGE_TAB":
+      obj.tab = action.curtab;
+      return obj;
+      
     default:
       return state;
   }
 }
+
 
 //for storing global background color state variable
 //const bgDefault = {
