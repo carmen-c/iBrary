@@ -37,15 +37,15 @@ class Login extends React.Component {
     //do we need to check for errors??? 
     }).then(u => {
       if(this.state.error === ''){
-        this.props.dispatch(ChangePage(2));
+        this.props.dispatch(ChangePage(4));
       }
     })
       
     })
   }
   
-  navigateToSignUp=(page)=>{
-    this.props.dispatch(ChangePage(page));
+  navigateToSignUp=()=>{
+    this.props.dispatch(ChangePage(3));
   }
 
   render() {
@@ -89,7 +89,7 @@ class Login extends React.Component {
                 <Button
                     style={styles.buttonText}
                     title="Create Account"
-                    onPress={this.navigateToSignUp.bind(this, 3)}
+                    onPress={this.navigateToSignUp}
                 />
         </View>
       </View>

@@ -35,7 +35,7 @@ class SignUp extends React.Component {
       //navigate to welcome screen if there are no errors
       }).then(u => {
         if(this.state.error === ""){
-          this.props.navigation.navigate('Welcome')
+          this.props.dispatch(ChangePage(2));
         }
       }) 
     }
@@ -84,7 +84,7 @@ class SignUp extends React.Component {
                 onChangeText={(text) => this.setState({password2: text})}/>
         </View>
         <View style={styles.butBox}> 
-                <TouchableOpacity onPress={this.handleLogin}> 
+                <TouchableOpacity onPress={this.handleSignUp}> 
                     <View style={[styles.signBut]}>
                         <Text style={styles.buttonText}>SIGN UP</Text>
                     </View>

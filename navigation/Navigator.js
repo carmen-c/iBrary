@@ -14,6 +14,7 @@ class Main extends React.Component {
   handleButton=(page)=>{
  this.props.dispatch(ChangePage(page));
   }
+  
   render() {
     var curpage = <Login/>;
     
@@ -31,6 +32,9 @@ class Main extends React.Component {
         break;
       case 4:
         curpage = <TabBar />
+        break;
+      default:
+        curpage = <Login />
         break;
     }
     
