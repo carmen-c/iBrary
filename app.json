@@ -20,12 +20,6 @@
     "assetBundlePatterns": [
       "**/*"
     ],
-    "ios": {
-      "supportsTablet": true,
-      "permissions": ["CAMERA"]
-    },
-      "android" : {
-      "permissions": ["CAMEEA"]
-    }
+    
   }
 }

@@ -1,11 +1,13 @@
 import React from 'react';
 import { View, StyleSheet, Text, Button, TextInput, TouchableOpacity } from 'react-native';
 
+import {connect} from 'react-redux';
+
 export default class CreatePostScreen extends React.Component {
   static navigationOptions = {
     header: null,
   };
-
+  
   render() {
     return (
       <View style={styles.container}>
@@ -15,6 +17,7 @@ export default class CreatePostScreen extends React.Component {
         <View style={styles.boxes}>
             <View style={styles.box}><Text>gallery</Text></View>
             <View style={styles.box}><Text>Cameras</Text></View>
+    
         </View>
         <View style={[styles.items, styles.title]}>
           <TextInput

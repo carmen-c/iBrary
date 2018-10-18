@@ -18,7 +18,9 @@ class SignUp extends React.Component {
     password2: "",
     error: "",
   }
-
+  navigateToLogIn=()=>{
+    this.props.dispatch(ChangePage(1));
+  }
   handleSignUp=()=>{
     //check if firebase is already loaded
     if(!firebase.apps.length) {
@@ -50,7 +52,7 @@ class SignUp extends React.Component {
     
     return (
       <View style={styles.container}>
-        <TouchableOpacity onPress={this.handleLogin}> 
+        <TouchableOpacity onPress={this.navigateToLogIn}> 
           <View>
               <Text>back button</Text>
           </View>

@@ -9,6 +9,9 @@ export default class Profile extends React.Component {
   render() {
     return (
       <View style={styles.container}>
+         <View style={styles.pageTitle}>
+            <Text style={styles.titleFont}>Profile</Text>
+        </View>
         <View style={styles.section}>
             <View style={styles.box1}>
               <Image 
@@ -40,10 +43,24 @@ export default class Profile extends React.Component {
 
 const styles = StyleSheet.create({
   container: {
+    width:'100%',
     flex: 1,
     backgroundColor: '#e6e6e6',
     flexDirection: 'column'
  
+  },
+  pageTitle: {
+    paddingTop:65,
+    paddingBottom:30,
+    width:'100%',
+    backgroundColor:'#e6e6e6',
+//    alignContent:'center',
+    alignItems:'center',
+  },
+  titleFont:{
+    fontSize:25,
+    fontWeight: 'bold',
+    color:'#138172'
   },
   section: {
     width:'100%',
@@ -55,8 +72,9 @@ const styles = StyleSheet.create({
   },
   box1: {
     height:'40%',
-    backgroundColor:'pink',
-    marginTop:30,
+//    backgroundColor:'pink',
+    marginTop:5,
+    paddingBottom:'5%'
   },
   profile: {
     width:80,
