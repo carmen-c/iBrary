@@ -35,53 +35,69 @@ class TabBar extends React.Component {
     }
     
     return (
-      <View style={styles.container}>
+    
+        <View style={styles.container}>
         {curtab}
-        <View style={styles.tabBar}>
-          <Text>Tab bar here</Text>
-          
-          <TouchableOpacity onPress={this.handleButton.bind(this, 2)}> 
-          <View>
-              <Image 
-                source={require('../assets/images/robot-dev.png')}
-                />
-              <Text>post</Text>
-          </View>
+        
+        <View style={styles.hairline} />
+        
+        <View style={styles.nav}>
+          <TouchableOpacity onPress={this.handleButton.bind(this, 2)}>
+              <Image
+                   style={styles.navIcon}
+                  source={require('../assets/images/createButton.png')}/>
           </TouchableOpacity>
-          
-          <TouchableOpacity onPress={this.handleButton.bind(this, 1)}> 
-          <View>
-              <Image 
-                source={require('../assets/images/robot-dev.png')}
-                />
-              <Text>home</Text>
-          </View>
+          <TouchableOpacity onPress={this.handleButton.bind(this, 1)}>
+              <Image
+                   style={styles.navIcon}
+                  source={require('../assets/images/homeButton.png')}/>
           </TouchableOpacity>
-          
-          <TouchableOpacity onPress={this.handleButton.bind(this, 3)}> 
-          <View>
-              <Image 
-                source={require('../assets/images/robot-dev.png')}
-                />
-              <Text>profile</Text>
-          </View>
-        </TouchableOpacity>
+          <TouchableOpacity onPress={this.handleButton.bind(this, 3)}>
+              <Image
+                   style={styles.navIcon}
+                  source={require('../assets/images/profileButton.png')}/>
+          </TouchableOpacity>
         </View>
+        
       </View>
+        
+
     );
   }
 }
 
 const styles = StyleSheet.create({
   container: {
-    backgroundColor: '#fff',
+    width:"100%",
+    height:80,
+    paddingBottom:0,
+    flex: 1,
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'space-around',
   },
-  tabBar: {
-    flex: 0.1,
-    flexDirection: 'row',
-    justifyContent: 'space-between',
+  hairline: {
+    backgroundColor: '#A2A2A2',
+    height: 0.3,
+    width: '100%',
+    margin:0,
+    padding:0,
+    position:'absolute',
+    bottom:80,
+  },
+  nav: {
+    height:80,
+    backgroundColor: '#f1f1f1',
+    flexDirection:'row',
+    paddingTop:20,
+    position:'absolute',
+    bottom:0,
+    
+  },
+  navIcon: {
+    width:27,
+    height:27,
+    resizeMode:'contain',
+    marginLeft:'30%'
   }
 });
 
