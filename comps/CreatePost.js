@@ -1,12 +1,16 @@
 import React from 'react';
-import { View, StyleSheet, Text, Button, TextInput, TouchableOpacity } from 'react-native';
+import { View, StyleSheet, Text, Button, TextInput, TouchableOpacity, Image } from 'react-native';
 
 import {connect} from 'react-redux';
+import {ChangeTab} from '../redux/Actions';
 
-export default class CreatePostScreen extends React.Component {
+ class CreatePostScreen extends React.Component {
   static navigationOptions = {
     header: null,
-  };
+  }
+  navigateToCamera=()=>{
+    this.props.dispatch(ChangeTab(4));
+  } 
   
   render() {
     return (
@@ -16,7 +20,16 @@ export default class CreatePostScreen extends React.Component {
         </View>
         <View style={styles.boxes}>
             <View style={styles.box}><Text>gallery</Text></View>
-            <View style={styles.box}><Text>Cameras</Text></View>
+            <View style={styles.verticalHairline}/>
+            <View style={styles.box}>
+              <TouchableOpacity onPress={this.navigateToCamera}>
+                <Image 
+                  source={require('../assets/images/camera.png')}
+                  style={styles.imgIcon}
+                  />
+              </TouchableOpacity>
+              
+          </View>
     
         </View>
         <View style={[styles.items, styles.title]}>
@@ -61,6 +74,11 @@ const styles = StyleSheet.create({
     height: 0.3,
     width: '100%'
   },
+  verticalHairline:{
+    backgroundColor: '#A2A2A2',
+    height: 150,
+    width: 0.5
+  },
   pageTitle: {
     paddingTop:65,
     paddingBottom:30,
@@ -82,6 +100,8 @@ const styles = StyleSheet.create({
   },
   box: {
     width:'50%',
+    paddingLeft:'15%',
+    paddingRight:'15%',
     height:150,
     backgroundColor:"#F2F2F2",
     alignContent:'center',
@@ -110,15 +130,26 @@ const styles = StyleSheet.create({
     margin:5,
     padding:15,
     borderRadius:10,
-    backgroundColor:"#138172",
+    backgroundColor:'#138172',
     shadowOffset:{  width: 0,  height: 5,  },
     shadowRadius: 5,
-    shadowColor: "#ccc",
+    shadowColor: '#ccc',
     shadowOpacity: 1,
   },
   butBox: {
-    flexDirection:"column",
-    width:"80%"  
+    flexDirection:'column',
+    width:'80%'  
   },
+  imgIcon:{
+    width:'100%',
+    resizeMode:'contain'
+  }
 });
 
+function mapStateToProps(state){
+  return {
+    tab:state.Page.tab
+  }
+}
+
+export default connect (mapStateToProps)(CreatePostScreen);
