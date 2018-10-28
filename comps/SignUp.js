@@ -22,23 +22,20 @@ class SignUp extends React.Component {
     this.props.dispatch(ChangePage(1));
   }
   handleSignUp=()=>{
-    //check if firebase is already loaded
-    if(!firebase.apps.length) {
-      firebase.initializeApp(FConfig);
-    }
     
     //check if passwords match
     if(this.state.password === this.state.password2) {
       
       //create user
-      firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.password).catch(error => {
+      firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.password).then(user => {
+        if(this.state.error === ""){
+          this.saveNewUserData();
+          this.props.dispatch(ChangePage(2));
+        }
+      }).catch(error => {
         this.setState({error: error.message})
         
       //navigate to welcome screen if there are no errors
-      }).then(u => {
-        if(this.state.error === ""){
-          this.props.dispatch(ChangePage(2));
-        }
       }) 
     }
     
@@ -47,8 +44,23 @@ class SignUp extends React.Component {
       this.setState({error: "your passwords don't match"})
     }
   }
-
+  
+  saveNewUserData=()=> {
+    if (firebase.auth().currentUser) {
+      currentUser = firebase.auth().currentUser;
+      if (currentUser) {
+          firebase.database().ref('users/' + currentUser.uid).set({
+              userID: currentUser.uid,
+              email: currentUser.email,
+          })
+      }
+      console.log(currentUser);
+    }
+  }
+  
   render() {
+    
+    var database = firebase.database();
     
     return (
       <View style={styles.container}>
