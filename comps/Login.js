@@ -7,6 +7,9 @@ import FConfig from '../constants/FConfig';
 import {connect} from 'react-redux';
 import {ChangePage} from '../redux/Actions';
 
+//import {GoogleSigninButton, statusCodes} from 'react-native-google-signin';
+//import GConfig from '../constants/GConfig';
+
 class Login extends React.Component {
   static navigationOptions = {
     header: null,
@@ -15,16 +18,18 @@ class Login extends React.Component {
   state={
     email: '',
     password: '',
-    error: ''
+    error: '',
+    userInfo: null
   }
 
-  handleLogin=()=>{
-    //check if firebase is already loaded
+  componentDidMount() {
     if(!firebase.apps.length) {
       firebase.initializeApp(FConfig);
     }
-    
-    //keep user logged in
+  }
+
+  handleLogin=()=>{
+    //keep user logged in?
     firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL).then(a => {
         
     //sign in using email and password
@@ -46,6 +51,10 @@ class Login extends React.Component {
   
   navigateToSignUp=()=>{
     this.props.dispatch(ChangePage(3));
+  }
+  
+  tempNav=()=>{
+    this.props.dispatch(ChangePage(4));
   }
 
   render() {
@@ -81,11 +90,7 @@ class Login extends React.Component {
                         <Text style={styles.buttonText}>SIGN IN</Text>
                     </View>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={this.handleLogin}> 
-                    <View style={[styles.signBut,styles.red] }>
-                        <Text style={[styles.buttonText]}>SIGN IN WITH Google </Text>
-                    </View>
-                </TouchableOpacity>
+                
                 <Button
                     style={styles.buttonText}
                     title="Create Account"
