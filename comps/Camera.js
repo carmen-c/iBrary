@@ -3,7 +3,8 @@ import { View, StyleSheet, Text, Flatlist, Button, TouchableOpacity, Image } fro
 import {Camera, Permissions} from 'expo';
 
 import {connect} from 'react-redux';
-import {ChangeTab} from '../redux/Actions';
+import {ChangeTab,ChangePage} from '../redux/Actions';
+
 
 class MyCamera extends React.Component {
   static navigationOptions = {
@@ -14,6 +15,7 @@ class MyCamera extends React.Component {
         camType:Camera.Constants.Type.front,
         imgsrc:"null",
   }
+
   changeCamera=()=>{
         if(this.state.camType === Camera.Constants.Type.front ){
             this.setState({
@@ -40,7 +42,7 @@ class MyCamera extends React.Component {
     }
 
   navigateToCreatePage=()=>{
-    this.props.dispatch(ChangeTab(2));
+    this.props.dispatch(ChangePage(4));
   }  
 
   render() {

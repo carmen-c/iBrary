@@ -4,10 +4,10 @@ import { StyleSheet, Text, View, Button } from 'react-native';
 import Login from '../comps/Login';
 import Welcome from '../screens/WelcomeScreen';
 import SignUp from '../comps/SignUp';
+import MyCamera from '../comps/Camera'
 
 import TabBar from './TabBar';
-import {connect} from 'react-redux';
-import {ChangePage} from '../redux/Actions';
+import {connect, ChangePage} from 'react-redux';
 
 class Main extends React.Component {
   
@@ -32,6 +32,9 @@ class Main extends React.Component {
         break;
       case 4:
         curpage = <TabBar />
+        break;
+      case 5:
+        curpage = <MyCamera />
         break;
       default:
         curpage = <Login />

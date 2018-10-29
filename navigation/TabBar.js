@@ -30,9 +30,6 @@ class TabBar extends React.Component {
       case 3:
         curtab = <Profile />
         break;
-      case 4:
-        curtab = <Camera />
-        break;
       default:
         curtab = <Home />
         break;

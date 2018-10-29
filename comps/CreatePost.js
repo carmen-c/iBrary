@@ -3,13 +3,14 @@ import { View, StyleSheet, Text, Button, TextInput, TouchableOpacity, Image } fr
 
 import {connect} from 'react-redux';
 import {ChangeTab} from '../redux/Actions';
+import {ChangePage} from '../redux/Actions';
 
  class CreatePostScreen extends React.Component {
   static navigationOptions = {
     header: null,
   }
   navigateToCamera=()=>{
-    this.props.dispatch(ChangeTab(4));
+    this.props.dispatch(ChangePage(5));
   } 
   
   render() {
