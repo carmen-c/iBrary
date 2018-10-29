@@ -7,8 +7,8 @@ import FConfig from '../constants/FConfig';
 import {connect} from 'react-redux';
 import {ChangePage} from '../redux/Actions';
 
-//import {GoogleSigninButton, statusCodes} from 'react-native-google-signin';
-//import GConfig from '../constants/GConfig';
+import {GoogleSignin, GoogleSigninButton, statusCodes} from 'react-native-google-signin';
+import GConfig from '../constants/GConfig';
 
 class Login extends React.Component {
   static navigationOptions = {
@@ -49,6 +49,26 @@ class Login extends React.Component {
     })
   }
   
+  signIn = async () => {
+    
+  try {
+    await GoogleSignin.hasPlayServices();
+    const userInfo = await GoogleSignin.signIn();
+    this.setState({ userInfo });
+    console.log(userInfo);
+  } catch (error) {
+    if (error.code === statusCodes.SIGN_IN_CANCELLED) {
+      // user cancelled the login flow
+    } else if (error.code === statusCodes.IN_PROGRESS) {
+      // operation (f.e. sign in) is in progress already
+    } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
+      // play services not available or outdated
+    } else {
+      // some other error happened
+    }
+  }
+  }
+  
   navigateToSignUp=()=>{
     this.props.dispatch(ChangePage(3));
   }
@@ -58,6 +78,7 @@ class Login extends React.Component {
   }
 
   render() {
+    GoogleSignin.configure(GConfig);
     
     return (
       <View style={styles.container}>
@@ -90,7 +111,12 @@ class Login extends React.Component {
                         <Text style={styles.buttonText}>SIGN IN</Text>
                     </View>
                 </TouchableOpacity>
-                
+                <GoogleSigninButton
+                    style={{ width: 48, height: 48 }}
+                    size={GoogleSigninButton.Size.Icon}
+                    color={GoogleSigninButton.Color.Dark}
+                    onPress={this.signIn}
+                    disabled={this.state.isSigninInProgress} />
                 <Button
                     style={styles.buttonText}
                     title="Create Account"
