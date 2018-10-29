@@ -4,7 +4,6 @@ import { StyleSheet, Text, View, Button, Image, TouchableOpacity } from 'react-n
 import Home from '../comps/Home';
 import CreatePost from '../comps/CreatePost';
 import Profile from '../comps/Profile';
-import Camera from '../comps/Camera';
 
 import {connect} from 'react-redux';
 import {ChangePage, ChangeTab} from '../redux/Actions';

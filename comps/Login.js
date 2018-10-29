@@ -7,6 +7,9 @@ import FConfig from '../constants/FConfig';
 import {connect} from 'react-redux';
 import {ChangePage} from '../redux/Actions';
 
+import {GoogleSignin, GoogleSigninButton, statusCodes} from 'react-native-google-signin';
+import GConfig from '../constants/GConfig';
+
 class Login extends React.Component {
   static navigationOptions = {
     header: null,
@@ -15,16 +18,18 @@ class Login extends React.Component {
   state={
     email: '',
     password: '',
-    error: ''
+    error: '',
+    userInfo: null
   }
 
-  handleLogin=()=>{
-    //check if firebase is already loaded
+  componentDidMount() {
     if(!firebase.apps.length) {
       firebase.initializeApp(FConfig);
     }
-    
-    //keep user logged in
+  }
+
+  handleLogin=()=>{
+    //keep user logged in?
     firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL).then(a => {
         
     //sign in using email and password
@@ -44,11 +49,36 @@ class Login extends React.Component {
     })
   }
   
+  signIn = async () => {
+    
+  try {
+    await GoogleSignin.hasPlayServices();
+    const userInfo = await GoogleSignin.signIn();
+    this.setState({ userInfo });
+    console.log(userInfo);
+  } catch (error) {
+    if (error.code === statusCodes.SIGN_IN_CANCELLED) {
+      // user cancelled the login flow
+    } else if (error.code === statusCodes.IN_PROGRESS) {
+      // operation (f.e. sign in) is in progress already
+    } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
+      // play services not available or outdated
+    } else {
+      // some other error happened
+    }
+  }
+  }
+  
   navigateToSignUp=()=>{
     this.props.dispatch(ChangePage(3));
   }
+  
+  tempNav=()=>{
+    this.props.dispatch(ChangePage(4));
+  }
 
   render() {
+    GoogleSignin.configure(GConfig);
     
     return (
       <View style={styles.container}>
@@ -81,11 +111,12 @@ class Login extends React.Component {
                         <Text style={styles.buttonText}>SIGN IN</Text>
                     </View>
                 </TouchableOpacity>
-                <TouchableOpacity onPress={this.handleLogin}> 
-                    <View style={[styles.signBut,styles.red] }>
-                        <Text style={[styles.buttonText]}>SIGN IN WITH Google </Text>
-                    </View>
-                </TouchableOpacity>
+                <GoogleSigninButton
+                    style={{ width: 48, height: 48 }}
+                    size={GoogleSigninButton.Size.Icon}
+                    color={GoogleSigninButton.Color.Dark}
+                    onPress={this.signIn}
+                    disabled={this.state.isSigninInProgress} />
                 <Button
                     style={styles.buttonText}
                     title="Create Account"
