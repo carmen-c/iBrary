@@ -1,6 +1,6 @@
 import React from 'react';
 import { View, StyleSheet, Text, Flatlist, Button, TouchableOpacity, Image } from 'react-native';
-import {Camera, Permissions} from 'expo';
+//import {Camera, Permissions} from 'expo';
 
 import {connect} from 'react-redux';
 import {ChangeTab,ChangePage} from '../redux/Actions';
@@ -11,36 +11,36 @@ class MyCamera extends React.Component {
     header: null,
   };
 
-  state={
-        camType:Camera.Constants.Type.front,
-        imgsrc:"null",
-  }
+//  state={
+//        camType:Camera.Constants.Type.front,
+//        imgsrc:"null",
+//  }
 
-  changeCamera=()=>{
-        if(this.state.camType === Camera.Constants.Type.front ){
-            this.setState({
-            camType:Camera.Constants.Type.back
-            })
-        }
-        else{
-            this.setState({
-            camType:Camera.Constants.Type.front
-            })
-        }
-
-  }
-  
-  handleImage = async()=>{
-        let photo = await this.camera.takePictureAsync();
-        console.log(photo);
-        this.setState({
-            imgsrc:photo.uri
-        })
-  }
-  async componentWillMount() {
-        const { status } = await Permissions.askAsync(Permissions.CAMERA);
-    }
-
+//  changeCamera=()=>{
+//        if(this.state.camType === Camera.Constants.Type.front ){
+//            this.setState({
+//            camType:Camera.Constants.Type.back
+//            })
+//        }
+//        else{
+//            this.setState({
+//            camType:Camera.Constants.Type.front
+//            })
+//        }
+//
+//  }
+//  
+//  handleImage = async()=>{
+//        let photo = await this.camera.takePictureAsync();
+//        console.log(photo);
+//        this.setState({
+//            imgsrc:photo.uri
+//        })
+//  }
+//  async componentWillMount() {
+//        const { status } = await Permissions.askAsync(Permissions.CAMERA);
+//    }
+//
   navigateToCreatePage=()=>{
     this.props.dispatch(ChangePage(4));
   }  
@@ -49,25 +49,7 @@ class MyCamera extends React.Component {
     return (
       <View style={styles.container}>
       
-        <Button title='back' onPress={this.navigateToCreatePage}/>
-        <Camera style={{width:'100%', height:'45%'}} type={this.state.camType} ref={ref => { this.camera = ref; }} >
-        </Camera>
-        <Button 
-            onPress={this.changeCamera}
-            title='Change Camera'
-        />
-        
-        <TouchableOpacity
-          onPress={this.handleImage}>
-          <View style={styles.takePhoto}/>
-        </TouchableOpacity>
-    
-        <Image
-            style={{width:100, height:100}}
-            resizeMode="cover"
-            source={{url:this.state.imgsrc}}
-            />
-      
+        <Button title='back' onPress={this.navigateToCreatePage}/>  
         
       </View>
     );

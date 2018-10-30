@@ -96,14 +96,14 @@ class Login extends React.Component {
                 style={[styles.inps]}
                 placeholder='E-mail'
                 keyboardType='email-address'
-                onChangeText={this.handleNum1}/>
+                onChangeText={(text) => this.setState({email: text})}/>
 
             <TextInput 
                 style={styles.inps}
                 placeholder="Password"
                 keyboardType="default"
                 secureTextEntry={true}
-                onChangeText={this.handleNum2}/>
+                onChangeText={(text) => this.setState({password: text})}/>
         </View>
         <View style={styles.butBox}> 
                 <TouchableOpacity onPress={this.handleLogin}> 
