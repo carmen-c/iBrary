@@ -2,10 +2,9 @@ import React from 'react';
 import { View, StyleSheet, Text, Button, TextInput, TouchableOpacity } from 'react-native';
 
 import {connect} from 'react-redux';
-import {ChangeTab} from '../redux/Actions';
-import {ChangePage} from '../redux/Actions';
+import {ChangeTab, ChangePage} from '../redux/Actions';
 
-export default class CreatePostScreen extends React.Component {
+class CreatePost extends React.Component {
   
   navigateToCamera=()=>{
     this.props.dispatch(ChangePage(5));
@@ -19,7 +18,7 @@ export default class CreatePostScreen extends React.Component {
         </View>
         <View style={styles.boxes}>
             <View style={styles.box}><Text>gallery</Text></View>
-            <View style={styles.box}><Text>Cameras</Text></View>
+            <View style={styles.box}><Button title= "camera" onPress = {this.navigateToCamera}/></View>
     
         </View>
         <View style={[styles.items, styles.title]}>
@@ -124,4 +123,12 @@ const styles = StyleSheet.create({
     width:"80%"  
   },
 });
+
+function mapStateToProps(state){
+  return {
+    page:state.Page.page
+  }
+}
+
+export default connect (mapStateToProps)(CreatePost);
 
