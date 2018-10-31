@@ -18,12 +18,11 @@ class Login extends React.Component {
   state={
     email: '',
     password: '',
-    error: '',
-    userInfo: null
+    error: ''
   }
-
-  componentDidMount() {
-    if(!firebase.apps.length) {
+  
+  componentDidMount=()=>{
+    if (!firebase.apps.length) {
       firebase.initializeApp(FConfig);
     }
   }
@@ -31,18 +30,16 @@ class Login extends React.Component {
   handleLogin=()=>{
     //keep user logged in?
     firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL).then(a => {
-        
+      
     //sign in using email and password
     return firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.password).catch(error => {
       this.setState()
 //      this.setState({error: error.message})
       
     //navigate to app if there are no errors
-    //store token in redux
-    //do we need to check for errors??? 
     }).then(u => {
       if(this.state.error === ''){
-        this.props.dispatch(ChangePage(4));
+        this.navigateToHome();
       }
     })
       
@@ -50,34 +47,25 @@ class Login extends React.Component {
   }
   
   signIn = async () => {
-    
-  try {
-    await GoogleSignin.hasPlayServices();
-    const userInfo = await GoogleSignin.signIn();
-    this.setState({ userInfo });
-    console.log(userInfo);
-  } catch (error) {
-    if (error.code === statusCodes.SIGN_IN_CANCELLED) {
-      // user cancelled the login flow
-    } else if (error.code === statusCodes.IN_PROGRESS) {
-      // operation (f.e. sign in) is in progress already
-    } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
-      // play services not available or outdated
-    } else {
-      // some other error happened
-    }
-  }
+    await GoogleSignin.signIn().then((user)=>{
+      const credential = firebase.auth.GoogleAuthProvider.credential(user.idToken, user.accessToken);
+      firebase.auth().signInAndRetrieveDataWithCredential(credential);
+      this.navigateToHome();
+    }).catch((error) =>{
+        this.setState({error: error.message})
+    });
   }
   
   navigateToSignUp=()=>{
     this.props.dispatch(ChangePage(3));
   }
   
-  tempNav=()=>{
+  navigateToHome=()=>{
     this.props.dispatch(ChangePage(4));
   }
 
   render() {
+    
     GoogleSignin.configure(GConfig);
     
     return (
@@ -113,8 +101,8 @@ class Login extends React.Component {
                 </TouchableOpacity>
                 <GoogleSigninButton
                     style={{ width: 48, height: 48 }}
-                    size={GoogleSigninButton.Size.Wide}
-                    color={GoogleSigninButton.Color.Light}
+                    size={GoogleSigninButton.Size.Icon}
+                    color={GoogleSigninButton.Color.Dark}
                     onPress={this.signIn}
                     disabled={this.state.isSigninInProgress} />
                 <Button
