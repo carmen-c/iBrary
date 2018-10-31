@@ -1,6 +1,6 @@
 import React from 'react';
-import { View, StyleSheet, Text, Flatlist, Button, TouchableOpacity, Image } from 'react-native';
-import {Camera, Permissions} from 'expo';
+import { View, StyleSheet, Text, Flatlist, Button, TouchableOpacity, Image, AppRegistry, Dimensions } from 'react-native';
+import {RNCamera} from 'react-native-camera';
 
 import {connect} from 'react-redux';
 import {ChangeTab,ChangePage} from '../redux/Actions';
@@ -11,64 +11,45 @@ class MyCamera extends React.Component {
     header: null,
   };
 
-  state={
-        camType:Camera.Constants.Type.front,
-        imgsrc:"null",
-  }
-
-  changeCamera=()=>{
-        if(this.state.camType === Camera.Constants.Type.front ){
-            this.setState({
-            camType:Camera.Constants.Type.back
-            })
-        }
-        else{
-            this.setState({
-            camType:Camera.Constants.Type.front
-            })
-        }
-
-  }
-  
-  handleImage = async()=>{
-        let photo = await this.camera.takePictureAsync();
-        console.log(photo);
-        this.setState({
-            imgsrc:photo.uri
-        })
-  }
-  async componentWillMount() {
-        const { status } = await Permissions.askAsync(Permissions.CAMERA);
-    }
-
   navigateToCreatePage=()=>{
     this.props.dispatch(ChangePage(4));
   }  
+  
+  takePicture = async function() {
+    if (this.camera) {
+      const options = { quality: 0.5, base64: true };
+      const data = await this.camera.takePictureAsync(options)
+      console.log(data.uri);
+    }
+  };
 
   render() {
     return (
       <View style={styles.container}>
       
-        <Button title='back' onPress={this.navigateToCreatePage}/>
-        <Camera style={{width:'100%', height:'45%'}} type={this.state.camType} ref={ref => { this.camera = ref; }} >
-        </Camera>
-        <Button 
-            onPress={this.changeCamera}
-            title='Change Camera'
+        <Button title='back' onPress={this.navigateToCreatePage}/> 
+        
+        <RNCamera
+            ref={ref => {
+              this.camera = ref;
+            }}
+            style = {styles.preview}
+            type={RNCamera.Constants.Type.back}
+            flashMode={RNCamera.Constants.FlashMode.on}
+            permissionDialogTitle={'Permission to use camera'}
+            permissionDialogMessage={'We need your permission to use your camera phone'}
+            onGoogleVisionBarcodesDetected={({ barcodes }) => {
+              console.log(barcodes)
+            }}
         />
-        
+        <View style={{flex: 0, flexDirection: 'row', justifyContent: 'center',}}>
         <TouchableOpacity
-          onPress={this.handleImage}>
-          <View style={styles.takePhoto}/>
+            onPress={this.takePicture.bind(this)}
+            style = {styles.capture}
+        >
+            <Text style={{fontSize: 14}}> SNAP </Text>
         </TouchableOpacity>
-    
-        <Image
-            style={{width:100, height:100}}
-            resizeMode="cover"
-            source={{url:this.state.imgsrc}}
-            />
-      
-        
+        </View>
       </View>
     );
   }
@@ -104,6 +85,7 @@ const styles = StyleSheet.create({
  
 });
 
+AppRegistry.registerComponent('MyCamera', () => MyCamera);
 
 function mapStateToProps(state){
   return {
