@@ -16,7 +16,7 @@ class CreatePost extends React.Component {
   createNewPost =()=>{
     var newPostKey = db.ref().child('posts').push().key;
     var current = auth.currentUser.uid;
-    var date = new Date().toDateString();
+    var date = new Date().toUTCString();
     this.writeNewPost(current, newPostKey, date, this.state.title, this.state.content);
   }
   
