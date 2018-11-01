@@ -26,8 +26,7 @@ class Login extends React.Component {
       
     //sign in using email and password
     return auth.signInWithEmailAndPassword(this.state.email, this.state.password).catch(error => {
-      this.setState()
-//      this.setState({error: error.message})
+      this.setState({error: error.message})
       
     //navigate to app if there are no errors
     }).then(u => {
@@ -45,7 +44,15 @@ class Login extends React.Component {
       auth.signInAndRetrieveDataWithCredential(credential);
       this.navigateToHome();
     }).catch((error) =>{
+      if (error.code === statusCodes.SIGN_IN_CANCELLED) {
+        // user cancelled the login flow
+      } else if (error.code === statusCodes.IN_PROGRESS) {
         this.setState({error: error.message})
+      } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
+        this.setState({error: error.message})
+      } else {
+        // some other error happened
+      }
     });
   }
   

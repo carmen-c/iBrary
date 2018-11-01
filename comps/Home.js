@@ -1,10 +1,13 @@
 import React from 'react';
 import {Image, Platform, ScrollView, StyleSheet, Text, TouchableOpacity, View, FlatList, TextInput, Button, SearchBar, ListItem} from 'react-native';
-import {db} from '../constants/FConfig';
-
+import {db, auth} from '../constants/FConfig';
+import {GoogleSignin, statusCodes} from 'react-native-google-signin';
 import Post from './Post';
 
-export default class Home extends React.Component {
+import {connect} from 'react-redux';
+import {ChangePage} from '../redux/Actions';
+
+class Home extends React.Component {
   
   state={
     error:"",
@@ -33,6 +36,17 @@ export default class Home extends React.Component {
     });
   }
   
+  logout = async ()=>{
+    await GoogleSignin.revokeAccess();
+    await GoogleSignin.signOut();
+    auth.signOut().then(()=> {
+//      console.log('Signed Out');
+      this.props.dispatch(ChangePage(1));
+    }).catch(error => {
+      console.log(error.message);
+    });
+  }
+  
   render() {
     this.readPosts();
     
@@ -43,6 +57,10 @@ export default class Home extends React.Component {
             title="Settings"
             onPress={this.handleSettings}
           />
+          <Button
+            title="temp Logout"
+            onPress={this.logout}
+            />
         </View>
         <Text>{this.state.error}</Text>
         
@@ -55,6 +73,13 @@ export default class Home extends React.Component {
     );
   }
 }
+
+function mapStateToProps(state){
+  return {
+    page:state.Page.page
+  }
+}
+export default connect (mapStateToProps)(Home);
 
 const styles = StyleSheet.create({
   container: {
