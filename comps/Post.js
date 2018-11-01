@@ -5,9 +5,11 @@ export default class Post extends React.Component {
 
   render() {
     return (
-      <View style={{backgroundColor: 'white'}}>
+      <View 
+        style={{backgroundColor: 'white'}}
+        refs={this.props.postid}>
         <View>
-        <Text>{this.props.title}</Text>
+        <Text style={{fontSize: 20}}>{this.props.title}</Text>
         </View>
         <Text>{this.props.content}</Text>
       </View>

@@ -55,6 +55,7 @@ class CreatePost extends React.Component {
         <View style={[styles.items, styles.content]}>
            <TextInput
               placeholder='Content'
+              multiline={true}
               onChangeText={(text)=> this.setState({content: text})}
             />  
         </View> 

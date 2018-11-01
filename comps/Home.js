@@ -49,7 +49,7 @@ export default class Home extends React.Component {
         <FlatList
           data={this.state.arrData}
           keyExtractor={item => item.title}
-          renderItem={({item}) => (<Post title={item.title} content={item.content}/>)}
+          renderItem={({item}) => (<Post title={item.title} content={item.content} postid={item.postID}/>)}
         />
       </View>
     );
