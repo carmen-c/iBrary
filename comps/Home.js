@@ -1,16 +1,41 @@
 import React from 'react';
-import {Image, Platform, ScrollView, StyleSheet, Text, TouchableOpacity, View, FlatList, TextInput, Button} from 'react-native';
+import {Image, Platform, ScrollView, StyleSheet, Text, TouchableOpacity, View, FlatList, TextInput, Button, SearchBar, ListItem} from 'react-native';
+import {db} from '../constants/FConfig';
+
+import Post from './Post';
 
 export default class Home extends React.Component {
-  static navigationOptions = {
-    header: null,
-  };
-
+  
+  state={
+    error:"",
+    arrData: [],
+    loading: false,
+  }
+  
   handleSettings=()=>{
     
   }
   
+  readPosts=()=>{
+    db.ref('posts/').once('value').then(snapshot => {
+      var items = [];
+      
+      snapshot.forEach(child =>{
+//        console.log(childSnapshot.val())
+        items.push({
+          title: child.val().title,
+          content: child.val().content
+        })
+      });
+      this.setState({arrData: items})
+    }).catch(error => {
+      this.setState({error: error.message})
+    });
+  }
+  
   render() {
+    this.readPosts();
+    
     return (
       <View style={styles.container}>
         <View style={styles.searchBar}>
@@ -19,6 +44,13 @@ export default class Home extends React.Component {
             onPress={this.handleSettings}
           />
         </View>
+        <Text>{this.state.error}</Text>
+        
+        <FlatList
+          data={this.state.arrData}
+          keyExtractor={item => item.title}
+          renderItem={({item}) => (<Post title={item.title} content={item.content}/>)}
+        />
       </View>
     );
   }

@@ -1,7 +1,9 @@
 import React from 'react';
 import { View, StyleSheet, Text, Button, Image, ImageBackground } from 'react-native';
 
-export default class Profile extends React.Component {
+import {connect} from 'react-redux';
+
+class Profile extends React.Component {
   static navigationOptions = {
     title: 'Profile',
   };
@@ -40,6 +42,12 @@ export default class Profile extends React.Component {
     );
   }
 }
+
+function mapStateToProps(state){
+  return {
+  }
+}
+export default connect (mapStateToProps)(Profile);
 
 const styles = StyleSheet.create({
   container: {

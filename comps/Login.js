@@ -1,8 +1,7 @@
 import React from 'react';
 import {Image, Button, Text, TextInput, View, StyleSheet, TouchableOpacity} from 'react-native';
 
-import * as firebase from 'firebase';
-import FConfig from '../constants/FConfig';
+import {auth, auth2} from '../constants/FConfig';
 
 import {connect} from 'react-redux';
 import {ChangePage} from '../redux/Actions';
@@ -20,19 +19,13 @@ class Login extends React.Component {
     password: '',
     error: ''
   }
-  
-  componentDidMount=()=>{
-    if (!firebase.apps.length) {
-      firebase.initializeApp(FConfig);
-    }
-  }
 
   handleLogin=()=>{
     //keep user logged in?
-    firebase.auth().setPersistence(firebase.auth.Auth.Persistence.LOCAL).then(a => {
+    auth.setPersistence(auth2.Auth.Persistence.LOCAL).then(a => {
       
     //sign in using email and password
-    return firebase.auth().signInWithEmailAndPassword(this.state.email, this.state.password).catch(error => {
+    return auth.signInWithEmailAndPassword(this.state.email, this.state.password).catch(error => {
       this.setState()
 //      this.setState({error: error.message})
       
@@ -48,8 +41,8 @@ class Login extends React.Component {
   
   signIn = async () => {
     await GoogleSignin.signIn().then((user)=>{
-      const credential = firebase.auth.GoogleAuthProvider.credential(user.idToken, user.accessToken);
-      firebase.auth().signInAndRetrieveDataWithCredential(credential);
+      const credential = auth2.GoogleAuthProvider.credential(user.idToken, user.accessToken);
+      auth.signInAndRetrieveDataWithCredential(credential);
       this.navigateToHome();
     }).catch((error) =>{
         this.setState({error: error.message})

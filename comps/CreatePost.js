@@ -1,10 +1,34 @@
 import React from 'react';
 import { View, StyleSheet, Text, Button, TextInput, TouchableOpacity } from 'react-native';
+import {auth, db} from '../constants/FConfig';
 
 import {connect} from 'react-redux';
 import {ChangeTab, ChangePage} from '../redux/Actions';
 
 class CreatePost extends React.Component {
+  
+  state={
+    title: "",
+    content: "",
+    tags: ""
+  }
+
+  createNewPost =()=>{
+    var newPostKey = db.ref().child('posts').push().key;
+    var current = auth.currentUser.uid;
+    var date = new Date().toDateString();
+    this.writeNewPost(current, newPostKey, date, this.state.title, this.state.content);
+  }
+  
+  writeNewPost=(uid, postid, date, title, content)=>{
+    db.ref('posts/' + postid).set({
+        userID: uid,
+        postID: postid,
+        date: date,
+        title: title,
+        content: content
+    })
+  }
   
   navigateToCamera=()=>{
     this.props.dispatch(ChangePage(5));
@@ -24,12 +48,14 @@ class CreatePost extends React.Component {
         <View style={[styles.items, styles.title]}>
           <TextInput
               placeholder='Title'
+              onChangeText={(text)=> this.setState({title: text})}
           />
         </View>
         <View style={styles.hairline} />
         <View style={[styles.items, styles.content]}>
            <TextInput
               placeholder='Content'
+              onChangeText={(text)=> this.setState({content: text})}
             />  
         </View> 
         <View style={styles.hairline} />
@@ -37,10 +63,11 @@ class CreatePost extends React.Component {
         <View style={[styles.items, styles.hashtag]}>
             <TextInput
               placeholder='# Add Hashtags'
+              onChangeText={(text)=> this.setState({tags: text})}
             />
         </View>
         <View style={styles.butBox}> 
-            <TouchableOpacity onPress={this.handleLogin}> 
+            <TouchableOpacity onPress={this.createNewPost}> 
                     <View style={[styles.signBut]}>
                         <Text style={styles.buttonText}>POST</Text>
                     </View>
