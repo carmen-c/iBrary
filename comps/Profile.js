@@ -2,7 +2,10 @@ import React from 'react';
 import { View, StyleSheet, Text, Button, Image, ImageBackground, TouchableOpacity } from 'react-native';
 
 import {connect} from 'react-redux';
+
 import {ChangePage} from '../redux/Actions';
+
+
 
 class Profile extends React.Component {
   static navigationOptions = {
@@ -49,6 +52,12 @@ class Profile extends React.Component {
     );
   }
 }
+
+function mapStateToProps(state){
+  return {
+  }
+}
+export default connect (mapStateToProps)(Profile);
 
 const styles = StyleSheet.create({
   container: {

@@ -1,8 +1,7 @@
 import React from 'react';
 import {Image, Button, Text, TextInput, View, StyleSheet, TouchableOpacity} from 'react-native';
 
-import * as firebase from 'firebase';
-import FConfig from '../constants/FConfig';
+import {auth, auth2, db} from '../constants/FConfig';
 
 import {connect} from 'react-redux';
 import {ChangePage} from '../redux/Actions';
@@ -26,7 +25,7 @@ class SignUp extends React.Component {
     if(this.state.password === this.state.password2) {
       
       //create user
-      firebase.auth().createUserWithEmailAndPassword(this.state.email, this.state.password).then(user => {
+      auth.createUserWithEmailAndPassword(this.state.email, this.state.password).then(user => {
         if(this.state.error === ""){
           this.saveNewUserData();
           this.props.dispatch(ChangePage(2));
@@ -45,6 +44,7 @@ class SignUp extends React.Component {
   }
   
   saveNewUserData=()=> {
+<<<<<<< HEAD
     if (firebase.auth().currentUser) {
       currentUser = firebase.auth().currentUser;
       if (currentUser) {
@@ -57,11 +57,16 @@ class SignUp extends React.Component {
       }
       console.log(currentUser);
     }
+=======
+      db.ref('users/' + auth.currentUser.uid).set({
+        userID: auth.currentUser.uid,
+        email: auth.currentUser.email,
+      })
+      console.log(auth.currentUser);
+>>>>>>> 8e7d6311b1ed982eab69188c76ff5c1d5e4e27c2
   }
   
   render() {
-    
-    var database = firebase.database();
     
     return (
       <View style={styles.container}>

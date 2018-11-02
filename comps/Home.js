@@ -1,16 +1,55 @@
 import React from 'react';
-import {Image, Platform, ScrollView, StyleSheet, Text, TouchableOpacity, View, FlatList, TextInput, Button} from 'react-native';
+import {Image, Platform, ScrollView, StyleSheet, Text, TouchableOpacity, View, FlatList, TextInput, Button, SearchBar, ListItem} from 'react-native';
+import {db, auth} from '../constants/FConfig';
+import {GoogleSignin, statusCodes} from 'react-native-google-signin';
+import Post from './Post';
 
-export default class Home extends React.Component {
-  static navigationOptions = {
-    header: null,
-  };
+import {connect} from 'react-redux';
+import {ChangePage} from '../redux/Actions';
 
+class Home extends React.Component {
+  
+  state={
+    error:"",
+    arrData: [],
+    loading: false,
+  }
+  
   handleSettings=()=>{
     
   }
   
+  readPosts=()=>{
+    db.ref('posts/').once('value').then(snapshot => {
+      var items = [];
+      
+      snapshot.forEach(child =>{
+//        console.log(childSnapshot.val())
+        items.push({
+          title: child.val().title,
+          content: child.val().content
+        })
+      });
+      this.setState({arrData: items})
+    }).catch(error => {
+      this.setState({error: error.message})
+    });
+  }
+  
+  logout = async ()=>{
+    await GoogleSignin.revokeAccess();
+    await GoogleSignin.signOut();
+    auth.signOut().then(()=> {
+//      console.log('Signed Out');
+      this.props.dispatch(ChangePage(1));
+    }).catch(error => {
+      console.log(error.message);
+    });
+  }
+  
   render() {
+    this.readPosts();
+    
     return (
       <View style={styles.container}>
         <View style={styles.searchBar}>
@@ -18,11 +57,29 @@ export default class Home extends React.Component {
             title="Settings"
             onPress={this.handleSettings}
           />
+          <Button
+            title="temp Logout"
+            onPress={this.logout}
+            />
         </View>
+        <Text>{this.state.error}</Text>
+        
+        <FlatList
+          data={this.state.arrData}
+          keyExtractor={item => item.title}
+          renderItem={({item}) => (<Post title={item.title} content={item.content} postid={item.postID}/>)}
+        />
       </View>
     );
   }
 }
+
+function mapStateToProps(state){
+  return {
+    page:state.Page.page
+  }
+}
+export default connect (mapStateToProps)(Home);
 
 const styles = StyleSheet.create({
   container: {
