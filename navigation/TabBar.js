@@ -69,7 +69,7 @@ class TabBar extends React.Component {
 const styles = StyleSheet.create({
   container: {
     width:"100%",
-    height:80,
+    height:65,
     paddingBottom:0,
     flex: 1,
     alignItems: 'center',
@@ -82,10 +82,10 @@ const styles = StyleSheet.create({
     margin:0,
     padding:0,
     position:'absolute',
-    bottom:80,
+    bottom:65,
   },
   nav: {
-    height:80,
+    height:65,
     backgroundColor: '#f1f1f1',
     flexDirection:'row',
     paddingTop:20,

@@ -1,19 +1,28 @@
 import React from 'react';
-import { View, StyleSheet, Text, Button, Image, ImageBackground } from 'react-native';
+import { View, StyleSheet, Text, Button, Image, ImageBackground, TouchableOpacity } from 'react-native';
 
-import {connect} from 'react-redux';
+import {connect} from 'react-redux'; 
+import {ChangePage} from '../redux/Actions';
+
+
 
 class Profile extends React.Component {
   static navigationOptions = {
     title: 'Profile',
   };
-
+  navigatePage=(page)=>{
+    this.props.dispatch(ChangePage(page));
+  }
+  
   render() {
     return (
       <View style={styles.container}>
          <View style={styles.pageTitle}>
             <Text style={styles.titleFont}>Profile</Text>
         </View>
+        <TouchableOpacity onPress={this.navigatePage.bind(this,7)}>
+          <Text>Setting</Text>
+        </TouchableOpacity>
         <View style={styles.section}>
             <View style={styles.box1}>
               <Image 
@@ -43,11 +52,6 @@ class Profile extends React.Component {
   }
 }
 
-function mapStateToProps(state){
-  return {
-  }
-}
-export default connect (mapStateToProps)(Profile);
 
 const styles = StyleSheet.create({
   container: {
@@ -97,3 +101,10 @@ const styles = StyleSheet.create({
     width: '100%'
 },
 });
+function mapStateToProps(state){
+  return {
+    page:state.Page.page
+  }
+}
+ 
+export default connect (mapStateToProps)(Profile);
