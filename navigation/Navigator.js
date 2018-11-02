@@ -4,15 +4,11 @@ import { StyleSheet, Text, View, Button } from 'react-native';
 import Login from '../comps/Login';
 import Welcome from '../comps/Welcome';
 import SignUp from '../comps/SignUp';
-
 import MyCamera from '../comps/Camera'
 import Category from '../comps/Category';
 import ProfileSetting from '../comps/ProfileSetting';
-
-import MyCamera from '../comps/Camera';
-
-
 import TabBar from './TabBar';
+
 import {connect} from 'react-redux';
 import {ChangePage} from '../redux/Actions';
 

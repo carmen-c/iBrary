@@ -116,15 +116,6 @@ class Login extends React.Component {
   }
 }
 
-function mapStateToProps(state){
-  return {
-    page:state.Page.page
-  }
-}
-export default connect (mapStateToProps)(Login);
-
-
-
 const styles = StyleSheet.create({
   container: {
     width:'100%',
@@ -180,3 +171,11 @@ const styles = StyleSheet.create({
     backgroundColor:'#d34836'
 }
 });
+
+function mapStateToProps(state){
+  return {
+    page:state.Page.page
+  }
+}
+export default connect (mapStateToProps)(Login);
+

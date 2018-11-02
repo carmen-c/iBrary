@@ -1,11 +1,7 @@
 import React from 'react';
 
 import { View, StyleSheet, Text, Button, TextInput, TouchableOpacity, ScrollView, Image } from 'react-native';
-
-
-import { View, StyleSheet, Text, Button, TextInput, TouchableOpacity } from 'react-native';
 import {auth, db} from '../constants/FConfig';
-
 
 import {connect} from 'react-redux';
 import {ChangeTab, ChangePage} from '../redux/Actions';
@@ -76,10 +72,7 @@ class CreatePost extends React.Component {
         
         <View style={[styles.items, styles.hashtag]}>
             <TextInput
-
               placeholder='select the categoty'
-
-              placeholder='# Add Hashtags'
               onChangeText={(text)=> this.setState({tags: text})}
 
             />

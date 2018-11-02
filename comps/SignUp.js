@@ -44,7 +44,7 @@ class SignUp extends React.Component {
   }
   
   saveNewUserData=()=> {
-<<<<<<< HEAD
+
     if (firebase.auth().currentUser) {
       currentUser = firebase.auth().currentUser;
       if (currentUser) {
@@ -57,13 +57,13 @@ class SignUp extends React.Component {
       }
       console.log(currentUser);
     }
-=======
+
       db.ref('users/' + auth.currentUser.uid).set({
         userID: auth.currentUser.uid,
         email: auth.currentUser.email,
       })
       console.log(auth.currentUser);
->>>>>>> 8e7d6311b1ed982eab69188c76ff5c1d5e4e27c2
+
   }
   
   render() {
@@ -149,8 +149,6 @@ const styles = StyleSheet.create({
     marginTop:65,
     marginBottom:10,
     width:'100%',
-//    backgroundColor:'#e6e6e6',
-//    alignContent:'center',
     alignItems:'center',
   },
   titleFont:{
