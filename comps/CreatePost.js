@@ -1,5 +1,6 @@
 import React from 'react';
-import { View, StyleSheet, Text, Button, TextInput, TouchableOpacity } from 'react-native';
+import { View, StyleSheet, Text, Button, TextInput, TouchableOpacity, ScrollView, Image } from 'react-native';
+
 
 import {connect} from 'react-redux';
 import {ChangeTab, ChangePage} from '../redux/Actions';
@@ -8,18 +9,26 @@ class CreatePost extends React.Component {
   
   navigateToCamera=()=>{
     this.props.dispatch(ChangePage(5));
-  } 
+  }; 
   
   render() {
     return (
+      <ScrollView style={{backgroundColor:'#fff'}}>
       <View style={styles.container}>
         <View style={styles.pageTitle}>
             <Text style={styles.titleFont}>Create an Idea</Text>
         </View>
         <View style={styles.boxes}>
             <View style={styles.box}><Text>gallery</Text></View>
-            <View style={styles.box}><Button title= "camera" onPress = {this.navigateToCamera}/></View>
-    
+            <View style={styles.verticalHairline}/>
+            <View style={styles.box}>
+              <TouchableOpacity onPress={this.navigateToCamera}>
+                <Image 
+                  source={require('../assets/images/camera.png')}
+                  style={styles.imgIcon}
+                  />
+              </TouchableOpacity>
+          </View>
         </View>
         <View style={[styles.items, styles.title]}>
           <TextInput
@@ -36,7 +45,7 @@ class CreatePost extends React.Component {
         
         <View style={[styles.items, styles.hashtag]}>
             <TextInput
-              placeholder='# Add Hashtags'
+              placeholder='select the categoty'
             />
         </View>
         <View style={styles.butBox}> 
@@ -46,7 +55,8 @@ class CreatePost extends React.Component {
                     </View>
             </TouchableOpacity>
        </View>
-      </View>
+        </View>
+      </ScrollView>
     );
   }
 }
@@ -54,14 +64,20 @@ class CreatePost extends React.Component {
 const styles = StyleSheet.create({
   container: {
     width:'100%',
+    height:'100%',
     flex:1,
     backgroundColor: '#fff',
     alignItems: 'center',
   },
   hairline: {
     backgroundColor: '#A2A2A2',
-    height: 0.3,
+    height: 0.6,
     width: '100%'
+  },
+  verticalHairline:{
+    backgroundColor: '#A2A2A2',
+    height: 150,
+    width: 0.5
   },
   pageTitle: {
     paddingTop:65,
@@ -84,6 +100,8 @@ const styles = StyleSheet.create({
   },
   box: {
     width:'50%',
+    paddingLeft:'15%',
+    paddingRight:'15%',
     height:150,
     backgroundColor:"#F2F2F2",
     alignContent:'center',
@@ -97,10 +115,11 @@ const styles = StyleSheet.create({
     height:'10%'  
   },
   content: {
-    height:'25%' 
+    height:'30%' 
   },
   hashtag: {
-    height:'10%'
+    height:'10%',
+    marginBottom:'5%'
   },
   buttonText:{
     fontSize:17,
@@ -122,6 +141,10 @@ const styles = StyleSheet.create({
     flexDirection:"column",
     width:"80%"  
   },
+  imgIcon:{
+    width:'100%',
+    resizeMode:'contain'
+  }
 });
 
 function mapStateToProps(state){

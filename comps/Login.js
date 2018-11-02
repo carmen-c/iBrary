@@ -142,7 +142,8 @@ const styles = StyleSheet.create({
     width:'100%',
     alignItems: 'center',
     justifyContent: 'center',
-    backgroundColor:'#e6e6e6'
+    backgroundColor:'#e6e6e6',
+    paddingTop:'20%'
   },
   logoImg: {
       marginTop:'5%',

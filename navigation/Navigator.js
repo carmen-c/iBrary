@@ -2,12 +2,15 @@ import React from 'react';
 import { StyleSheet, Text, View, Button } from 'react-native';
 
 import Login from '../comps/Login';
-import Welcome from '../screens/WelcomeScreen';
+import Welcome from '../comps/Welcome';
 import SignUp from '../comps/SignUp';
 import MyCamera from '../comps/Camera'
+import Category from '../comps/Category';
+import ProfileSetting from '../comps/ProfileSetting';
 
 import TabBar from './TabBar';
-import {connect, ChangePage} from 'react-redux';
+import {connect} from 'react-redux';
+import {ChangePage} from '../redux/Actions';
 
 class Main extends React.Component {
   
@@ -36,6 +39,12 @@ class Main extends React.Component {
       case 5:
         curpage = <MyCamera />
         break;
+      case 6:
+        curpage = <Category />
+        break;
+      case 7:
+        curpage = <ProfileSetting/>
+        break;
       default:
         curpage = <Login />
         break;
@@ -54,7 +63,6 @@ const styles = StyleSheet.create({
     flex: 1,
     backgroundColor: '#e6e6e6',
     alignItems: 'center',
-    justifyContent: 'center',
   },
 });
 

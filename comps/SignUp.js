@@ -8,18 +8,17 @@ import {connect} from 'react-redux';
 import {ChangePage} from '../redux/Actions';
 
 class SignUp extends React.Component {
-  static navigationOptions = {
-    header: null,
-  };
 
   state={
     email: "",
     password: "",
     password2: "",
     error: "",
+    name:"",
+    poURl:"",
   }
   navigateToLogIn=()=>{
-    this.props.dispatch(ChangePage(1));
+    this.props.dispatch(ChangePage(2));
   }
   handleSignUp=()=>{
     
@@ -52,6 +51,8 @@ class SignUp extends React.Component {
           firebase.database().ref('users/' + currentUser.uid).set({
               userID: currentUser.uid,
               email: currentUser.email,
+              nickname : currentUser.name,
+              
           })
       }
       console.log(currentUser);
@@ -64,84 +65,101 @@ class SignUp extends React.Component {
     
     return (
       <View style={styles.container}>
-        <TouchableOpacity onPress={this.navigateToLogIn}> 
-          <View>
-              <Text>back button</Text>
-          </View>
+        <TouchableOpacity 
+           style={styles.backBut}
+         onPress={this.navigateToLogIn}> 
+              <Image 
+                  style={styles.backBut}
+                  source={require('../assets/images/backButton.png')}
+                />
         </TouchableOpacity>
-        
-        <Text>Create Account</Text>
-        <Text>Sign up with your email address</Text>
-        <View>
-          <Text>{this.state.error}</Text>
-        </View>
-        
-        <View style={styles.inpBox}>
-            <TextInput 
-                style={[styles.inps]}
-                placeholder='E-mail'
-                keyboardType='email-address'
-                onChangeText={(text) => this.setState({email: text})}/>
+        <View style={styles.center}>
+          <View style={styles.pageTitle}>
+              <Text style={styles.titleFont}>Create Account</Text>
+          </View>
+
+          <Text>Sign up with your email address</Text>
+          <View>
+            <Text>{this.state.error}</Text>
+          </View>
+
+          <View style={styles.inpBox}>
+              <TextInput 
+                  style={[styles.inps]}
+                  placeholder='E-mail'
+                  keyboardType='email-address'
+                  onChangeText={(text) => this.setState({email: text})}/>
+
+              <TextInput 
+                  style={styles.inps}
+                  placeholder="Password"
+                  keyboardType="default"
+                  secureTextEntry={true}
+                  onChangeText={(text) => this.setState({password: text})}/>
 
             <TextInput 
-                style={styles.inps}
-                placeholder="Password"
-                keyboardType="default"
-                secureTextEntry={true}
-                onChangeText={(text) => this.setState({password: text})}/>
-          
-          <TextInput 
-                style={styles.inps}
-                placeholder="Re-Type Password"
-                keyboardType="default"
-                secureTextEntry={true}
-                onChangeText={(text) => this.setState({password2: text})}/>
-        </View>
-        <View style={styles.butBox}> 
-                <TouchableOpacity onPress={this.handleSignUp}> 
-                    <View style={[styles.signBut]}>
-                        <Text style={styles.buttonText}>SIGN UP</Text>
-                    </View>
-                </TouchableOpacity>
-                <TouchableOpacity onPress={this.handleLogin}> 
-                    <View style={[styles.signBut,styles.red] }>
-                        <Text style={[styles.buttonText]}>SIGN UP WITH Google </Text>
-                    </View>
-                </TouchableOpacity>
+                  style={styles.inps}
+                  placeholder="Re-Type Password"
+                  keyboardType="default"
+                  secureTextEntry={true}
+                  onChangeText={(text) => this.setState({password2: text})}/>
+          </View>
+          <View style={styles.butBox}> 
+                  <TouchableOpacity onPress={this.handleSignUp}> 
+                      <View style={[styles.signBut]}>
+                          <Text style={styles.buttonText}>SIGN UP</Text>
+                      </View>
+                  </TouchableOpacity>
+                  <TouchableOpacity onPress={this.handleLogin}> 
+                      <View style={[styles.signBut,styles.red] }>
+                          <Text style={[styles.buttonText]}>SIGN UP WITH Google </Text>
+                      </View>
+                  </TouchableOpacity>
+          </View>
         </View>
       </View>
     );
   }
 }
 
-function mapStateToProps(state){
-  return {
-    page:state.Page.page
-  }
-}
-export default connect (mapStateToProps)(SignUp);
-
 
 
 const styles = StyleSheet.create({
   container: {
     width:'100%',
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginTop:100,
   },
-  logoImg: {
-      marginTop:30,
-      marginBottom:20,
-      width:130, 
-      height:150, 
-      resizeMode:'contain'
+  backBut: {
+    width:30,
+    height:30,
+    position:'absolute',
+    left:5,
+    top:15,
+    resizeMode:'contain',
+    zIndex:50
+  },
+  center: {
+    alignItems:'center'
+  },
+  pageTitle: {
+    marginTop:65,
+    marginBottom:10,
+    width:'100%',
+//    backgroundColor:'#e6e6e6',
+//    alignContent:'center',
+    alignItems:'center',
+  },
+  titleFont:{
+    fontSize:25,
+    fontWeight: 'bold',
+    color:'#138172'
+  },
+  pageDes:{
+    marginBottom:40
   },
   inpBox: {
-    flexDirection:'column',
     width:'75%',
-    margin:30,
-    padding:20,
+    marginBottom:'10%',
+    padding:'3%',
     backgroundColor:'#FFF',
     borderRadius:10,
     shadowOffset:{  width: 0,  height: 5,  },
@@ -177,3 +195,12 @@ const styles = StyleSheet.create({
     backgroundColor:'#d34836'
 }
 });
+
+
+function mapStateToProps(state){
+  return {
+    page:state.Page.page
+  }
+}
+export default connect (mapStateToProps)(SignUp);
+
