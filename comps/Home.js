@@ -26,6 +26,7 @@ class Home extends React.Component {
       snapshot.forEach(child =>{
 //        console.log(childSnapshot.val())
         items.push({
+          key: child.val().postID,
           title: child.val().title,
           content: child.val().content
         })
@@ -66,7 +67,7 @@ class Home extends React.Component {
         
         <FlatList
           data={this.state.arrData}
-          keyExtractor={item => item.title}
+          keyExtractor={item => item.key}
           renderItem={({item}) => (<Post title={item.title} content={item.content} postid={item.postID}/>)}
         />
       </View>
