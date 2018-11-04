@@ -19,6 +19,7 @@ class SignUp extends React.Component {
   navigateToLogIn=()=>{
     this.props.dispatch(ChangePage(2));
   }
+
   handleSignUp=()=>{
     
     //check if passwords match
@@ -44,7 +45,7 @@ class SignUp extends React.Component {
   }
   
   saveNewUserData=()=> {
-
+  var firebase = require('firebase');
     if (firebase.auth().currentUser) {
       currentUser = firebase.auth().currentUser;
       if (currentUser) {
@@ -58,7 +59,7 @@ class SignUp extends React.Component {
       console.log(currentUser);
     }
 
-      db.ref('users/' + auth.currentUser.uid).set({
+      firebase.database().ref('users/' + auth.currentUser.uid).set({
         userID: auth.currentUser.uid,
         email: auth.currentUser.email,
       })
