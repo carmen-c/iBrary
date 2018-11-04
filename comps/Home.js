@@ -15,7 +15,7 @@ class Home extends React.Component {
     loading: false,
   }
   
-  handleSettings=()=>{
+  handleSearch=()=>{
     
   }
   
@@ -52,25 +52,29 @@ class Home extends React.Component {
     this.readPosts();
     
     return (
+
       <View style={styles.container}>
-        <View style={styles.searchBar}>
-          <Button
-            title="Settings"
-            onPress={this.handleSettings}
-          />
-          <Button
+        
+        <TextInput
+            style={styles.searchBar}
+            placeholder="Search"
+            onChangeText={this.handleSearch}
+        />
+       
+        <Button
             title="temp Logout"
             onPress={this.logout}
             />
-        </View>
         <Text>{this.state.error}</Text>
-        
-        <FlatList
-          data={this.state.arrData}
-          keyExtractor={item => item.key}
-          renderItem={({item}) => (<Post title={item.title} content={item.content} postid={item.postID}/>)}
-        />
+        <View style={{marginTop:35, paddingBottom:150}}>
+            <FlatList
+              data={this.state.arrData}
+              keyExtractor={item => item.key}
+              renderItem={({item}) => (<Post title={item.title} content={item.content} postid={item.postID}/>)}
+            />
+        </View>
       </View>
+    
     );
   }
 }
@@ -84,14 +88,18 @@ export default connect (mapStateToProps)(Home);
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
+    alignItems:'center',
     width:"100%",
     marginTop:30,
-    backgroundColor:'#e6e6e6',
-    alignItems:'center',
+    backgroundColor:'#e6e6e6',   
   },
   searchBar: {
-     width:'100%'
+    position:'absolute',
+    top:10,
+    width:'85%',
+    marginTop:20,
+    padding:15,
+    backgroundColor:'#fff',
   },
   developmentModeText: {
     marginBottom: 20,
@@ -102,22 +110,6 @@ const styles = StyleSheet.create({
   },
   contentContainer: {
     paddingTop: 30,
-  },
-  welcomeContainer: {
-    alignItems: 'center',
-    marginTop: 10,
-    marginBottom: 20,
-  },
-  welcomeImage: {
-    width: 100,
-    height: 80,
-    resizeMode: 'contain',
-    marginTop: 3,
-    marginLeft: -10,
-  },
-  getStartedContainer: {
-    alignItems: 'center',
-    marginHorizontal: 50,
   },
   homeScreenFilename: {
     marginVertical: 7,

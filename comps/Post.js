@@ -1,18 +1,34 @@
 import React from 'react';
-import { View, StyleSheet, Text, Button, Image, ImageBackground } from 'react-native';
+import { View, StyleSheet, Text, Button, Image, ImageBackground, ScrollView,TouchableOpacity } from 'react-native';
 
 export default class Post extends React.Component {
 
   render() {
     return (
-      <View 
-        style={{backgroundColor: 'white'}}
-        refs={this.props.postid}>
-        <View>
-        <Text style={{fontSize: 20}}>{this.props.title}</Text>
+      <ScrollView>
+        <View style={styles.container}>
+          <TouchableOpacity style={styles.list} refs={this.props.postid}>
+            <View>
+            <Text style={{fontSize: 20, marginBottom:10}}>{this.props.title}</Text>
+            </View>
+            <Text>{this.props.content}</Text>
+          </TouchableOpacity>
         </View>
-        <Text>{this.props.content}</Text>
-      </View>
+      </ScrollView>
     );
   }
 }
+const styles = StyleSheet.create({
+  container: {
+    width:"100%",
+    alignItems:'center',
+  },
+  list:{
+    width:'95%',
+    backgroundColor:'#fff',
+    marginBottom:20,
+    borderRadius:10,
+    padding:15
+  }
+
+});

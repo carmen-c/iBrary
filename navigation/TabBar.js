@@ -9,8 +9,35 @@ import {connect} from 'react-redux';
 import {ChangePage, ChangeTab} from '../redux/Actions';
 
 class TabBar extends React.Component {
-  
+  state={
+    homeImg:require('../assets/images/homeButtonClicked.png'),
+    postImg:require('../assets/images/createButton.png'),
+    profileImg:require('../assets/images/profileButton.png')
+  }
   handleButton=(tab)=>{
+    
+    //change icon to colored one
+    if(tab === 1){
+       this.setState({
+         homeImg:require('../assets/images/homeButtonClicked.png'),
+         postImg:require('../assets/images/createButton.png'),
+         profileImg:require('../assets/images/profileButton.png')
+        })
+    }
+    else if(tab === 2){
+       this.setState({
+         homeImg:require('../assets/images/homeButton.png'),
+         postImg:require('../assets/images/createButtonClicked.png'),
+         profileImg:require('../assets/images/profileButton.png')
+        })
+    }
+    else{
+       this.setState({
+         homeImg:require('../assets/images/homeButton.png'),
+         postImg:require('../assets/images/createButton.png'),
+         profileImg:require('../assets/images/profileButtonClicked.png')
+        })
+    }
     this.props.dispatch(ChangeTab(tab));
   }
   
@@ -44,18 +71,18 @@ class TabBar extends React.Component {
         <View style={styles.nav}>
           <TouchableOpacity onPress={this.handleButton.bind(this, 2)}>
               <Image
-                   style={styles.navIcon}
-                  source={require('../assets/images/createButton.png')}/>
+                  style={styles.navIcon}
+                  source={this.state.postImg}/>
           </TouchableOpacity>
           <TouchableOpacity onPress={this.handleButton.bind(this, 1)}>
               <Image
-                   style={styles.navIcon}
-                  source={require('../assets/images/homeButton.png')}/>
+                  style={styles.navIcon}
+                  source={this.state.homeImg}/>
           </TouchableOpacity>
           <TouchableOpacity onPress={this.handleButton.bind(this, 3)}>
               <Image
-                   style={styles.navIcon}
-                  source={require('../assets/images/profileButton.png')}/>
+                  style={styles.navIcon}
+                  source={this.state.profileImg}/>
           </TouchableOpacity>
         </View>
         
@@ -73,7 +100,7 @@ const styles = StyleSheet.create({
     paddingBottom:0,
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'space-around',
+
   },
   hairline: {
     backgroundColor: '#A2A2A2',
