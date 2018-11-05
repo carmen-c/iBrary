@@ -17,7 +17,7 @@ class SignUp extends React.Component {
     poURl:"",
   }
   navigateToLogIn=()=>{
-    this.props.dispatch(ChangePage(2));
+    this.props.dispatch(ChangePage(1));
   }
 
   handleSignUp=()=>{
