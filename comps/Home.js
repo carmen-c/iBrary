@@ -20,15 +20,16 @@ class Home extends React.Component {
   }
   
   readPosts=()=>{
-    db.ref('posts/').once('value').then(snapshot => {
+    db.ref('posts/').orderByChild('timestamp').once('value').then(snapshot => {
       var items = [];
       
       snapshot.forEach(child =>{
 //        console.log(childSnapshot.val())
-        items.push({
+        items.unshift({
           key: child.val().postID,
           title: child.val().title,
-          content: child.val().content
+          content: child.val().content,
+          date: child.val().date
         })
       });
       this.setState({arrData: items})
@@ -70,7 +71,11 @@ class Home extends React.Component {
             <FlatList
               data={this.state.arrData}
               keyExtractor={item => item.key}
-              renderItem={({item}) => (<Post title={item.title} content={item.content} postid={item.postID}/>)}
+              renderItem={({item}) => (<Post 
+                                         title={item.title} 
+                                         content={item.content} 
+                                         postid={item.postID}
+                                         />)}
             />
         </View>
       </View>
