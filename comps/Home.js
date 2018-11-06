@@ -13,18 +13,49 @@ class Home extends React.Component {
     error:"",
     arrData: [],
     loading: false,
+    search: ""
   }
   
-  handleSearch=()=>{
-    
+  componentWillMount=()=>{
+    this.readPosts();
+  }
+  
+  handleSearch=(keyword)=>{
+    if(keyword == "") {
+      this.readPosts();
+      console.log("readpost");
+    } else { 
+      db.ref('posts/')
+        .orderByChild('title')
+        .equalTo(keyword)
+        .on('value', this.newSearchList);  
+    }
+  }
+  
+  newSearchList=(snapshot)=>{
+    console.log(snapshot);
+    var items = [];
+
+    snapshot.forEach(child =>{
+      console.log(child);
+      items.unshift({
+        key: child.val().postID,
+        title: child.val().title,
+        content: child.val().content,
+        date: child.val().date
+      })
+      console.log(items);
+    });
+    this.setState({arrData: items})
   }
   
   readPosts=()=>{
-    db.ref('posts/').orderByChild('timestamp').once('value').then(snapshot => {
+    db.ref('posts/')
+      .once('value')
+      .then(snapshot => {
       var items = [];
       
       snapshot.forEach(child =>{
-//        console.log(childSnapshot.val())
         items.unshift({
           key: child.val().postID,
           title: child.val().title,
@@ -50,7 +81,7 @@ class Home extends React.Component {
   }
   
   render() {
-    this.readPosts();
+    //this.readPosts();
     
     return (
 
@@ -59,7 +90,7 @@ class Home extends React.Component {
         <TextInput
             style={styles.searchBar}
             placeholder="Search"
-            onChangeText={this.handleSearch}
+            onChangeText={(text) => this.handleSearch(text)}
         />
        
         <Button
@@ -69,6 +100,7 @@ class Home extends React.Component {
         <Text>{this.state.error}</Text>
         <View style={{marginTop:35, paddingBottom:150}}>
             <FlatList
+              extraData={this.state.arrData}
               data={this.state.arrData}
               keyExtractor={item => item.key}
               renderItem={({item}) => (<Post 
