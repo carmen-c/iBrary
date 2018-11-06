@@ -18,16 +18,19 @@ class CreatePost extends React.Component {
     var newPostKey = db.ref().child('posts').push().key;
     var current = auth.currentUser.uid;
     var date = new Date().toUTCString();
-    this.writeNewPost(current, newPostKey, date, this.state.title, this.state.content);
+    var timestamp = new Date().getTime();
+    
+    this.writeNewPost(current, newPostKey, date, this.state.title, this.state.content, timestamp);
   }
   
-  writeNewPost=(uid, postid, date, title, content)=>{
+  writeNewPost=(uid, postid, date, title, content, timestamp)=>{
     db.ref('posts/' + postid).set({
         userID: uid,
         postID: postid,
         date: date,
         title: title,
-        content: content
+        content: content,
+        timestamp: timestamp
     })
   }
   

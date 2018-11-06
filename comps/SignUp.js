@@ -17,7 +17,7 @@ class SignUp extends React.Component {
     poURl:"",
   }
   navigateToLogIn=()=>{
-    this.props.dispatch(ChangePage(2));
+    this.props.dispatch(ChangePage(1));
   }
 
   handleSignUp=()=>{
@@ -58,13 +58,6 @@ class SignUp extends React.Component {
       }
       console.log(currentUser);
     }
-
-      firebase.database().ref('users/' + auth.currentUser.uid).set({
-        userID: auth.currentUser.uid,
-        email: auth.currentUser.email,
-      })
-      console.log(auth.currentUser);
-
   }
   
   render() {
