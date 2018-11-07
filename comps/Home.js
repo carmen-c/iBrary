@@ -23,34 +23,16 @@ class Home extends React.Component {
   handleSearch=(keyword)=>{
     if(keyword.length == 0) {
       this.readPosts();
-//      console.log("readpost");
     } else { 
       var newResult = this.state.arrData.filter((post)=>{
-//      console.log(obj);
         var matchThis = new RegExp(keyword, 'g');
         var arr = post.title.match(matchThis);
       return arr;
       })
-//      console.log(newResult);
       this.setState({
       arrData:newResult
       })
-    }
-    
-//    var re = new RegExp(keyword,"g");
-//    
-//    var newResult = this.state.arrData.filter((obj)=>{
-//      console.log(obj);
-//      var arr = obj.title.match(re);
-//      return (arr.length > 0);
-//    })
-    
-//    if (newResult != null) {
-//      this.setState({
-//      arrData:newResult
-//      })
-//    }
-    
+    } 
   }
   
   readPosts=()=>{

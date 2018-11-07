@@ -18,6 +18,7 @@ export default class CommentList extends React.Component {
   
   readComments=()=>{
     db.ref('comments/')
+      .orderByChild('postID')
       .equalTo(this.props.postid)
       .on('value', this.createCommentList);
   }
