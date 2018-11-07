@@ -6,21 +6,19 @@ import * as firebase from 'firebase';
 import FConfig from '../constants/FConfig';
 
 import {connect} from 'react-redux';
-import {ChangePage} from '../redux/Actions';
+import {ChangePage,SavedProfile} from '../redux/Actions';
 
 class ProfileSetting extends React.Component {
-  static navigationOptions = {
-    header: null,
-  };
-
-  state={
-    name: "",
-    bio: "",
-  }
+state={
+  name:'',
+  bio:'',
+}
   navigatePage=(page)=>{
     this.props.dispatch(ChangePage(page));
   }
   saveNewUserData=()=>{
+    this.props.dispatch(SavedProfile(this.props.userid, this.state.name, this.state.bio, this.state.img));
+    
     alert('save')
     var firebase = require('firebase');
     if (firebase.auth().currentUser) {
@@ -72,13 +70,13 @@ class ProfileSetting extends React.Component {
             <View style={styles.inpBox}>
               <TextInput 
                     style={[styles.inps]}
-                    placeholder='Name'
+                    placeholder={this.props.name}
                     keyboardType='default'
                     onChangeText={(text) => this.setState({name: text})}/>
 
               <TextInput 
                     style={[styles.inps]}
-                    placeholder="Bio"
+                    placeholder={this.props.bio}
                     keyboardType="default"
                     onChangeText={(text) => this.setState({bio: text})}/>
             </View>
@@ -179,6 +177,9 @@ const styles = StyleSheet.create({
 function mapStateToProps(state){
   return {
     page:state.Page.page,
+    name:state.Profile.name,
+    bio:state.Profile.bio,
+    img:state.Profile.img,
   }
 }
  

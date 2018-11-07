@@ -4,7 +4,7 @@ import {Image, Button, Text, TextInput, View, StyleSheet, TouchableOpacity} from
 import {auth, auth2} from '../constants/FConfig';
 
 import {connect} from 'react-redux';
-import {ChangePage} from '../redux/Actions';
+import {ChangePage, SavedProfile} from '../redux/Actions';
 
 import {GoogleSignin, GoogleSigninButton, statusCodes} from 'react-native-google-signin';
 import GConfig from '../constants/GConfig';
@@ -185,7 +185,10 @@ const styles = StyleSheet.create({
 
 function mapStateToProps(state){
   return {
-    page:state.Page.page
+    page:state.Page.page,
+    name:state.Profile.name,
+    bio:state.Profile.bio,
+    img:state.Profile.img,
   }
 }
 export default connect (mapStateToProps)(Login);
