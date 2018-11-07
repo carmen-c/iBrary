@@ -21,7 +21,7 @@ class Home extends React.Component {
   }
   
   handleSearch=(keyword)=>{
-    if(keyword == "") {
+    if(keyword.length == 0) {
       this.readPosts();
 //      console.log("readpost");
     } else { 
@@ -31,11 +31,10 @@ class Home extends React.Component {
         var arr = post.title.match(matchThis);
       return arr;
       })
-      console.log(newResult);
-//      this.setState({
-//      arrData:newResult
-//      })
-//      console.log(this.state.arrData);
+//      console.log(newResult);
+      this.setState({
+      arrData:newResult
+      })
     }
     
 //    var re = new RegExp(keyword,"g");
@@ -107,7 +106,7 @@ class Home extends React.Component {
             style={styles.searchBar}
             placeholder="Search"
             autoCorrect={false}
-            onEndEditing={(text) => this.handleSearch(text)}
+            onChangeText={(text) => this.handleSearch(text)}
         />
        
         <Button
