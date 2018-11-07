@@ -58,62 +58,8 @@ class CreateComment extends React.Component {
 const styles = StyleSheet.create({
   container: {
     width:'100%',
-    height:'100%',
-    flex:1,
     backgroundColor: '#fff',
     alignItems: 'center',
-  },
-  hairline: {
-    backgroundColor: '#A2A2A2',
-    height: 0.6,
-    width: '100%'
-  },
-  verticalHairline:{
-    backgroundColor: '#A2A2A2',
-    height: 150,
-    width: 0.5
-  },
-  pageTitle: {
-    paddingTop:65,
-    paddingBottom:30,
-    width:'100%',
-    backgroundColor:'#e6e6e6',
-//    alignContent:'center',
-    alignItems:'center',
-    
-  },
-  titleFont:{
-    fontSize:25,
-    fontWeight: 'bold',
-    color:'#138172'
-  },
-  boxes: {
-    flexDirection:'row',
-    width:'100%',
-    marginTop:0,
-  },
-  box: {
-    width:'50%',
-    paddingLeft:'15%',
-    paddingRight:'15%',
-    height:150,
-    backgroundColor:"#F2F2F2",
-    alignContent:'center',
-    justifyContent:'center'
-  },
-  items: {
-    width:'100%',
-    padding:10,
-  },
-  title: {
-    height:'10%'  
-  },
-  content: {
-    height:'30%' 
-  },
-  hashtag: {
-    height:'10%',
-    marginBottom:'5%'
   },
   buttonText:{
     fontSize:17,

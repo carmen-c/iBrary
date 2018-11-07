@@ -32,7 +32,9 @@ export default class CommentList extends React.Component {
           comment: child.val().comment
         })
       });
+    console.log(items)
       this.setState({arrData: items});
+     console.log(this.state.arrData);
   }
 
   renderList=({item}) =>  {
@@ -46,19 +48,20 @@ export default class CommentList extends React.Component {
   }
     
   render() {
-    //this.readPosts();
+//    this.readComments();
     
     return (
 
       <View style={styles.container}>
         <Text>{this.state.error}</Text>
-        <View style={{marginTop:35, paddingBottom:150}}>
+        <View style={{width:'100%',height:200,marginTop:5}}>
             <FlatList
               extraData={this.state.arrData}
               data={this.state.arrData}
               keyExtractor={item => item.key}
               renderItem={this.renderList}
             />
+          <Text>ss</Text>
         </View>
       </View>
     
@@ -68,7 +71,6 @@ export default class CommentList extends React.Component {
 
 const styles = StyleSheet.create({
   container: {
-    alignItems:'center',
     width:"100%",
     marginTop:30,
     backgroundColor:'#e6e6e6',   

@@ -14,20 +14,15 @@ class Comment extends React.Component {
     return (
         <View style={styles.container}>
           <TouchableOpacity style={styles.list} refs={this.props.commentid} onPress={this.handleSelected}>
+            <View>
             <Text>{this.props.comment}</Text>
+            <Text>dd</Text>
+              </View>
           </TouchableOpacity>
         </View>
     );
   }
 }
-
-function mapStateToProps(state){
-  return {
-    page:state.Page.page,
-    tab: state.Page.tab
-  }
-}
-export default connect (mapStateToProps)(Comment);
 
 const styles = StyleSheet.create({
   container: {
@@ -43,3 +38,12 @@ const styles = StyleSheet.create({
   }
 
 });
+
+
+function mapStateToProps(state){
+  return {
+    page:state.Page.page,
+    tab: state.Page.tab
+  }
+}
+export default connect (mapStateToProps)(Comment);

@@ -28,8 +28,8 @@ class PostDetail extends React.Component {
     this.check();
     
     return (
-      <View style={{marginTop: 50, height: "100%"}}>
-        <View style={{flex: 0.15}}>
+      <View style={{marginTop: 50, width:'100%',height:'100%', backgroundColor:'#fff'}}>
+        <View style={{height:70}}>
           <TouchableOpacity 
            onPress={this.navigateToHome}> 
            <Image 
@@ -39,14 +39,14 @@ class PostDetail extends React.Component {
           </TouchableOpacity>
         </View>
         
-         <View style={{flex: 0.45}}>
+         <View>
             <View refs={this.props.postid}>
             <Text style={{fontSize: 20, marginBottom:10}}>{this.props.title}</Text>
             </View>
             <Text>{this.props.content}</Text>
           </View>
         
-          <View style={{flex:0.40}}>
+          <View style={{height:100}}>
             <CommentList postid={this.props.postid}/>
             <CreateComment postid={this.props.postid}/>
           </View>
