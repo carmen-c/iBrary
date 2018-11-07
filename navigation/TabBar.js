@@ -4,6 +4,7 @@ import { StyleSheet, Text, View, Button, Image, TouchableOpacity } from 'react-n
 import Home from '../comps/Home';
 import CreatePost from '../comps/CreatePost';
 import Profile from '../comps/Profile';
+import PostDetail from '../comps/PostDetail';
 
 import {connect} from 'react-redux';
 import {ChangePage, ChangeTab} from '../redux/Actions';
@@ -55,6 +56,9 @@ class TabBar extends React.Component {
         break;
       case 3:
         curtab = <Profile />
+        break;
+      case 4:
+        curtab = <PostDetail/>
         break;
       default:
         curtab = <Home />

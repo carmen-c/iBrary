@@ -1,23 +1,41 @@
 import React from 'react';
 import { View, StyleSheet, Text, Button, Image, ImageBackground, ScrollView,TouchableOpacity } from 'react-native';
 
-export default class Post extends React.Component {
+import {connect} from 'react-redux';
+import {ChangeTab, SelectItem} from '../redux/Actions';
+
+class Post extends React.Component {
+  
+  handleSelected=()=>{
+    //pass or save all post props
+    this.props.dispatch(SelectItem(this.props.postid, this.props.userid, this.props.title, this.props.content));
+    //change page
+    this.props.dispatch(ChangeTab(4));
+//    console.log("clicked: ", this.props.postid, this.props.title);
+  }
 
   render() {
     return (
-      <ScrollView>
         <View style={styles.container}>
-          <TouchableOpacity style={styles.list} refs={this.props.postid}>
+          <TouchableOpacity style={styles.list} refs={this.props.postid} onPress={this.handleSelected}>
             <View>
             <Text style={{fontSize: 20, marginBottom:10}}>{this.props.title}</Text>
             </View>
             <Text>{this.props.content}</Text>
           </TouchableOpacity>
         </View>
-      </ScrollView>
     );
   }
 }
+
+function mapStateToProps(state){
+  return {
+    page:state.Page.page,
+    tab: state.Page.tab
+  }
+}
+export default connect (mapStateToProps)(Post);
+
 const styles = StyleSheet.create({
   container: {
     width:"100%",

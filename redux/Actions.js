@@ -13,3 +13,13 @@ export function ChangeTab(tab) {
     curtab:tab
   }
 }
+
+export function SelectItem(postid, userid, title, content) {
+  return {
+    type:"SELECTED_ITEM",
+    postid: postid,
+    userid: userid,
+    title: title,
+    content: content,
+  }
+}
