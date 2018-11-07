@@ -28,7 +28,7 @@ class PostDetail extends React.Component {
     this.check();
     
     return (
-      <View style={{marginTop: 50, width:'100%',height:'100%', backgroundColor:'#fff'}}>
+      <View style={{marginTop: 50, width:'100%',height:'100%',}}>
         <View style={{height:70}}>
           <TouchableOpacity 
            onPress={this.navigateToHome}> 
@@ -38,18 +38,22 @@ class PostDetail extends React.Component {
             />
           </TouchableOpacity>
         </View>
-        
-         <View>
-            <View refs={this.props.postid}>
-            <Text style={{fontSize: 20, marginBottom:10}}>{this.props.title}</Text>
+        <View style={{ width:'100%',height:'100%', backgroundColor:'#fff'}}>
+          <View style={{ width:'100%', alignItems:'center', backgroundColor:'#fff'}}>
+           <View style={{width:'65%', marginBottom:20}} >
+              <View style={{alignItems:'center'}} refs={this.props.postid}>
+              <Text style={{fontSize: 20, marginBottom:15, fontWeight: 'bold',}}>{this.props.title}</Text>
+              </View>
+              <Text>{this.props.content}</Text>
             </View>
-            <Text>{this.props.content}</Text>
+            <View style={styles.hairline}/>
           </View>
         
-          <View style={{height:100}}>
+          <View style={{ height:'100%',}}>
             <CommentList postid={this.props.postid}/>
             <CreateComment postid={this.props.postid}/>
           </View>
+        </View>
       </View>
         
     );
@@ -79,6 +83,11 @@ const styles = StyleSheet.create({
   comments: {
     width: "100%",
     flex: 1
+  },
+  hairline: {
+    backgroundColor: '#A2A2A2',
+    height: 0.6,
+    width: '85%'
   },
   list:{
     width:'95%',

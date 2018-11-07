@@ -61,7 +61,7 @@ export default class CommentList extends React.Component {
               keyExtractor={item => item.key}
               renderItem={this.renderList}
             />
-          <Text>ss</Text>
+          <Text>comment list here...</Text>
         </View>
       </View>
     
@@ -72,7 +72,6 @@ export default class CommentList extends React.Component {
 const styles = StyleSheet.create({
   container: {
     width:"100%",
-    marginTop:30,
-    backgroundColor:'#e6e6e6',   
+    marginTop:30,   
   }
 });

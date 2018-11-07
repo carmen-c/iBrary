@@ -36,50 +36,48 @@ class CreateComment extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <View style={[styles.items, styles.content]}>
-           <TextInput
-              placeholder='Comment'
-              multiline={true}
-              onChangeText={(text)=> this.setState({comment: text})}
-            />  
-        </View> 
-        <View style={styles.butBox}> 
+       
+          <View style={{width:'80%',padding:10}}>
+             <TextInput
+                placeholder='Make an comment'
+                multiline={true}
+                onChangeText={(text)=> this.setState({comment: text})}
+              />  
+          </View> 
+        
+        <View style={{width:'20%'}}>
             <TouchableOpacity onPress={this.createNewComment}> 
                     <View style={[styles.signBut]}>
-                        <Text style={styles.buttonText}>COMMENT</Text>
+                        <Text style={styles.buttonText}>ADD</Text>
                     </View>
             </TouchableOpacity>
-       </View>
-        </View>
+    </View>
+ 
+      </View>
     );
   }
 }
 
 const styles = StyleSheet.create({
   container: {
+    flex:1,   
+    flexDirection:'row',
     width:'100%',
-    backgroundColor: '#fff',
-    alignItems: 'center',
   },
   buttonText:{
-    fontSize:17,
+    fontSize:15,
     color:"#fff",
     fontWeight:"300",
   },
   signBut:{
     alignItems:'center',
     margin:5,
-    padding:15,
+    padding:5,
     borderRadius:10,
     backgroundColor:"#138172",
-    shadowOffset:{  width: 0,  height: 5,  },
-    shadowRadius: 5,
-    shadowColor: "#ccc",
-    shadowOpacity: 1,
   },
   butBox: {
-    flexDirection:"column",
-    width:"80%"  
+    width:"100%"  
   },
   imgIcon:{
     width:'100%',

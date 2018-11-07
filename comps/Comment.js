@@ -16,7 +16,7 @@ class Comment extends React.Component {
           <TouchableOpacity style={styles.list} refs={this.props.commentid} onPress={this.handleSelected}>
             <View>
             <Text>{this.props.comment}</Text>
-            <Text>dd</Text>
+            <Text>not working ..sad</Text>
               </View>
           </TouchableOpacity>
         </View>
