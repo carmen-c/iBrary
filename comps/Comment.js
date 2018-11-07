@@ -15,10 +15,10 @@ class Comment extends React.Component {
         <View style={styles.container}>
           <TouchableOpacity style={styles.list} refs={this.props.commentid} onPress={this.handleSelected}>
             <View>
-            <Text>{this.props.comment}</Text>
-            <Text>not working ..sad</Text>
-              </View>
+              <Text>{this.props.comment}</Text>
+            </View>
           </TouchableOpacity>
+          <View style={styles.hairline}/>
         </View>
     );
   }
@@ -30,12 +30,14 @@ const styles = StyleSheet.create({
     alignItems:'center',
   },
   list:{
-    width:'95%',
-    backgroundColor:'#fff',
-    marginBottom:20,
-    borderRadius:10,
-    padding:15
-  }
+    width:'90%',
+    padding:7,
+  },
+  hairline: {
+    backgroundColor: '#A2A2A2',
+    height: 0.6,
+    width: '85%'
+  },
 
 });
 

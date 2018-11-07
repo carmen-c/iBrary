@@ -49,7 +49,7 @@ class PostDetail extends React.Component {
             <View style={styles.hairline}/>
           </View>
         
-          <View style={{ height:'100%',}}>
+          <View style={{width:'100%', height:'100%',}}>
             <CommentList postid={this.props.postid}/>
             <CreateComment postid={this.props.postid}/>
           </View>
@@ -87,7 +87,7 @@ const styles = StyleSheet.create({
   hairline: {
     backgroundColor: '#A2A2A2',
     height: 0.6,
-    width: '85%'
+    width: '90%'
   },
   list:{
     width:'95%',

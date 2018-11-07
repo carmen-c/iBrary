@@ -62,7 +62,6 @@ export default class CommentList extends React.Component {
               keyExtractor={item => item.key}
               renderItem={this.renderList}
             />
-          <Text>comment list here...</Text>
         </View>
       </View>
     

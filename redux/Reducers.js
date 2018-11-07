@@ -44,6 +44,29 @@ export function SelectPost(state= selectedPost, action) {
   }
 }
 
+const savedProfile ={
+  userid: "",
+  name: "",
+  bio: "",
+  img: "",
+};
+
+export function Profile(state= savedProfile, action) {
+  let obj = Object.assign({}, state);
+  
+  switch(action.type) {
+    case "SAVED_PROFILE":
+      obj.userid = action.userid;
+      obj.name = action.name;
+      obj.bio = action.bio;
+      obj.img = action.img;
+      return obj;
+      
+    default:
+      return state;
+  }
+}
+
 
 //for storing global background color state variable
 //const bgDefault = {
