@@ -42,6 +42,7 @@ class Login extends React.Component {
     //navigate to app if there are no errors
     }).then(u => {
       if(this.state.error === ''){
+        this.handleUserInfo(u);
         this.navigateToHome();
       }
     })
@@ -53,6 +54,7 @@ class Login extends React.Component {
     await GoogleSignin.signIn().then((user)=>{
       const credential = auth2.GoogleAuthProvider.credential(user.idToken, user.accessToken);
       auth.signInAndRetrieveDataWithCredential(credential);
+      this.handleUserInfo(auth.currentUser);
       this.navigateToHome();
     }).catch((error) =>{
       if (error.code === statusCodes.SIGN_IN_CANCELLED) {
@@ -65,6 +67,28 @@ class Login extends React.Component {
         // some other error happened
       }
     });
+  }
+  
+  handleUserInfo=(user)=>{
+    db.ref('users/'+ user.uid)
+      .once('value')
+      .then(snapshot => {
+      
+        var pimg = "";
+      
+        if(snapshot.val().img == "") {
+//          put default image
+        } else {
+          pimg = snapshot.val().img
+        }
+    
+        this.props.dispatch(SavedProfile(
+          snapshot.val().userID,
+          snapshot.val().name,
+          snapshot.val().bio,
+          pimg
+        ))
+      });
   }
   
   navigateToSignUp=()=>{
