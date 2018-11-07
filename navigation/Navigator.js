@@ -7,6 +7,7 @@ import SignUp from '../comps/SignUp';
 import MyCamera from '../comps/Camera'
 import Category from '../comps/Category';
 import ProfileSetting from '../comps/ProfileSetting';
+import Gallery from '../comps/Gallery';
 import TabBar from './TabBar';
 
 import {connect} from 'react-redux';
@@ -44,6 +45,9 @@ class Main extends React.Component {
         break;
       case 7:
         curpage = <ProfileSetting/>
+        break;
+      case 8:
+        curpage =<Gallery/>
         break;
       default:
         curpage = <Login />

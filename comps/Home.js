@@ -115,7 +115,7 @@ class Home extends React.Component {
             onPress={this.logout}
             />
         <Text>{this.state.error}</Text>
-        <View style={{marginTop:35, paddingBottom:150}}>
+        <View style={{width:"95%",marginTop:35, paddingBottom:150}}>
             <FlatList
               extraData={this.state.arrData}
               data={this.state.arrData}

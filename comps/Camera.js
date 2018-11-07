@@ -45,9 +45,9 @@ class MyCamera extends React.Component {
         <View style={{flex: 0, flexDirection: 'row', justifyContent: 'center',}}>
         <TouchableOpacity
             onPress={this.takePicture.bind(this)}
-            style = {styles.capture}
+            style = {styles.takePhoto}
         >
-            <Text style={{fontSize: 14}}> SNAP </Text>
+            
         </TouchableOpacity>
         </View>
       </View>
@@ -81,6 +81,10 @@ const styles = StyleSheet.create({
     height:70,
     borderRadius:35,
     backgroundColor:'#ccc'
+  },
+  preview:{
+    width:'100%',
+    height:'45%'
   }
  
 });

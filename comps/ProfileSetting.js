@@ -1,6 +1,7 @@
 import React from 'react';
-import {Image, Button, Text, TextInput, View, StyleSheet, TouchableOpacity, ScrollView} from 'react-native';
+import {Image, Button, Text, TextInput, View, StyleSheet, TouchableOpacity, ScrollView, } from 'react-native';
 
+import {auth, auth2, db} from '../constants/FConfig';
 import * as firebase from 'firebase';
 import FConfig from '../constants/FConfig';
 
@@ -13,15 +14,35 @@ class ProfileSetting extends React.Component {
   };
 
   state={
-    email: "",
-    password: "",
-    password2: "",
-    error: "",
+    name: "",
+    bio: "",
   }
   navigatePage=(page)=>{
     this.props.dispatch(ChangePage(page));
   }
-  
+  saveNewUserData=()=>{
+    alert('save')
+    var firebase = require('firebase');
+    if (firebase.auth().currentUser) {
+      currentUser = firebase.auth().currentUser;
+      if (currentUser) {
+          firebase.database().ref('users/' + currentUser.uid).set({
+              userID: currentUser.uid,
+              email: currentUser.email,
+              name : this.state.name,
+              bio: this.state.bio
+              
+          })
+      }
+      console.log(currentUser);
+    }
+
+//      firebase.database().ref('users/' + auth.currentUser.uid).set({
+//        name : currentUser.name,
+//        bio: currentUser.bio
+//      })
+//      console.log(auth.currentUser);
+  }
     
   render() {
     
@@ -52,15 +73,17 @@ class ProfileSetting extends React.Component {
               <TextInput 
                     style={[styles.inps]}
                     placeholder='Name'
-                    keyboardType='default'/>
+                    keyboardType='default'
+                    onChangeText={(text) => this.setState({name: text})}/>
 
               <TextInput 
                     style={[styles.inps]}
                     placeholder="Bio"
-                    keyboardType="default"/>
+                    keyboardType="default"
+                    onChangeText={(text) => this.setState({bio: text})}/>
             </View>
             <View style={styles.butBox}> 
-                    <TouchableOpacity onPress={this.navigatePage.bind(this,4)}> 
+                    <TouchableOpacity onPress={this.saveNewUserData}> 
                         <View style={[styles.signBut]}>
                             <Text style={styles.buttonText}>SAVE</Text>
                         </View>
