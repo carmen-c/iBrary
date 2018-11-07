@@ -23,34 +23,40 @@ class Home extends React.Component {
   handleSearch=(keyword)=>{
     if(keyword == "") {
       this.readPosts();
-      console.log("readpost");
+//      console.log("readpost");
     } else { 
-      db.ref('posts/')
-        .orderByChild('title')
-        .equalTo(keyword)
-        .on('value', this.newSearchList);  
-    }
-  }
-  
-  newSearchList=(snapshot)=>{
-    console.log(snapshot);
-    var items = [];
-
-    snapshot.forEach(child =>{
-      console.log(child);
-      items.unshift({
-        key: child.val().postID,
-        title: child.val().title,
-        content: child.val().content,
-        date: child.val().date
+      var newResult = this.state.arrData.filter((post)=>{
+//      console.log(obj);
+        var matchThis = new RegExp(keyword, 'g');
+        var arr = post.title.match(matchThis);
+      return arr;
       })
-      console.log(items);
-    });
-    this.setState({arrData: items})
+      console.log(newResult);
+//      this.setState({
+//      arrData:newResult
+//      })
+//      console.log(this.state.arrData);
+    }
+    
+//    var re = new RegExp(keyword,"g");
+//    
+//    var newResult = this.state.arrData.filter((obj)=>{
+//      console.log(obj);
+//      var arr = obj.title.match(re);
+//      return (arr.length > 0);
+//    })
+    
+//    if (newResult != null) {
+//      this.setState({
+//      arrData:newResult
+//      })
+//    }
+    
   }
   
   readPosts=()=>{
     db.ref('posts/')
+      .limitToLast(100)
       .once('value')
       .then(snapshot => {
       var items = [];
@@ -80,6 +86,16 @@ class Home extends React.Component {
     });
   }
   
+  renderList=({item}) =>  {
+    return(
+      <Post 
+       title={item.title} 
+       content={item.content} 
+       postid={item.key}
+       />
+    )
+  }
+    
   render() {
     //this.readPosts();
     
@@ -90,7 +106,8 @@ class Home extends React.Component {
         <TextInput
             style={styles.searchBar}
             placeholder="Search"
-            onChangeText={(text) => this.handleSearch(text)}
+            autoCorrect={false}
+            onEndEditing={(text) => this.handleSearch(text)}
         />
        
         <Button
@@ -103,11 +120,7 @@ class Home extends React.Component {
               extraData={this.state.arrData}
               data={this.state.arrData}
               keyExtractor={item => item.key}
-              renderItem={({item}) => (<Post 
-                                         title={item.title} 
-                                         content={item.content} 
-                                         postid={item.postID}
-                                         />)}
+              renderItem={this.renderList}
             />
         </View>
       </View>
@@ -137,7 +150,5 @@ const styles = StyleSheet.create({
     marginTop:20,
     padding:15,
     backgroundColor:'#fff',
-  },
-  
- 
+  }
 });

@@ -19,7 +19,18 @@ class Login extends React.Component {
     password: '',
     error: ''
   }
-
+  
+  componentWillMount=()=>{
+    auth.onAuthStateChanged(user=> {
+      if (user) {
+        // User is signed in.
+        this.navigateToHome();
+      } else {
+        // No user is signed in.
+      }
+    });  
+  }
+  
   handleLogin=()=>{
     //keep user logged in?
     auth.setPersistence(auth2.Auth.Persistence.LOCAL).then(a => {

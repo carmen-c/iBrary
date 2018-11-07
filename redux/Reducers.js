@@ -21,6 +21,29 @@ export function Page(state= pageDefault, action) {
   }
 }
 
+const selectedPost ={
+  postid: "",
+  userid: "",
+  title: "",
+  content: "",
+};
+
+export function SelectPost(state= selectedPost, action) {
+  let obj = Object.assign({}, state);
+  
+  switch(action.type) {
+    case "SELECTED_ITEM":
+      obj.postid = action.postid;
+      obj.userid = action.userid;
+      obj.title = action.title;
+      obj.content = action.content;
+      return obj;
+      
+    default:
+      return state;
+  }
+}
+
 
 //for storing global background color state variable
 //const bgDefault = {
