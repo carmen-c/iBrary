@@ -34,8 +34,8 @@ class CreatePost extends React.Component {
     })
   }
   
-  navigateToCamera=()=>{
-    this.props.dispatch(ChangePage(5));
+  navigatePage=(page)=>{
+    this.props.dispatch(ChangePage(page));
   }; 
   
   render() {
@@ -46,10 +46,17 @@ class CreatePost extends React.Component {
             <Text style={styles.titleFont}>Create an Idea</Text>
         </View>
         <View style={styles.boxes}>
-            <View style={styles.box}><Text>gallery</Text></View>
+            <View style={styles.box}>
+              <TouchableOpacity onPress={this.navigatePage.bind(this,8)}>
+                <Image 
+                  source={require('../assets/images/camera.png')}
+                  style={styles.imgIcon}
+                  />
+              </TouchableOpacity>
+            </View>
             <View style={styles.verticalHairline}/>
             <View style={styles.box}>
-              <TouchableOpacity onPress={this.navigateToCamera}>
+              <TouchableOpacity onPress={this.navigatePage.bind(this,5)}>
                 <Image 
                   source={require('../assets/images/camera.png')}
                   style={styles.imgIcon}
