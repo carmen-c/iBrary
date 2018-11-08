@@ -2,8 +2,6 @@ import React from 'react';
 import {Image, Button, Text, TextInput, View, StyleSheet, TouchableOpacity, ScrollView, } from 'react-native';
 
 import {auth, auth2, db} from '../constants/FConfig';
-import * as firebase from 'firebase';
-import FConfig from '../constants/FConfig';
 
 import {connect} from 'react-redux';
 import {ChangePage, ChangeTab,SavedProfile} from '../redux/Actions';
@@ -20,11 +18,11 @@ state={
     this.props.dispatch(SavedProfile(this.props.userid, this.state.name, this.state.bio, this.state.img));
     
     alert('save')
-    var firebase = require('firebase');
-    if (firebase.auth().currentUser) {
-      currentUser = firebase.auth().currentUser;
+//    var firebase = require('firebase');
+    if (auth.currentUser) {
+      currentUser = auth.currentUser;
       if (currentUser) {
-          firebase.database().ref('users/' + currentUser.uid).set({
+          db.ref('users/' + currentUser.uid).set({
               userID: currentUser.uid,
               email: currentUser.email,
               name : this.state.name,

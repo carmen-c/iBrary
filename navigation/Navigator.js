@@ -16,7 +16,7 @@ import {ChangePage} from '../redux/Actions';
 class Main extends React.Component {
   
   handleButton=(page)=>{
- this.props.dispatch(ChangePage(page));
+    this.props.dispatch(ChangePage(page));
   }
   
   render() {
@@ -47,7 +47,7 @@ class Main extends React.Component {
         curpage = <ProfileSetting/>
         break;
       case 8:
-        curpage =<Gallery/>
+        curpage = <Gallery/>
         break;
       default:
         curpage = <Login />

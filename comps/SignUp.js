@@ -4,7 +4,7 @@ import {Image, Button, Text, TextInput, View, StyleSheet, TouchableOpacity} from
 import {auth, auth2, db} from '../constants/FConfig';
 
 import {connect} from 'react-redux';
-import {ChangePage} from '../redux/Actions';
+import {ChangePage, FirstTime} from '../redux/Actions';
 
 class SignUp extends React.Component {
 
@@ -16,26 +16,29 @@ class SignUp extends React.Component {
     name:"",
     poURl:"",
   }
+
   navigateToLogIn=()=>{
     this.props.dispatch(ChangePage(1));
   }
 
   handleSignUp=()=>{
-    
+//    this.props.dispatch(FirstTime("true"))
     //check if passwords match
     if(this.state.password === this.state.password2) {
       
       //create user
       auth.createUserWithEmailAndPassword(this.state.email, this.state.password).then(user => {
-        if(this.state.error === ""){
           this.saveNewUserData();
-          this.props.dispatch(ChangePage(2));
-        }
       }).catch(error => {
         this.setState({error: error.message})
         
       //navigate to welcome screen if there are no errors
-      }) 
+      })
+//      .then(()=>{
+//        this.props.dispatch(FirstTime("true"));
+//      });
+      this.props.dispatch(ChangePage(7));
+//      console.log(this.props.firsttime);
     }
     
     //if passwords don't match tell the user
@@ -45,18 +48,15 @@ class SignUp extends React.Component {
   }
   
   saveNewUserData=()=> {
-  var firebase = require('firebase');
-    if (firebase.auth().currentUser) {
-      currentUser = firebase.auth().currentUser;
-      if (currentUser) {
-          firebase.database().ref('users/' + currentUser.uid).set({
-              userID: currentUser.uid,
-              email: currentUser.email,
-             
-              
-          })
-      }
-      console.log(currentUser);
+    if (auth.currentUser) {
+      currentUser = auth.currentUser;
+      
+      db.ref('users/' + currentUser.uid).set({
+          userID: currentUser.uid,
+          email: currentUser.email 
+      }).catch(error => {
+          this.setState({error: error.message})
+      });
     }
   }
   
@@ -107,11 +107,6 @@ class SignUp extends React.Component {
                   <TouchableOpacity onPress={this.handleSignUp}> 
                       <View style={[styles.signBut]}>
                           <Text style={styles.buttonText}>SIGN UP</Text>
-                      </View>
-                  </TouchableOpacity>
-                  <TouchableOpacity onPress={this.handleLogin}> 
-                      <View style={[styles.signBut,styles.red] }>
-                          <Text style={[styles.buttonText]}>SIGN UP WITH Google </Text>
                       </View>
                   </TouchableOpacity>
           </View>
@@ -196,7 +191,8 @@ const styles = StyleSheet.create({
 
 function mapStateToProps(state){
   return {
-    page:state.Page.page
+    page:state.Page.page,
+    firsttime:state.Page.firsttime
   }
 }
 export default connect (mapStateToProps)(SignUp);
