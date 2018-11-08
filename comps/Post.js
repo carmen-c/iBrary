@@ -8,7 +8,7 @@ class Post extends React.Component {
   
   handleSelected=()=>{
     //pass or save all post props
-    this.props.dispatch(SelectItem(this.props.postid, this.props.userid, this.props.title, this.props.content));
+    this.props.dispatch(SelectItem(this.props.postid, this.props.userid, this.props.title, this.props.content, this.props.username));
     //change page
     this.props.dispatch(ChangeTab(4));
 //    console.log("clicked: ", this.props.postid, this.props.title);
@@ -19,6 +19,7 @@ class Post extends React.Component {
         <View style={styles.container}>
           <TouchableOpacity style={styles.list} refs={this.props.postid} onPress={this.handleSelected}>
             <View>
+            <Text>{this.props.username}</Text>
             <Text style={{fontSize: 20, marginBottom:10}}>{this.props.title}</Text>
             </View>
             <Text>{this.props.content}</Text>

@@ -30,7 +30,8 @@ export default class CommentList extends React.Component {
         items.unshift({
           key: child.val().commentID,
           postid: child.val().postID,
-          comment: child.val().comment
+          comment: child.val().comment,
+          username: child.val().username
         })
       });
     console.log(items)
@@ -44,6 +45,7 @@ export default class CommentList extends React.Component {
        commentid={item.key}
        postid={item.postid}
        comment={item.comment}
+       username={item.username}
        />
     )
   }

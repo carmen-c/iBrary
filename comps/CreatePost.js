@@ -20,17 +20,18 @@ class CreatePost extends React.Component {
     var date = new Date().toUTCString();
     var timestamp = new Date().getTime();
     
-    this.writeNewPost(current, newPostKey, date, this.state.title, this.state.content, timestamp);
+    this.writeNewPost(current, newPostKey, date, this.state.title, this.state.content, timestamp, this.props.name);
   }
   
-  writeNewPost=(uid, postid, date, title, content, timestamp)=>{
+  writeNewPost=(uid, postid, date, title, content, timestamp, name)=>{
     db.ref('posts/' + postid).set({
         userID: uid,
         postID: postid,
         date: date,
         title: title,
         content: content,
-        timestamp: timestamp
+        timestamp: timestamp,
+        username: name
     })
   }
   
@@ -188,7 +189,8 @@ const styles = StyleSheet.create({
 
 function mapStateToProps(state){
   return {
-    page:state.Page.page
+    page:state.Page.page,
+    name:state.Profile.name
   }
 }
 

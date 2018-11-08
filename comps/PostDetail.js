@@ -39,11 +39,15 @@ class PostDetail extends React.Component {
           </TouchableOpacity>
         </View>
         <View style={{ width:'100%',height:'100%', backgroundColor:'#fff'}}>
+          
           <View style={{ width:'100%', alignItems:'center', backgroundColor:'#fff'}}>
            <View style={{width:'65%', marginBottom:20}} >
+             
               <View style={{alignItems:'center'}} refs={this.props.postid}>
-              <Text style={{fontSize: 20, marginBottom:15, fontWeight: 'bold',}}>{this.props.title}</Text>
+                <Text>{this.props.username} has posted...</Text>
+                <Text style={{fontSize: 20, marginBottom:15, fontWeight: 'bold',}}>{this.props.title}</Text>
               </View>
+             
               <Text>{this.props.content}</Text>
             </View>
             <View style={styles.hairline}/>
@@ -53,6 +57,7 @@ class PostDetail extends React.Component {
             <CommentList postid={this.props.postid}/>
             <CreateComment postid={this.props.postid}/>
           </View>
+          
         </View>
       </View>
         
@@ -68,6 +73,7 @@ function mapStateToProps(state){
     userid:state.SelectPost.userid,
     title:state.SelectPost.title,
     content:state.SelectPost.content,
+    username:state.SelectPost.username,
   }
 }
 export default connect (mapStateToProps)(PostDetail);
