@@ -1,7 +1,7 @@
 import React from 'react';
 import {Image, Button, Text, TextInput, View, StyleSheet, TouchableOpacity} from 'react-native';
 
-import {auth, auth2} from '../constants/FConfig';
+import {db, auth, auth2} from '../constants/FConfig';
 
 import {connect} from 'react-redux';
 import {ChangePage, SavedProfile} from '../redux/Actions';
@@ -17,18 +17,25 @@ class Login extends React.Component {
   state={
     email: '',
     password: '',
-    error: ''
+    error: '',
+    name:'',
+    bio:'',
+    uid:'',
   }
   
   componentWillMount=()=>{
     auth.onAuthStateChanged(user=> {
       if (user) {
         // User is signed in.
-        this.navigateToHome();
+        this.handleUserInfo(user);
       } else {
         // No user is signed in.
       }
     });  
+  }
+  
+  componentWillUnMount=()=>{
+    //have to put something here to get rid of warning
   }
   
   handleLogin=()=>{
@@ -43,7 +50,6 @@ class Login extends React.Component {
     }).then(u => {
       if(this.state.error === ''){
         this.handleUserInfo(u);
-        this.navigateToHome();
       }
     })
       
@@ -55,7 +61,8 @@ class Login extends React.Component {
       const credential = auth2.GoogleAuthProvider.credential(user.idToken, user.accessToken);
       auth.signInAndRetrieveDataWithCredential(credential);
       this.handleUserInfo(auth.currentUser);
-      this.navigateToHome();
+      this.navigateToPage.bind(this, 4);
+      
     }).catch((error) =>{
       if (error.code === statusCodes.SIGN_IN_CANCELLED) {
         // user cancelled the login flow
@@ -73,30 +80,29 @@ class Login extends React.Component {
     db.ref('users/'+ user.uid)
       .once('value')
       .then(snapshot => {
-      
+        var thisuser = snapshot.val();
         var pimg = "";
       
-        if(snapshot.val().img == "") {
+        if(thisuser.img == "") {
 //          put default image
         } else {
-          pimg = snapshot.val().img
+          pimg = thisuser.img
         }
-    
+//        serid, name, bio, img
         this.props.dispatch(SavedProfile(
-          snapshot.val().userID,
-          snapshot.val().name,
-          snapshot.val().bio,
+          thisuser.userID,
+          thisuser.name,
+          thisuser.bio,
           pimg
         ))
-      });
+      
+      }).then(()=>{
+        this.navigateToPage(4);
+      }); 
   }
   
-  navigateToSignUp=()=>{
-    this.props.dispatch(ChangePage(3));
-  }
-  
-  navigateToHome=()=>{
-    this.props.dispatch(ChangePage(4));
+  navigateToPage=(page)=>{
+    this.props.dispatch(ChangePage(page));
   }
 
   render() {
@@ -143,7 +149,7 @@ class Login extends React.Component {
                 <Button
                     style={styles.buttonText}
                     title="Create Account"
-                    onPress={this.navigateToSignUp}
+                    onPress={this.navigateToPage.bind(this, 3)}
                 />
         </View>
       </View>
