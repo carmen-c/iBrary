@@ -36,7 +36,7 @@ const styles = StyleSheet.create({
   hairline: {
     backgroundColor: '#A2A2A2',
     height: 0.6,
-    width: '85%'
+    width: '90%'
   },
 
 });

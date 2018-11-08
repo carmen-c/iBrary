@@ -20,6 +20,7 @@ class Login extends React.Component {
     error: '',
     name:'',
     bio:'',
+    img:'',
     uid:'',
   }
   
@@ -84,7 +85,8 @@ class Login extends React.Component {
         var pimg = "";
       
         if(thisuser.img == "") {
-//          put default image
+          pimg = 'require("../assets/images/profileDefault.png")'
+          
         } else {
           pimg = thisuser.img
         }

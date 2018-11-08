@@ -12,14 +12,18 @@ class ProfileSetting extends React.Component {
 state={
   name:this.props.name,
   bio:this.props.bio,
-}
+  img:this.props.img
+  }
   navigatePage=(page)=>{
     this.props.dispatch(ChangePage(page), ChangeTab(3));
+  }
+  handleGallery=()=>{
+    this.props.dispatch(ChangePage(9));
   }
   saveNewUserData=()=>{
     this.props.dispatch(SavedProfile(this.props.userid, this.state.name, this.state.bio, this.state.img));
     
-    alert('save')
+    alert('User profile is saved')
     var firebase = require('firebase');
     if (firebase.auth().currentUser) {
       currentUser = firebase.auth().currentUser;
@@ -28,7 +32,8 @@ state={
               userID: currentUser.uid,
               email: currentUser.email,
               name : this.state.name,
-              bio: this.state.bio
+              bio: this.state.bio,
+              img :this.state.img
               
           })
       }
@@ -57,14 +62,23 @@ state={
           </TouchableOpacity>
             <View style={styles.pageTitle}>
                 <Text style={styles.titleFont}>Profile Setting</Text>
+                <Text  style={styles.pageDes}>Create your profile</Text>
             </View>
-            <Text  style={styles.pageDes}>Create your profile</Text>
+            
 
             <View >
-              <Image 
-              style={{width:100, height:100, borderRadius:50, marginBottom:20}}
-              source={require('../assets/images/profileDefault.png')}
-              />
+              <TouchableOpacity onPress={this.handleGallery}>
+               <Image 
+                  style={{width:100, height:100, borderRadius:50, marginBottom:20}}
+                  source={{ uri: this.state.img }}
+                /> 
+                {/*<Image 
+                  style={{width:100, height:100, borderRadius:50, marginBottom:20}}
+                  source={require('../assets/images/profileDefault.png')}
+                />
+                */}
+              </TouchableOpacity>
+              
             </View>
 
             <View style={styles.inpBox}>
@@ -130,6 +144,7 @@ const styles = StyleSheet.create({
     color:'#138172'
   },
   pageDes:{
+    marginTop:10,
     marginBottom:30
   },
   inpBox: {

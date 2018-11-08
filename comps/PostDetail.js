@@ -39,19 +39,25 @@ class PostDetail extends React.Component {
           </TouchableOpacity>
         </View>
         <View style={{ width:'100%',height:'100%', backgroundColor:'#fff'}}>
-          <View style={{ width:'100%', alignItems:'center', backgroundColor:'#fff'}}>
-           <View style={{width:'65%', marginBottom:20}} >
+          <View style={{ width:'100%', margin:0,alignItems:'center'}}>
+           <View style={{width:'80%', marginBottom:20}} >
               <View style={{alignItems:'center'}} refs={this.props.postid}>
-              <Text style={{fontSize: 20, marginBottom:15, fontWeight: 'bold',}}>{this.props.title}</Text>
+               <Text style={{fontSize: 20, margin:15, fontWeight: 'bold',}}>
+                 {this.props.title}
+                </Text>
               </View>
-              <Text>{this.props.content}</Text>
-            </View>
+              <Text style={{fontSize: 16}}>
+                {this.props.content}
+              </Text>
+           </View>
             <View style={styles.hairline}/>
           </View>
         
-          <View style={{width:'100%', height:'100%',}}>
+          <View style={{width:'100%', height:'100%',alignItems:'center'}}>
             <CommentList postid={this.props.postid}/>
+            <View style={styles.hairline}/>
             <CreateComment postid={this.props.postid}/>
+            <View style={styles.hairline}/>
           </View>
         </View>
       </View>
