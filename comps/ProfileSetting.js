@@ -6,15 +6,15 @@ import * as firebase from 'firebase';
 import FConfig from '../constants/FConfig';
 
 import {connect} from 'react-redux';
-import {ChangePage,SavedProfile} from '../redux/Actions';
+import {ChangePage, ChangeTab,SavedProfile} from '../redux/Actions';
 
 class ProfileSetting extends React.Component {
 state={
-  name:'',
-  bio:'',
+  name:this.props.name,
+  bio:this.props.bio,
 }
   navigatePage=(page)=>{
-    this.props.dispatch(ChangePage(page));
+    this.props.dispatch(ChangePage(page), ChangeTab(3));
   }
   saveNewUserData=()=>{
     this.props.dispatch(SavedProfile(this.props.userid, this.state.name, this.state.bio, this.state.img));
@@ -70,13 +70,13 @@ state={
             <View style={styles.inpBox}>
               <TextInput 
                     style={[styles.inps]}
-                    placeholder={this.props.name}
+                    value={this.state.name}
                     keyboardType='default'
                     onChangeText={(text) => this.setState({name: text})}/>
-
+                    
               <TextInput 
                     style={[styles.inps]}
-                    placeholder={this.props.bio}
+                    value={this.state.bio}
                     keyboardType="default"
                     onChangeText={(text) => this.setState({bio: text})}/>
             </View>
@@ -177,6 +177,7 @@ const styles = StyleSheet.create({
 function mapStateToProps(state){
   return {
     page:state.Page.page,
+    tab:state.Page.tab,
     name:state.Profile.name,
     bio:state.Profile.bio,
     img:state.Profile.img,
