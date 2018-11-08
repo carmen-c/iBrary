@@ -85,12 +85,14 @@ state={
               <TextInput 
                     style={[styles.inps]}
                     value={this.state.name}
+                    placeholder="name"
                     keyboardType='default'
                     onChangeText={(text) => this.setState({name: text})}/>
                     
               <TextInput 
                     style={[styles.inps]}
                     value={this.state.bio}
+                    placeholder="write something about yourself"
                     keyboardType="default"
                     onChangeText={(text) => this.setState({bio: text})}/>
             </View>

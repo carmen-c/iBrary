@@ -44,14 +44,13 @@ class Login extends React.Component {
     auth.setPersistence(auth2.Auth.Persistence.LOCAL).then(a => {
       
     //sign in using email and password
-    return auth.signInWithEmailAndPassword(this.state.email, this.state.password).catch(error => {
+    return auth.signInWithEmailAndPassword(this.state.email, this.state.password)
+    .then(user => {
+        this.handleUserInfo(auth.currentUser);
+    }).catch(error => {
       this.setState({error: error.message})
       
     //navigate to app if there are no errors
-    }).then(u => {
-      if(this.state.error === ''){
-        this.handleUserInfo(u);
-      }
     })
       
     })
@@ -78,6 +77,7 @@ class Login extends React.Component {
   }
   
   handleUserInfo=(user)=>{
+    if(user.uid != null){
     db.ref('users/'+ user.uid)
       .once('value')
       .then(snapshot => {
@@ -90,6 +90,8 @@ class Login extends React.Component {
         } else {
           pimg = thisuser.img
         }
+
+        console.log(thisuser);
 //        serid, name, bio, img
         this.props.dispatch(SavedProfile(
           thisuser.userID,
@@ -100,7 +102,8 @@ class Login extends React.Component {
       
       }).then(()=>{
         this.navigateToPage(4);
-      }); 
+      });
+    } else {}
   }
   
   navigateToPage=(page)=>{

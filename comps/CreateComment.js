@@ -19,17 +19,18 @@ class CreateComment extends React.Component {
     var timestamp = new Date().getTime();
     var post = this.props.postid;
     
-    this.writeNewComment(current, newCommentKey, date, this.state.comment, timestamp, post);
+    this.writeNewComment(current, newCommentKey, date, this.state.comment, timestamp, post, this.props.name);
   }
   
-  writeNewComment=(uid, commentid, date, comment, timestamp, post)=>{
+  writeNewComment=(uid, commentid, date, comment, timestamp, post, name)=>{
     db.ref('comments/' + commentid).set({
         userID: uid,
         commentID: commentid,
         date: date,
         comment: comment,
         timestamp: timestamp,
-        postID: post
+        postID: post,
+        username: name
     })
   }
   
@@ -92,6 +93,7 @@ const styles = StyleSheet.create({
 function mapStateToProps(state){
   return {
     page:state.Page.page,
+    name:state.Profile.name
   }
 }
 

@@ -47,7 +47,8 @@ class Home extends React.Component {
           key: child.val().postID,
           title: child.val().title,
           content: child.val().content,
-          date: child.val().date
+          date: child.val().date,
+          username: child.val().username
         })
       });
       this.setState({arrData: items})
@@ -73,6 +74,7 @@ class Home extends React.Component {
        title={item.title} 
        content={item.content} 
        postid={item.key}
+       username={item.username}
        />
     )
   }

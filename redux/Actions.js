@@ -14,13 +14,14 @@ export function ChangeTab(tab) {
   }
 }
 
-export function SelectItem(postid, userid, title, content) {
+export function SelectItem(postid, userid, title, content, username) {
   return {
     type:"SELECTED_ITEM",
     postid: postid,
     userid: userid,
     title: title,
     content: content,
+    username: username
   }
 }
 

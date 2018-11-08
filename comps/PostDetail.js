@@ -59,6 +59,7 @@ class PostDetail extends React.Component {
             <CreateComment postid={this.props.postid}/>
             <View style={styles.hairline}/>
           </View>
+          
         </View>
       </View>
         
@@ -74,6 +75,7 @@ function mapStateToProps(state){
     userid:state.SelectPost.userid,
     title:state.SelectPost.title,
     content:state.SelectPost.content,
+    username:state.SelectPost.username,
   }
 }
 export default connect (mapStateToProps)(PostDetail);
