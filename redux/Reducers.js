@@ -69,6 +69,25 @@ export function Profile(state= savedProfile, action) {
   }
 }
 
+const selectedPostImg ={
+  postImg: "",
+};
+
+export function PostImg(state= selectedPostImg, action) {
+  let obj = Object.assign({}, state);
+  
+  switch(action.type) {
+    case "SSELECT_POSTIMG":
+      obj.postImg = action.postImg;
+      return obj;
+      
+    default:
+      return state;
+  }
+}
+
+
+
 
 //for storing global background color state variable
 //const bgDefault = {

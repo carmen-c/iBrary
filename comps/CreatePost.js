@@ -6,6 +6,9 @@ import {auth, db} from '../constants/FConfig';
 import {connect} from 'react-redux';
 import {ChangeTab, ChangePage} from '../redux/Actions';
 
+//import ImagePicker from 'react-native-image-picker';
+
+
 class CreatePost extends React.Component {
   
   state={
@@ -13,6 +16,7 @@ class CreatePost extends React.Component {
     content: "",
     tags: ""
   }
+
 
   createNewPost =()=>{
     var newPostKey = db.ref().child('posts').push().key;
@@ -120,7 +124,7 @@ const styles = StyleSheet.create({
     width: 0.5
   },
   pageTitle: {
-    paddingTop:65,
+    paddingTop:40,
     paddingBottom:30,
     width:'100%',
     backgroundColor:'#e6e6e6',

@@ -14,14 +14,14 @@ export function ChangeTab(tab) {
   }
 }
 
-export function SelectItem(postid, userid, title, content, username) {
+export function SelectItem(postid, userid, username, title, content) {
   return {
     type:"SELECTED_ITEM",
     postid: postid,
     userid: userid,
+    username: username,
     title: title,
     content: content,
-    username: username
   }
 }
 
@@ -32,5 +32,19 @@ export function SavedProfile( userid, name, bio, img) {
     name: name,
     bio: bio,
     img:img
+  }
+}
+
+export function SelectProfileImg(Pimg) {
+  return {
+    type:"SELECTED_PROFILEIMG",
+    Pimg:Pimg
+  }
+}
+
+export function SelectPostImg(postimg) {
+  return {
+    type:"SELECT_POSTIMG",
+    postImg:postImg
   }
 }

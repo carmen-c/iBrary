@@ -8,7 +8,7 @@ class Post extends React.Component {
   
   handleSelected=()=>{
     //pass or save all post props
-    this.props.dispatch(SelectItem(this.props.postid, this.props.userid, this.props.title, this.props.content, this.props.username));
+    this.props.dispatch(SelectItem(this.props.postid, this.props.userid, this.props.username,this.props.title, this.props.content, this.props.username));
     //change page
     this.props.dispatch(ChangeTab(4));
 //    console.log("clicked: ", this.props.postid, this.props.title);
@@ -19,13 +19,15 @@ class Post extends React.Component {
         <View style={styles.container}>
           <TouchableOpacity style={styles.list} refs={this.props.postid} onPress={this.handleSelected}>
             <View>
-              
-              
-
-            <Text>{this.props.username}</Text>
-            <Text style={{fontSize: 20, marginBottom:10, fontWeight:'bold'}}>{this.props.title}</Text>
-            <Text style={{fontSize: 16}}>{this.props.content}</Text>
-            </View>
+              <View style={{flexDirection:'row'}}>
+                <Image style={{ width:30, height:30, marginRight:7}} source={require('../assets/images/profileDefault.png')} />
+                <Text style={{fontSize:15, color:'#7a7979', marginTop:5}}>{this.props.username}</Text>
+              </View>
+            
+            <Text style={{fontSize: 20, marginBottom:10, marginTop:5, fontWeight:'bold', marginTop:5, marginLeft:5}}>{this.props.title}
+            </Text>
+            <Text style={{fontSize: 16, marginLeft:5}}>{this.props.content}</Text>
+            </View> 
             
           </TouchableOpacity>
         </View>
