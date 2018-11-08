@@ -18,6 +18,10 @@ class Login extends React.Component {
     email: '',
     password: '',
     error: '',
+    name:'',
+    bio:'',
+    img:'',
+    uid:'',
   }
   
   componentWillMount=()=>{
@@ -79,13 +83,15 @@ class Login extends React.Component {
       .then(snapshot => {
         var thisuser = snapshot.val();
         var pimg = "";
+      
+        if(thisuser.img == "") {
+          pimg = 'require("../assets/images/profileDefault.png")'
+          
+        } else {
+          pimg = thisuser.img
+        }
+
         console.log(thisuser);
-//        if(thisuser.img) {
-//          pimg = thisuser.img;
-//        } else {
-//          // put default here
-//          pimg = "none";
-//        }
 //        serid, name, bio, img
         this.props.dispatch(SavedProfile(
           thisuser.userID,

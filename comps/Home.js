@@ -128,8 +128,8 @@ const styles = StyleSheet.create({
   },
   searchBar: {
     position:'absolute',
-    top:10,
-    width:'85%',
+    top:8,
+    width:'90%',
     marginTop:20,
     padding:15,
     backgroundColor:'#fff',

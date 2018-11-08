@@ -37,23 +37,21 @@ class CreateComment extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-       
-          <View style={{width:'80%',padding:10}}>
-             <TextInput
-                placeholder='Make an comment'
-                multiline={true}
-                onChangeText={(text)=> this.setState({comment: text})}
-              />  
-          </View> 
+        <View style={{width:'70%',padding:10, marginLeft:'5%'}}>
+           <TextInput
+              placeholder='Make an comment'
+              multiline={true}
+              onChangeText={(text)=> this.setState({comment: text})}
+            />  
+        </View> 
         
-        <View style={{width:'20%'}}>
+        <View style={{width:'20%', marginRight:15}}>
             <TouchableOpacity onPress={this.createNewComment}> 
                     <View style={[styles.signBut]}>
                         <Text style={styles.buttonText}>ADD</Text>
                     </View>
             </TouchableOpacity>
-    </View>
- 
+        </View>
       </View>
     );
   }
@@ -63,7 +61,13 @@ const styles = StyleSheet.create({
   container: {
     flex:1,   
     flexDirection:'row',
+
     width:'100%',
+  },
+  hairline: {
+    backgroundColor: '#A2A2A2',
+    height: 0.6,
+    width: '90%'
   },
   buttonText:{
     fontSize:15,
@@ -74,7 +78,7 @@ const styles = StyleSheet.create({
     alignItems:'center',
     margin:5,
     padding:5,
-    borderRadius:10,
+    borderRadius:5,
     backgroundColor:"#138172",
   },
   butBox: {

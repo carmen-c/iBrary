@@ -19,10 +19,14 @@ class Post extends React.Component {
         <View style={styles.container}>
           <TouchableOpacity style={styles.list} refs={this.props.postid} onPress={this.handleSelected}>
             <View>
+              
+              
+
             <Text>{this.props.username}</Text>
-            <Text style={{fontSize: 20, marginBottom:10}}>{this.props.title}</Text>
+            <Text style={{fontSize: 20, marginBottom:10, fontWeight:'bold'}}>{this.props.title}</Text>
+            <Text style={{fontSize: 16}}>{this.props.content}</Text>
             </View>
-            <Text>{this.props.content}</Text>
+            
           </TouchableOpacity>
         </View>
     );

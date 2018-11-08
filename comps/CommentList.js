@@ -57,7 +57,7 @@ export default class CommentList extends React.Component {
 
       <View style={styles.container}>
         <Text>{this.state.error}</Text>
-        <View style={{width:'100%',height:200,marginTop:5}}>
+        <View style={{width:'100%',height:200}}>
             <FlatList
               extraData={this.state.arrData}
               data={this.state.arrData}
@@ -73,7 +73,6 @@ export default class CommentList extends React.Component {
 
 const styles = StyleSheet.create({
   container: {
-    width:"100%",
-    marginTop:30,   
+    width:"100%", 
   }
 });

@@ -13,7 +13,8 @@ class Profile extends React.Component {
     error:"",
     arrData: [],
     userN:'',
-    bio:''
+    bio:'',
+    img:this.props.img
 
   }
   static navigationOptions = {
@@ -32,7 +33,8 @@ class Profile extends React.Component {
           var user = snapshot.val(); 
           this.setState({
             userN:user.name,
-            bio:user.bio
+            bio:user.bio,
+//            img:user.img
           })
 
     
@@ -53,19 +55,22 @@ class Profile extends React.Component {
         <TouchableOpacity onPress={this.navigatePage.bind(this,7)}>
           <Text>Setting</Text>
         </TouchableOpacity>
-        <View style={styles.section}>
-          
+        <View style={styles.section}>  
             <View style={styles.box1}>
-              <Image 
+             {/* <Image 
                 source={require('../assets/images/profile.jpg')}
                 style={styles.profile}            
               />
+            */}
+              <Image 
+                source={{ uri: this.state.img }}
+                style={styles.profile}            
+              /> 
             </View>
             <View style={styles.box1}>
-               <Text>{this.state.error}</Text>
-            
-           
-                <Text>{this.state.userN}</Text><Text>{this.state.bio}</Text>
+              <Text>{this.state.error}</Text>
+              <Text style={{fontWeight:'bold', fontSize:20, marginBottom:5}}>{this.state.userN}</Text>
+              <Text>{this.state.bio}</Text>
             </View>
         </View>
         <View style={styles.hairline} />
@@ -73,9 +78,9 @@ class Profile extends React.Component {
            <Text>Interest</Text>
         </View>
         <View style={styles.hairline} />
-        <View style={styles.section}>
-           <Text>Social Media</Text>
-        </View>
+          <View style={styles.section}>
+             <Text>Social Media</Text>
+          </View>
         <View style={styles.hairline} />
         <View style={styles.section}>
            <Text>Ideas</Text>
@@ -136,7 +141,8 @@ const styles = StyleSheet.create({
 });
 function mapStateToProps(state){
   return {
-    page:state.Page.page
+    page:state.Page.page,
+    img:state.Profile.img,
   }
 }
  
