@@ -15,7 +15,7 @@ class Comment extends React.Component {
         <View style={styles.container}>
           <TouchableOpacity style={styles.list} refs={this.props.commentid} onPress={this.handleSelected}>
             <View>
-               <Text>{this.props.username} says...</Text>
+               <Text style={styles.username}>{this.props.username}User Name</Text>
               <Text>{this.props.comment}</Text>
             </View>
           </TouchableOpacity>
@@ -39,6 +39,9 @@ const styles = StyleSheet.create({
     height: 0.6,
     width: '90%'
   },
+  username:{
+    fontWeight:'bold'
+  }
 
 });
 
