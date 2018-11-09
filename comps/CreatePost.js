@@ -15,7 +15,7 @@ class CreatePost extends React.Component {
     title: "",
     content: "",
     tags: "",
-    img: "",
+    img: {},
     imgURL: "",
     filename: "",
     postid: "",
@@ -31,8 +31,12 @@ class CreatePost extends React.Component {
       cropping: true,
       includeBase64: true
     }).then(image => {
-      this.setState({img: image.data});
-      this.setState({filename: image.filename});
+      this.setState({
+        img: image
+      });
+      this.setState({
+        filename: image.filename
+      });
       console.log("chosen image:", this.state.img);
     });
   }
@@ -48,7 +52,7 @@ class CreatePost extends React.Component {
     if(this.state.img != "") {
       var imgRef = storage.ref().child('postImages/'+newPostKey+"/"+this.state.filename+'.jpg');
     
-        imgRef.putString(this.state.img, 'base64').then((snapshot)=>{
+        imgRef.putString(this.state.img.data, 'base64').then((snapshot)=>{
         console.log("it might be uploaded?");
         console.log("A", snapshot.metadata.fullPath);
         
@@ -93,18 +97,20 @@ class CreatePost extends React.Component {
         </View>
         <View style={styles.boxes}>
             <View style={styles.box}>
+  
               <TouchableOpacity onPress={this.addImgsFromGallery}>
                 <Image 
                   source={require('../assets/images/robot-dev.png')}
                   style={styles.imgIcon}
                   />
+                
               </TouchableOpacity>
             </View>
             <View style={styles.verticalHairline}/>
             <View style={styles.box}>
               <TouchableOpacity onPress={this.navigatePage.bind(this,5)}>
                 <Image 
-                  source={require('../assets/images/camera.png')}
+                  source={{uri: this.state.img.path} }
                   style={styles.imgIcon}
                   />
               </TouchableOpacity>

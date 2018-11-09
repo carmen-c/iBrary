@@ -14,7 +14,7 @@ export function ChangeTab(tab) {
   }
 }
 
-export function SelectItem(postid, userid, username, title, content) {
+export function SelectItem(postid, userid, username, title, content,img) {
   return {
     type:"SELECTED_ITEM",
     postid: postid,
@@ -22,6 +22,7 @@ export function SelectItem(postid, userid, username, title, content) {
     username: username,
     title: title,
     content: content,
+    img:img
   }
 }
 

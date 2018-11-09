@@ -48,7 +48,8 @@ class Home extends React.Component {
           title: child.val().title,
           content: child.val().content,
           date: child.val().date,
-          username: child.val().username
+          username: child.val().username,
+          img:child.val().img
         })
       });
       this.setState({arrData: items})
@@ -75,6 +76,7 @@ class Home extends React.Component {
        content={item.content} 
        postid={item.key}
        username={item.username}
+       img={item.img}
        />
     )
   }

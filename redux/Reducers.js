@@ -26,7 +26,8 @@ const selectedPost ={
   userid: "",
   title: "",
   content: "",
-  username: ""
+  username: "",
+  img:""
 };
 
 export function SelectPost(state= selectedPost, action) {
@@ -39,6 +40,7 @@ export function SelectPost(state= selectedPost, action) {
       obj.title = action.title;
       obj.content = action.content;
       obj.username = action.username;
+      obj.img = action.img;
       return obj;
       
     default:

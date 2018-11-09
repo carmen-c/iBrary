@@ -26,7 +26,7 @@ class PostDetail extends React.Component {
   render() {
     
     this.check();
-    
+    console.log(this.props.img)
     return (
       <View style={styles.container}>
         <View style={{height:60}}>
@@ -45,10 +45,13 @@ class PostDetail extends React.Component {
                 <Image style={{ width:40, height:40, marginRight:10}} source={require('../assets/images/profileDefault.png')} />
                 <Text style={{fontWeight:'bold', fontSize:15, color:'#7a7979', marginTop:5}}>{this.props.username}</Text>
               </View>
+              
             </View>
               
            <View style={{width:'80%', marginBottom:20}} >
+             
               <View style={{alignItems:'center'}} refs={this.props.postid}>
+                <Image style={{width:150, height:150, marginBottom:5}} source={{ uri: (this.props.img) ? this.props.img : "" }} />
                <Text style={{fontSize: 20, margin:15, fontWeight: 'bold',}}>
                  {this.props.title}
                 </Text>
@@ -83,6 +86,8 @@ function mapStateToProps(state){
     title:state.SelectPost.title,
     content:state.SelectPost.content,
     username:state.SelectPost.username,
+    img:state.SelectPost.img,
+
   }
 }
 export default connect (mapStateToProps)(PostDetail);
