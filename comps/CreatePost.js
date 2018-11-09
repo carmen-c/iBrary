@@ -40,7 +40,19 @@ class CreatePost extends React.Component {
       console.log("chosen image:", this.state.img);
     });
   }
-
+  
+   addImgFromCamera = () => {
+    ImagePicker.openCamera({
+      width: 200,
+      height: 200,
+      cropping: true,
+      includeBase64: true
+    }).then(image => {
+      this.setState({img: image.data});
+      this.setState({filename: image.filename});
+      console.log("chosen image:", this.state.img);
+    });
+  }
 
   createNewPost =()=>{
     var newPostKey = db.ref().child('posts').push().key;
@@ -108,7 +120,7 @@ class CreatePost extends React.Component {
             </View>
             <View style={styles.verticalHairline}/>
             <View style={styles.box}>
-              <TouchableOpacity onPress={this.navigatePage.bind(this,5)}>
+              <TouchableOpacity onPress={this.addImgFromCamera}>
                 <Image 
                   source={{uri: this.state.img.path} }
                   style={styles.imgIcon}

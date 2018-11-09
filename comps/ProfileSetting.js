@@ -1,7 +1,8 @@
 import React from 'react';
-import {Image, Button, Text, TextInput, View, StyleSheet, TouchableOpacity, ScrollView, } from 'react-native';
+import {Image, Button, Text, TextInput, View, StyleSheet, TouchableOpacity, ScrollView, Alert} from 'react-native';
+import ImagePicker from 'react-native-image-crop-picker';
 
-import {auth, auth2, db} from '../constants/FConfig';
+import {auth, auth2, db, storage} from '../constants/FConfig';
 
 import {connect} from 'react-redux';
 import {ChangePage, ChangeTab,SavedProfile} from '../redux/Actions';
@@ -11,44 +12,100 @@ state={
   name:this.props.name,
   bio:this.props.bio,
   img:this.props.img,
+  newImg: "",
+  filename: "profileImage",
   }
   navigatePage=(page)=>{
     this.props.dispatch(ChangePage(page), ChangeTab(3));
   }
   handleGallery=()=>{
-    this.props.dispatch(ChangePage(9));
+    Alert.alert(
+      'Change Profile Picture',
+      'Where do you want to get the picture?',
+      [
+        {text: 'Camera', onPress: () => this.addImgFromCamera()},
+        {text: 'Gallery', onPress: () => this.addImgFromGallery()},
+        {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
+      ],
+      { cancelable: true }
+    )
   }
+  
+  addImgFromGallery=()=>{
+    ImagePicker.openPicker({
+      width: 200,
+      height: 200,
+      cropping: true,
+      includeBase64: true
+    }).then(image => {
+      this.setState({newImg: image.data});
+//      this.setState({filename: image.filename});
+      console.log("chosen image:", this.state.img);
+    });
+  }
+  
+  addImgFromCamera = () => {
+    ImagePicker.openCamera({
+      width: 200,
+      height: 200,
+      cropping: true,
+      includeBase64: true
+    }).then(image => {
+      this.setState({newImg: image.data});
+      this.setState({filename: image.filename});
+      console.log("chosen image:", this.state.img);
+    });
+  }
+  
   saveNewUserData=()=>{
     
-    this.props.dispatch(SavedProfile(this.props.userid, this.state.name, this.state.bio, this.state.img));
+    if(this.state.newImg != "") {
+      var imgURL = "";
+      var imgRef = storage.ref().child('profileImages/'+this.props.userid+'.jpg');
+    
+      imgRef.putString(this.state.newImg, 'base64').then((snapshot)=>{
+//        console.log("it might be uploaded?");
+        console.log("A", snapshot.metadata.fullPath);
+        
+        storage.ref().child(snapshot.metadata.fullPath).getDownloadURL().then((url)=>{
+          
+          this.props.dispatch(SavedProfile(this.props.userid, this.state.name, this.state.bio, url));
+          
+          if (auth.currentUser) {
+            currentUser = auth.currentUser;
+            if (currentUser) {
+                db.ref('users/' + currentUser.uid).set({
+                    userID: currentUser.uid,
+                    email: currentUser.email,
+                    name : this.state.name,
+                    bio: this.state.bio,
+                    img :url
+                })
+            }
+          }
+       })
+      });
+    }
+    alert('User Profile is Saved')
+  }
+    
 //    if(user.img === null){
 //      db.ref('users/' + currentUser.uid).set({
 //        img:
 //      })
 //    }
-    alert('User Profile is Saved')
+    
 //    var firebase = require('firebase');
-    if (auth.currentUser) {
-      currentUser = auth.currentUser;
-      if (currentUser) {
-          db.ref('users/' + currentUser.uid).set({
-              userID: currentUser.uid,
-              email: currentUser.email,
-              name : this.state.name,
-              bio: this.state.bio,
-              img :this.state.img
-              
-          })
-      }
-      console.log(currentUser);
-    }
+    
+//      console.log(currentUser);
+//    }
 
 //      firebase.database().ref('users/' + auth.currentUser.uid).set({
 //        name : currentUser.name,
 //        bio: currentUser.bio
 //      })
 //      console.log(auth.currentUser);
-  }
+//  }
     
   render() {
     
