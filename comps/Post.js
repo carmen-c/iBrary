@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, StyleSheet, Text, Button, Image, ImageBackground, ScrollView,TouchableOpacity } from 'react-native';
+import { View, StyleSheet, Text, Button, Image, ImageBackground, ScrollView,TouchableOpacity,Dimensions } from 'react-native';
 
 import {connect} from 'react-redux';
 import {ChangeTab, SelectItem} from '../redux/Actions';
@@ -15,18 +15,27 @@ class Post extends React.Component {
   }
 
   render() {
+    var width = Dimensions.get('window').width;
     return (
         <View style={styles.container}>
           <TouchableOpacity style={styles.list} refs={this.props.postid} onPress={this.handleSelected}>
             <View>
               <View style={{flexDirection:'row'}}>
                 <Image style={{ width:30, height:30, marginRight:7}} source={require('../assets/images/profileDefault.png')} />
-                <Text style={{fontSize:15, color:'#7a7979', marginTop:5}}>{this.props.username}</Text>
+                <Text style={{fontSize:15, color:'#7a7979', marginTop:5}}>{(this.props.username) ? this.props.username : "Usename"}</Text>
               </View>
-             <Image style={{ width:30, height:30, marginRight:7}} source={{ uri: (this.props.img) ? this.props.img : "" }} />
-            <Text style={{fontSize: 20, marginBottom:10, marginTop:5, fontWeight:'bold', marginTop:5, marginLeft:5}}>{this.props.title}
-            </Text>
-            <Text style={{fontSize: 16, marginLeft:5}}>{this.props.content}</Text>
+              <View style={{flexDirection:'row', marginBottom:10}}>
+                <Image 
+                  style={{ width:70, height:70, marginRight:7, marginTop:10}} 
+                  source={(this.props.img) ? { uri: this.props.img} : require('../assets/images/defaultPostingImg.png') }/>
+                <View style={{width:'70%'}}>
+                  <Text style={{fontSize: 20, marginBottom:7, marginTop:15,marginLeft:5, fontWeight:'bold'}}>{this.props.title}
+                  </Text>
+                  <Text style={{fontSize: 16, marginLeft:5}}>{this.props.content}</Text>
+                </View>
+              </View>
+             
+            
             </View> 
             
           </TouchableOpacity>
@@ -53,7 +62,10 @@ const styles = StyleSheet.create({
     backgroundColor:'#fff',
     marginBottom:20,
     borderRadius:10,
-    padding:15
+    paddingTop:15,
+    paddingBottom:15,
+    paddingLeft:20,
+    paddingRight:20,
   }
 
 });

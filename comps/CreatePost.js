@@ -1,6 +1,6 @@
 import React from 'react';
 import ImagePicker from 'react-native-image-crop-picker';
-import { View, StyleSheet, Text, Button, TextInput, TouchableOpacity, ScrollView, Image } from 'react-native';
+import { View, StyleSheet, Text, Button, TextInput, TouchableOpacity, ScrollView, Image, Alert } from 'react-native';
 import {auth, db, storage} from '../constants/FConfig';
 
 import {connect} from 'react-redux';
@@ -20,11 +20,23 @@ class CreatePost extends React.Component {
     filename: "",
     postid: "",
   }
+handleGallery=()=>{
+    Alert.alert(
+      'Change Profile Picture',
+      'Where do you want to get the picture?',
+      [
+        {text: 'Camera', onPress: () => this.addImgFromCamera()},
+        {text: 'Gallery', onPress: () => this.addImgFromGallery()},
+        {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
+      ],
+      { cancelable: true }
+    )
+  }
 
   
 
   //user image picker and set image as state
-  addImgsFromGallery = () => {
+  addImgFromGallery = () => {
     ImagePicker.openPicker({
       width: 200,
       height: 200,
@@ -102,31 +114,19 @@ class CreatePost extends React.Component {
   render() {
     
     return (
-      <ScrollView style={{backgroundColor:'#fff'}}>
+      <ScrollView style={{width:'100%',backgroundColor:'#fff'}}>
       <View style={styles.container}>
         <View style={styles.pageTitle}>
             <Text style={styles.titleFont}>Create an Idea</Text>
         </View>
-        <View style={styles.boxes}>
-            <View style={styles.box}>
-  
-              <TouchableOpacity onPress={this.addImgsFromGallery}>
+        <View style={styles.boxes}>          
+              <TouchableOpacity onPress={this.handleGallery}>
                 <Image 
-                  source={require('../assets/images/robot-dev.png')}
-                  style={styles.imgIcon}
-                  />
-                
-              </TouchableOpacity>
-            </View>
-            <View style={styles.verticalHairline}/>
-            <View style={styles.box}>
-              <TouchableOpacity onPress={this.addImgFromCamera}>
-                <Image 
-                  source={{uri: this.state.img.path} }
+                  source={(this.state.img.path) ? {uri: this.state.img.path} : require('../assets/images/robot-dev.png')}
                   style={styles.imgIcon}
                   />
               </TouchableOpacity>
-          </View>
+         
         </View>
         <View style={[styles.items, styles.title]}>
           <TextInput
@@ -167,8 +167,7 @@ class CreatePost extends React.Component {
 const styles = StyleSheet.create({
   container: {
     width:'100%',
-    height:'100%',
-    flex:1,
+    height:'100%',   
     backgroundColor: '#fff',
     alignItems: 'center',
   },
@@ -183,7 +182,7 @@ const styles = StyleSheet.create({
     width: 0.5
   },
   pageTitle: {
-    paddingTop:40,
+    paddingTop:35,
     paddingBottom:30,
     width:'100%',
     backgroundColor:'#e6e6e6',
@@ -197,9 +196,9 @@ const styles = StyleSheet.create({
     color:'#138172'
   },
   boxes: {
-    flexDirection:'row',
+    alignItems:'center',
     width:'100%',
-    marginTop:0,
+    margin:10,
   },
   box: {
     width:'50%',
@@ -245,8 +244,9 @@ const styles = StyleSheet.create({
     width:"80%"  
   },
   imgIcon:{
-    width:'100%',
-    resizeMode:'contain'
+    width:120,
+    height:120,
+    
   }
 });
 

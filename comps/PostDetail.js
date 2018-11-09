@@ -28,6 +28,7 @@ class PostDetail extends React.Component {
     this.check();
     console.log(this.props.img)
     return (
+      <ScrollView>
       <View style={styles.container}>
         <View style={{height:60}}>
           <TouchableOpacity 
@@ -43,16 +44,16 @@ class PostDetail extends React.Component {
             <View style={{width:'90%', marginTop:10, height:50, backgroundColor:'#fcfcfc'}}>
               <View style={{flexDirection:'row', backgroundColor:'#fcfcfc'}}>
                 <Image style={{ width:40, height:40, marginRight:10}} source={require('../assets/images/profileDefault.png')} />
-                <Text style={{fontWeight:'bold', fontSize:15, color:'#7a7979', marginTop:5}}>{this.props.username}</Text>
+                <Text style={{fontWeight:'bold', fontSize:18, color:'#7a7979', marginTop:7}}>{(this.props.username) ? this.props.username : "Usename"}</Text>
               </View>
               
             </View>
               
-           <View style={{width:'80%', marginBottom:20}} >
+           <View style={{width:'85%', marginBottom:7}} >
              
               <View style={{alignItems:'center'}} refs={this.props.postid}>
-                <Image style={{width:150, height:150, marginBottom:5}} source={{ uri: (this.props.img) ? this.props.img : "" }} />
-               <Text style={{fontSize: 20, margin:15, fontWeight: 'bold',}}>
+                <Image style={{width:150, height:150, marginBottom:5}} source={(this.props.img) ? { uri: this.props.img} : require('../assets/images/defaultPostingImg.png') } />
+                <Text style={{fontSize: 20, marginTop:15,marginBottom:15, fontWeight: 'bold',}}>
                  {this.props.title}
                 </Text>
               </View>
@@ -62,16 +63,17 @@ class PostDetail extends React.Component {
            </View>
             <View style={styles.hairline}/>
           </View>
-        
-          <View style={{width:'100%', height:'100%',alignItems:'center'}}>
-            <CommentList postid={this.props.postid}/>
-            <View style={styles.hairline}/>
+          <View style={{width:'100%',alignItems:'center', paddingBottom:90}}>
             <CreateComment postid={this.props.postid}/>
             <View style={styles.hairline}/>
+            <CommentList postid={this.props.postid}/>
+            
+            
           </View>
           
         </View>
       </View>
+      </ScrollView>
         
     );
   }

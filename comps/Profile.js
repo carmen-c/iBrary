@@ -38,7 +38,7 @@ class Profile extends React.Component {
           })
 
     
-//          console.log(this.state.userN, this.state.bio);
+//          console.log(this.state.img);
         }).catch(error => {
           this.setState({error: error.message})
         });
@@ -52,10 +52,10 @@ class Profile extends React.Component {
          <View style={styles.pageTitle}>
             <Text style={styles.titleFont}>Profile</Text>
         </View>
-        <TouchableOpacity style={{position:'absolute', top:15, right:15}}onPress={this.navigatePage.bind(this,7)}>
+        <TouchableOpacity style={{position:'absolute', top:30, right:5, width:35, height:35}}onPress={this.navigatePage.bind(this,7)}>
           <Image 
-                  source={require('../assets/images/camera.png')}
-                  style={{width:40, height:40}}
+                  source={require('../assets/images/setting.png')}
+                  style={{width:25, height:25}}
                   />
         </TouchableOpacity>
         <View style={styles.section}>  
@@ -103,7 +103,7 @@ const styles = StyleSheet.create({
  
   },
   pageTitle: {
-    paddingTop:40,
+    paddingTop:35,
     paddingBottom:30,
     width:'100%',
     backgroundColor:'#e6e6e6',

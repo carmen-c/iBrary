@@ -12,7 +12,7 @@ state={
   name:this.props.name,
   bio:this.props.bio,
   img:this.props.img,
-  newImg: "",
+  newImg: {},
   filename: "profileImage",
   }
   navigatePage=(page)=>{
@@ -38,7 +38,9 @@ state={
       cropping: true,
       includeBase64: true
     }).then(image => {
-      this.setState({newImg: image.data});
+      this.setState({
+        newImg: image
+      });
 //      this.setState({filename: image.filename});
       console.log("chosen image:", this.state.img);
     });
@@ -63,13 +65,14 @@ state={
       var imgURL = "";
       var imgRef = storage.ref().child('profileImages/'+this.props.userid+'.jpg');
     
-      imgRef.putString(this.state.newImg, 'base64').then((snapshot)=>{
+      imgRef.putString(this.state.newImg.data, 'base64').then((snapshot)=>{
 //        console.log("it might be uploaded?");
         console.log("A", snapshot.metadata.fullPath);
         
         storage.ref().child(snapshot.metadata.fullPath).getDownloadURL().then((url)=>{
           
           this.props.dispatch(SavedProfile(this.props.userid, this.state.name, this.state.bio, url));
+//          console.log(url)
           
           if (auth.currentUser) {
             currentUser = auth.currentUser;
@@ -130,7 +133,11 @@ state={
               <TouchableOpacity onPress={this.handleGallery}>
                <Image 
                   style={{width:100, height:100, borderRadius:50, marginBottom:20}}
-                  source={{ uri: this.state.img }}
+                  source={{uri: (this.state.newImg.path) ? this.state.newImg.path : this.props.img}}
+                      
+              
+                    
+      
                 /> 
                 {/*<Image 
                   style={{width:100, height:100, borderRadius:50, marginBottom:20}}
@@ -259,6 +266,7 @@ function mapStateToProps(state){
     bio:state.Profile.bio,
     img:state.Profile.img,
     Pimg:state.Profile.Pimg,
+    userid:state.Profile.userid
   }
 }
  
