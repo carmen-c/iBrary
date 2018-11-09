@@ -131,7 +131,8 @@ const styles = StyleSheet.create({
     top:8,
     width:'90%',
     marginTop:20,
-    padding:15,
+    padding:10 ,
     backgroundColor:'#fff',
+    borderRadius:10,
   }
 });

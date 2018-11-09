@@ -1,18 +1,50 @@
 import React from 'react';
 import { View, StyleSheet, Text, Flatlist, Button, TouchableOpacity, Image, AppRegistry, Dimensions, ScrollView, CameraRoll,TouchableHighlight } from 'react-native';
 import {RNCamera} from 'react-native-camera';
+import ImagePicker from 'react-native-image-picker';
 
 import {connect} from 'react-redux';
-import {ChangeTab, ChangePage, SavedProfile, SelctProfileImg} from '../redux/Actions';
-
+import {ChangeTab, ChangePage, SavedProfile, } from '../redux/Actions';
+state={
+  
+}
 //import RNFetchBlob from 'react-native-fetch-blob';
+  const options = {
+  title: 'Select Avatar',
+  customButtons: [{ name: 'fb', title: 'Choose Photo from Facebook' }],
+  storageOptions: {
+    skipBackup: true,
+    path: 'images',
+  },
+};
+ImagePicker.showImagePicker(options, (response) => {
+  console.log('Response = ', response);
+
+  if (response.didCancel) {
+    console.log('User cancelled image picker');
+  } else if (response.error) {
+    console.log('ImagePicker Error: ', response.error);
+  } else if (response.customButton) {
+    console.log('User tapped custom button: ', response.customButton);
+  } else {
+    const source = { uri: response.uri };
+
+    // You can also display the image using data:
+    // const source = { uri: 'data:image/jpeg;base64,' + response.data };
+
+    this.setState({
+      avatarSource: source,
+    });
+  }
+});
 
 
 class GalleryForProfile extends React.Component {
+
    state={
     photos:[],
     index: null,
-    profileImg:this.props.img,
+    profileImg:''
   }
   setIndex = (index) => {
     if (index === this.state.index) {
@@ -44,7 +76,10 @@ class GalleryForProfile extends React.Component {
     this.setState({
       profileImg:image
     })
+//    this.props.dispatch(SelctProfileImg(this.props.Pimg));
     this.props.dispatch(SavedProfile(this.props.userid, this.props.name, this.props.bio, this.state.profileImg));
+//    this.props.dispatch(SelctProfileImg(this.props.Pimg));
+    console.log(this.props.Pimg)
     console.log(this.props.img)
    
     

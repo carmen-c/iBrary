@@ -28,8 +28,8 @@ class PostDetail extends React.Component {
     this.check();
     
     return (
-      <View style={{marginTop: 50, width:'100%',height:'100%',}}>
-        <View style={{height:70}}>
+      <View style={styles.container}>
+        <View style={{height:60}}>
           <TouchableOpacity 
            onPress={this.navigateToHome}> 
            <Image 
@@ -38,8 +38,15 @@ class PostDetail extends React.Component {
             />
           </TouchableOpacity>
         </View>
-        <View style={{ width:'100%',height:'100%', backgroundColor:'#fff'}}>
-          <View style={{ width:'100%', margin:0,alignItems:'center'}}>
+        <View style={styles.contents}>
+          <View style={styles.posting}>
+            <View style={{width:'90%', marginTop:10, height:50, backgroundColor:'#fcfcfc'}}>
+              <View style={{flexDirection:'row', backgroundColor:'#fcfcfc'}}>
+                <Image style={{ width:40, height:40, marginRight:10}} source={require('../assets/images/profileDefault.png')} />
+                <Text style={{fontWeight:'bold', fontSize:15, color:'#7a7979', marginTop:5}}>{this.props.username}</Text>
+              </View>
+            </View>
+              
            <View style={{width:'80%', marginBottom:20}} >
               <View style={{alignItems:'center'}} refs={this.props.postid}>
                <Text style={{fontSize: 20, margin:15, fontWeight: 'bold',}}>
@@ -83,10 +90,19 @@ export default connect (mapStateToProps)(PostDetail);
 
 const styles = StyleSheet.create({
   container: {
-    width:"100%",
-    height:"100%",
-    flex: 1,
-    alignItems:'center',
+    marginTop: 15, 
+    width:'100%',
+    height:'100%',
+  },
+  contents:{
+    width:'100%',
+    height:'100%', 
+    backgroundColor:'#fff'
+  },
+  posting:{
+    width:'100%', 
+    margin:0,
+    alignItems:'center'
   },
   comments: {
     width: "100%",

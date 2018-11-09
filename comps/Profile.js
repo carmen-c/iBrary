@@ -14,7 +14,7 @@ class Profile extends React.Component {
     arrData: [],
     userN:'',
     bio:'',
-    img:this.props.img
+    img:''
 
   }
   static navigationOptions = {
@@ -34,7 +34,7 @@ class Profile extends React.Component {
           this.setState({
             userN:user.name,
             bio:user.bio,
-//            img:user.img
+            img:user.img
           })
 
     
@@ -52,8 +52,11 @@ class Profile extends React.Component {
          <View style={styles.pageTitle}>
             <Text style={styles.titleFont}>Profile</Text>
         </View>
-        <TouchableOpacity onPress={this.navigatePage.bind(this,7)}>
-          <Text>Setting</Text>
+        <TouchableOpacity style={{position:'absolute', top:15, right:15}}onPress={this.navigatePage.bind(this,7)}>
+          <Image 
+                  source={require('../assets/images/camera.png')}
+                  style={{width:40, height:40}}
+                  />
         </TouchableOpacity>
         <View style={styles.section}>  
             <View style={styles.box1}>
@@ -69,7 +72,7 @@ class Profile extends React.Component {
             </View>
             <View style={styles.box1}>
               <Text>{this.state.error}</Text>
-              <Text style={{fontWeight:'bold', fontSize:20, marginBottom:5}}>{this.state.userN}</Text>
+              <Text style={{fontWeight:'bold', fontSize:25, marginBottom:5}}>{this.state.userN}</Text>
               <Text>{this.state.bio}</Text>
             </View>
         </View>
@@ -100,7 +103,7 @@ const styles = StyleSheet.create({
  
   },
   pageTitle: {
-    paddingTop:65,
+    paddingTop:40,
     paddingBottom:30,
     width:'100%',
     backgroundColor:'#e6e6e6',

@@ -3,13 +3,14 @@ import { View, StyleSheet, Text, Flatlist, Button, TouchableOpacity, Image, AppR
 import {RNCamera} from 'react-native-camera';
 
 import {connect} from 'react-redux';
-import {ChangeTab,ChangePage} from '../redux/Actions';
+import {ChangeTab,ChangePage,SavePostImg} from '../redux/Actions';
 
 
 class Gallery extends React.Component {
    state={
     photos:[],
-    index: null
+    index: null,
+    postImg:null,
   }
   setIndex = (index) => {
     if (index === this.state.index) {
@@ -35,8 +36,13 @@ class Gallery extends React.Component {
     this.props.dispatch(ChangePage(page));
   }
   selectImage=()=>{
-    
-  }
+    var image = this.state.photos[this.state.index].node.image.uri;
+    this.setState({
+      postImg:image
+    })
+    this.props.dispatch(SavedProfile(this.props.userid, this.props.name, this.props.bio, this.state.postImg));
+    console.log(this.props.img)
+  };
 
   render() {
     var width = Dimensions.get('window').width;

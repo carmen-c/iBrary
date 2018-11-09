@@ -10,7 +10,7 @@ class ProfileSetting extends React.Component {
 state={
   name:this.props.name,
   bio:this.props.bio,
-  img:this.props.img
+  img:this.props.img,
   }
   navigatePage=(page)=>{
     this.props.dispatch(ChangePage(page), ChangeTab(3));
@@ -19,8 +19,13 @@ state={
     this.props.dispatch(ChangePage(9));
   }
   saveNewUserData=()=>{
-    this.props.dispatch(SavedProfile(this.props.userid, this.state.name, this.state.bio, this.state.img));
     
+    this.props.dispatch(SavedProfile(this.props.userid, this.state.name, this.state.bio, this.state.img));
+//    if(user.img === null){
+//      db.ref('users/' + currentUser.uid).set({
+//        img:
+//      })
+//    }
     alert('User Profile is Saved')
 //    var firebase = require('firebase');
     if (auth.currentUser) {
@@ -196,6 +201,7 @@ function mapStateToProps(state){
     name:state.Profile.name,
     bio:state.Profile.bio,
     img:state.Profile.img,
+    Pimg:state.Profile.Pimg,
   }
 }
  
