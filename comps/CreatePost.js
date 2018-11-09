@@ -1,7 +1,7 @@
 import React from 'react';
-
+import ImagePicker from 'react-native-image-crop-picker';
 import { View, StyleSheet, Text, Button, TextInput, TouchableOpacity, ScrollView, Image } from 'react-native';
-import {auth, db} from '../constants/FConfig';
+import {auth, db, storage} from '../constants/FConfig';
 
 import {connect} from 'react-redux';
 import {ChangeTab, ChangePage} from '../redux/Actions';
@@ -11,7 +11,27 @@ class CreatePost extends React.Component {
   state={
     title: "",
     content: "",
-    tags: ""
+    tags: "",
+    img: "",
+    imgURL: "",
+    filename: "",
+    postid: "",
+  }
+
+  
+
+  //user image picker and set image as state
+  addImgsFromGallery = () => {
+    ImagePicker.openPicker({
+      width: 200,
+      height: 200,
+      cropping: true,
+      includeBase64: true
+    }).then(image => {
+      this.setState({img: image.data});
+      this.setState({filename: image.filename});
+      console.log("chosen image:", this.state.img);
+    });
   }
 
   createNewPost =()=>{
@@ -19,11 +39,30 @@ class CreatePost extends React.Component {
     var current = auth.currentUser.uid;
     var date = new Date().toUTCString();
     var timestamp = new Date().getTime();
+    var imgURL = "";
     
-    this.writeNewPost(current, newPostKey, date, this.state.title, this.state.content, timestamp, this.props.name);
+    if(this.state.img != "") {
+      var imgRef = storage.ref().child('postImages/'+newPostKey+"/"+this.state.filename+'.jpg');
+    
+        imgRef.putString(this.state.img, 'base64').then((snapshot)=>{
+        console.log("it might be uploaded?");
+        console.log("A", snapshot.metadata.fullPath);
+        
+        storage.ref().child(snapshot.metadata.fullPath).getDownloadURL().then((url)=>{
+          imgURL = url;
+          console.log("image url: ",url);
+          console.log(imgURL);
+          
+          this.writeNewPost(current, newPostKey, date, this.state.title, this.state.content, timestamp, this.props.name, imgURL);
+        })
+
+      });
+    } else {
+      this.writeNewPost(current, newPostKey, date, this.state.title, this.state.content, timestamp, this.props.name, imgURL);
+    }
   }
   
-  writeNewPost=(uid, postid, date, title, content, timestamp, name)=>{
+  writeNewPost=(uid, postid, date, title, content, timestamp, name, imgURL)=>{
     db.ref('posts/' + postid).set({
         userID: uid,
         postID: postid,
@@ -31,7 +70,8 @@ class CreatePost extends React.Component {
         title: title,
         content: content,
         timestamp: timestamp,
-        username: name
+        username: name,
+        img: imgURL
     })
   }
   
@@ -40,6 +80,7 @@ class CreatePost extends React.Component {
   }; 
   
   render() {
+    
     return (
       <ScrollView style={{backgroundColor:'#fff'}}>
       <View style={styles.container}>
@@ -48,9 +89,9 @@ class CreatePost extends React.Component {
         </View>
         <View style={styles.boxes}>
             <View style={styles.box}>
-              <TouchableOpacity onPress={this.navigatePage.bind(this,8)}>
+              <TouchableOpacity onPress={this.addImgsFromGallery}>
                 <Image 
-                  source={require('../assets/images/camera.png')}
+                  source={require('../assets/images/robot-dev.png')}
                   style={styles.imgIcon}
                   />
               </TouchableOpacity>
