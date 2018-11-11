@@ -15,7 +15,7 @@ class Comment extends React.Component {
         <View style={styles.container}>
           <TouchableOpacity style={styles.list} refs={this.props.commentid} onPress={this.handleSelected}>
             <View>
-              <View style={{flexDirection:'row'}}>
+              <View style={{width:'90%',flexDirection:'row'}}>
                 <Text style={styles.username}>{this.props.username}</Text>
                 <Text>{this.props.comment}</Text>
               </View>

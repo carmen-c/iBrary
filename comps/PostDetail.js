@@ -49,10 +49,10 @@ class PostDetail extends React.Component {
               
             </View>
               
-           <View style={{width:'85%', marginBottom:7}} >
+           <View style={{width:'85%', marginBottom:25}} >
              
               <View style={{alignItems:'center'}} refs={this.props.postid}>
-                <Image style={{width:150, height:150, marginBottom:5}} source={(this.props.img) ? { uri: this.props.img} : require('../assets/images/defaultPostingImg.png') } />
+                <Image style={{width:150, height:150, marginBottom:5, borderRadius:5}} source={(this.props.img) ? { uri: this.props.img} : require('../assets/images/defaultPostingImg.png') } />
                 <Text style={{fontSize: 20, marginTop:15,marginBottom:15, fontWeight: 'bold',}}>
                  {this.props.title}
                 </Text>
@@ -66,9 +66,7 @@ class PostDetail extends React.Component {
           <View style={{width:'100%',alignItems:'center', paddingBottom:90}}>
             <CreateComment postid={this.props.postid}/>
             <View style={styles.hairline}/>
-            <CommentList postid={this.props.postid}/>
-            
-            
+            <CommentList postid={this.props.postid}/>  
           </View>
           
         </View>

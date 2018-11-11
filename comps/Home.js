@@ -58,17 +58,6 @@ class Home extends React.Component {
     });
   }
   
-  logout = async ()=>{
-    await GoogleSignin.revokeAccess();
-    await GoogleSignin.signOut();
-    auth.signOut().then(()=> {
-//      console.log('Signed Out');
-      this.props.dispatch(ChangePage(1));
-    }).catch(error => {
-      console.log(error.message);
-    });
-  }
-  
   renderList=({item}) =>  {
     return(
       <Post 
@@ -94,13 +83,9 @@ class Home extends React.Component {
             autoCorrect={false}
             onChangeText={(text) => this.handleSearch(text)}
         />
-       
-        <Button
-            title="temp Logout"
-            onPress={this.logout}
-            />
+      
         <Text>{this.state.error}</Text>
-        <View style={{width:"95%",marginTop:35, paddingBottom:150}}>
+        <View style={{width:"95%",marginTop:50, marginBottom:50, paddingBottom:40}}>
             <FlatList
               extraData={this.state.arrData}
               data={this.state.arrData}
@@ -125,14 +110,15 @@ const styles = StyleSheet.create({
   container: {
     alignItems:'center',
     width:"100%",
-    marginTop:30,
+    marginTop:15,
     backgroundColor:'#e6e6e6',   
   },
   searchBar: {
     position:'absolute',
     top:8,
     width:'90%',
-    marginTop:20,
+    marginTop:7,
+    marginBottom:20,
     padding:10 ,
     backgroundColor:'#fff',
     borderRadius:10,

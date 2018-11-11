@@ -1,8 +1,9 @@
 import React from 'react';
-import {Image, Button, Text, TextInput, View, StyleSheet, TouchableOpacity, ScrollView, Alert} from 'react-native';
+import {Image, Button, Text, TextInput, View, StyleSheet, TouchableOpacity, ScrollView, Alert,ImageBackground} from 'react-native';
 import ImagePicker from 'react-native-image-crop-picker';
 
 import {auth, auth2, db, storage} from '../constants/FConfig';
+import {GoogleSignin, statusCodes} from 'react-native-google-signin';
 
 import {connect} from 'react-redux';
 import {ChangePage, ChangeTab,SavedProfile} from '../redux/Actions';
@@ -42,7 +43,7 @@ state={
         newImg: image
       });
 //      this.setState({filename: image.filename});
-      console.log("chosen image:", this.state.img);
+      console.log("chosen image:", this.state.newImg);
     });
   }
   
@@ -61,8 +62,20 @@ state={
   
   saveNewUserData=()=>{
     
-    if(this.state.newImg != "") {
-      var imgURL = "";
+    if (auth.currentUser) {
+            currentUser = auth.currentUser;
+            if (currentUser) {
+                db.ref('users/' + currentUser.uid).set({
+                    userID: currentUser.uid,
+                    email: currentUser.email,
+                    name : this.state.name,
+                    bio: this.state.bio,     
+                })
+            }
+      this.props.dispatch(SavedProfile(this.props.userid, this.state.name, this.state.bio, this.props.img));
+    }
+    if(this.state.newImg.data != '') {
+      var imgURL = '';
       var imgRef = storage.ref().child('profileImages/'+this.props.userid+'.jpg');
     
       imgRef.putString(this.state.newImg.data, 'base64').then((snapshot)=>{
@@ -81,7 +94,7 @@ state={
                     userID: currentUser.uid,
                     email: currentUser.email,
                     name : this.state.name,
-                    bio: this.state.bio,
+                    bio: this.state.bio, 
                     img :url
                 })
             }
@@ -89,6 +102,7 @@ state={
        })
       });
     }
+    
     alert('User Profile is Saved')
   }
     
@@ -109,6 +123,16 @@ state={
 //      })
 //      console.log(auth.currentUser);
 //  }
+  logout = async ()=>{
+    await GoogleSignin.revokeAccess();
+    await GoogleSignin.signOut();
+    auth.signOut().then(()=> {
+//      console.log('Signed Out');
+      this.props.dispatch(ChangePage(1));
+    }).catch(error => {
+      console.log(error.message);
+    });
+  }
     
   render() {
     
@@ -131,20 +155,20 @@ state={
 
             <View >
               <TouchableOpacity onPress={this.handleGallery}>
-               <Image 
-                  style={{width:100, height:100, borderRadius:50, marginBottom:20}}
+               <Image
+                   style={{width:100, height:100,borderRadius:50, backgroundColor:'#ccc'}}
                   source={{uri: (this.state.newImg.path) ? this.state.newImg.path : this.props.img}}
-                      
-              
-                    
-      
-                /> 
-                {/*<Image 
-                  style={{width:100, height:100, borderRadius:50, marginBottom:20}}
-                  source={require('../assets/images/profileDefault.png')}
                 />
-                */}
-              </TouchableOpacity>
+                  
+                  <View sytle={{width:100, height:100,borderRadius:50, marginBottom:20, alignItem:'center'}}>
+                    <Text style={{fontSize:20}}>+</Text>
+                  </View>
+                    
+                 
+      
+                
+        </TouchableOpacity>
+           
               
             </View>
 
@@ -164,13 +188,16 @@ state={
                     onChangeText={(text) => this.setState({bio: text})}/>
             </View>
             <View style={styles.butBox}> 
-                    <TouchableOpacity onPress={this.saveNewUserData}> 
-                        <View style={[styles.signBut]}>
-                            <Text style={styles.buttonText}>SAVE</Text>
-                        </View>
-                    </TouchableOpacity>
-
+                <TouchableOpacity onPress={this.saveNewUserData}> 
+                    <View style={[styles.signBut]}>
+                        <Text style={styles.buttonText}>SAVE</Text>
+                    </View>
+                </TouchableOpacity>
             </View>
+            <Button
+            title="Logout"
+            onPress={this.logout}
+            />
           </View>
         </ScrollView>
     );
@@ -200,7 +227,7 @@ const styles = StyleSheet.create({
     alignItems:'center'
   },
   pageTitle: {
-    marginTop:65,
+    marginTop:35,
     marginBottom:10,
     width:'100%',
 //    backgroundColor:'#e6e6e6',
@@ -217,8 +244,7 @@ const styles = StyleSheet.create({
     marginBottom:30
   },
   inpBox: {
-    width:'75%',
-    height:'30%',
+    width:'75%', 
     marginBottom:'10%',
     padding:'3%',
     backgroundColor:'#FFF',

@@ -37,15 +37,16 @@ class CreateComment extends React.Component {
   render() {
     return (
       <View style={styles.container}>
-        <View style={{width:'70%',padding:10, marginLeft:'5%'}}>
-           <TextInput
+        <View style={{width:'75%',padding:5, marginLeft:'5%'}}>
+           <TextInput   
+              style={{height:30}}
               placeholder='Make an comment'
               multiline={true}
               onChangeText={(text)=> this.setState({comment: text})}
             />  
         </View> 
         
-        <View style={{width:'20%', marginRight:15}}>
+        <View style={{width:'15%', marginRight:15}}>
             <TouchableOpacity onPress={this.createNewComment}> 
                     <View style={[styles.signBut]}>
                         <Text style={styles.buttonText}>ADD</Text>
@@ -61,7 +62,6 @@ const styles = StyleSheet.create({
   container: {
     flex:1,   
     flexDirection:'row',
-
     width:'100%',
   },
   hairline: {

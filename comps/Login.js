@@ -146,7 +146,7 @@ class Login extends React.Component {
                     </View>
                 </TouchableOpacity>
                 <GoogleSigninButton
-                    style={{ width: 300, height: 48 }}
+                    style={{ width: '100%', height: 50, borderRadius:10 }}
                     size={GoogleSigninButton.Size.Wide}
                     color={GoogleSigninButton.Color.Light}
                     onPress={this.signIn}
