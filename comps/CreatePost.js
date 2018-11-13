@@ -5,12 +5,6 @@ import {auth, db, storage} from '../constants/FConfig';
 
 import {connect} from 'react-redux';
 import {ChangeTab, ChangePage} from '../redux/Actions';
-import ImageResizer from 'react-native-image-resizer';
-import RNImageConverter from 'react-native-image-converter';
-
-
-//import ImagePicker from 'react-native-image-picker';
-
 
 class CreatePost extends React.Component {
   
@@ -22,10 +16,6 @@ class CreatePost extends React.Component {
     imgURL: "",
     filename: "",
     postid: "",
-    jpegURL:'',
-    resizedImg:'',
-    width:'',
-    height:''
   }
 handleCategory=()=>{
   
@@ -33,7 +23,7 @@ handleCategory=()=>{
 
 handleGallery=()=>{
     Alert.alert(
-      'Change Profile Picture',
+      'Add a Image',
       'Where do you want to get the picture?',
       [
         {text: 'Camera', onPress: () => this.addImgFromCamera()},
@@ -44,26 +34,20 @@ handleGallery=()=>{
     )
   }
 
-  
-
   //user image picker and set image as state
   addImgFromGallery = () => {
     ImagePicker.openPicker({
       width: 120,
       height: 120,
-      quality:70,
+      compressImageMaxWidth: 120,
+      compressImageMaxHeight: 120,
+      compressImageQuality: 0.7,
       cropping: true,
       includeBase64: true
     }).then(image => {
-      this.setState({
-        img: image,     
-      });
+      this.setState({img: image});
       this.setState({filename: image.filename});
-      
       console.log("chosen image:", this.state.img);
-
-//      this.resizeImg()
-      
     });
   }
   
@@ -71,7 +55,9 @@ handleGallery=()=>{
     ImagePicker.openCamera({
       width: 120,
       height: 120,
-      quality:70,
+      compressImageMaxWidth: 120,
+      compressImageMaxHeight: 120,
+      compressImageQuality: 0.7,
       cropping: true,
       includeBase64: true
     }).then(image => {
@@ -79,69 +65,31 @@ handleGallery=()=>{
       this.setState({filename: image.filename});
       this.setState({width: image.width});
       this.setState({height: image.height});
-
-      //console.log("chosen image:", this.state.img);
     });
   }
        
-   
-//   resizeImg = () =>{
-//     var resizedImg1="";
-//     var url='';
-//     RNImageConverter.getJPEG((this.state.img.data,'base64'), (newFile) => {
-//      console.log(newFile);
-//           url = newFile;
-//    });
-//          
-//     ImageResizer.createResizedImage({
-//      url:newFile,
-//      newWidth:100, 
-//      newHeight:100, 
-//      format:'JPEG',
-//      quality: 50
-//      }).then((resizedImageUri) => {
-//      
-//        resizedImg1:resizedImageUri;
-//   
-//
-//      }).catch((err) => {
-//
-//      });
-//     this.setState({
-//       resizedImg: resizedImg1
-//     })
-//     console.log(this.state.resizedImg1)
-//  }
-//  
-
   createNewPost =()=>{
     var newPostKey = db.ref().child('posts').push().key;
     var current = auth.currentUser.uid;
     var date = new Date().toUTCString();
     var timestamp = new Date().getTime();
     var imgURL = "";
-    console.log("upload",this.state.img)
-//    if(this.state.img != "") {
-//      console.log("imageSize", this.state.img.data)
-//      var imgRef = storage.ref().child('postImages/'+this.state.filename+'.jpeg');
-//        
-//    
-//        imgRef.putString(this.state.img.data, 'base64').then((snapshot)=>{
-////        console.log("it might be uploaded?");
-////        console.log("A", snapshot.metadata.fullPath);
-//        
-//        storage.ref().child(snapshot.metadata.fullPath).getDownloadURL().then((url)=>{
-//    
-//          imgURL = url;
-//          console.log("image url: ",url);
-//          console.log(imgURL);   
-//          this.writeNewPost(current, newPostKey, date, this.state.title, this.state.content, timestamp, this.props.name, imgURL);
-//        })
-//
-//      });
-//    } else {
+//    console.log("upload",this.state.img)
+    if(this.state.img != "") {
+      console.log("imageData", this.state.img.data);
+      var imgRef = storage.ref().child('postImages/'+this.state.filename+'.jpg');
+        
+        imgRef.putString(this.state.img.data, 'base64').then((snapshot)=>{
+        
+        storage.ref().child(snapshot.metadata.fullPath).getDownloadURL().then((url)=>{
+          imgURL = url;  
+          this.writeNewPost(current, newPostKey, date, this.state.title, this.state.content, timestamp, this.props.name, imgURL);
+        })
+
+      });
+    } else {
       this.writeNewPost(current, newPostKey, date, this.state.title, this.state.content, timestamp, this.props.name, imgURL);
-   // }
+    }
     
     Alert.alert("you posting has been saved!")
     this.props.dispatch(ChangeTab(1))
