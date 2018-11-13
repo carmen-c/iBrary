@@ -77,7 +77,7 @@ handleGallery=()=>{
 //    console.log("upload",this.state.img)
     if(Object.keys(this.state.img).length != 0) {
       console.log("imageData", this.state.img.data);
-      var imgRef = storage.ref().child('postImages/'+this.state.filename+'.jpg');
+      var imgRef = storage.ref().child('postImages/'+this.newPostKey+this.state.filename+'.jpg');
         
         imgRef.putString(this.state.img.data, 'base64').then((snapshot)=>{
         
