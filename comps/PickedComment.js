@@ -3,32 +3,30 @@ import { View, StyleSheet, Text, Button, Image, ImageBackground, ScrollView,Touc
 import Swipeout from 'react-native-swipeout';
 
 import {connect} from 'react-redux';
-import {ChangeTab} from '../redux/Actions';
+import {ChangeTab, UpdatePicked} from '../redux/Actions';
 import {db} from '../constants/FConfig';
 
-class Comment extends React.Component {
+class PickedComment extends React.Component {
   
-  handleSelected=()=>{
-//    console.log("clicked: ", this.props.postid);
-  }
-  
-  addToPost=()=>{
-    console.log("add to post");
+  deleteFromPost=()=>{
     db.ref('posts/' + this.props.postid).update({
-        pickedComments: this.props.commentid
+      //pop to remove from array??
+        pickedComments: ""
     }).then(()=>{
 //      alert("stuff");
-//      this.props.refresh();
+      this.props.refresh();
     });
+    this.props.dispatch(UpdatePicked(""));
+    console.log("UPDATED: ", this.props.picked);
   }
 
   render() {
     
     var swipeoutBtns = [
       {
-       text:'Pick', 
+       text:'Delete', 
        backgroundColor:'#138172', 
-       onPress:this.addToPost
+       onPress:this.deleteFromPost
       }
     ]
     
@@ -39,7 +37,7 @@ class Comment extends React.Component {
         backgroundColor="#fff"
         >
         <View style={styles.container}>
-          <TouchableOpacity style={styles.list} refs={this.props.commentid} onPress={this.handleSelected}>
+          <TouchableOpacity style={styles.list} refs={this.props.commentid}>
             <View>
               <View style={{width:'90%',flexDirection:'row'}}>
                 <Text style={styles.username}>{this.props.username}</Text>
@@ -59,7 +57,6 @@ const styles = StyleSheet.create({
   container: {
     width:"100%",
     alignItems:'center',
-    margin: 20,
   },
   list:{
     width:'90%',
@@ -81,7 +78,8 @@ const styles = StyleSheet.create({
 function mapStateToProps(state){
   return {
     page:state.Page.page,
-    tab: state.Page.tab
+    tab: state.Page.tab,
+    picked: state.SelectPost.picked
   }
 }
-export default connect (mapStateToProps)(Comment);
+export default connect (mapStateToProps)(PickedComment);

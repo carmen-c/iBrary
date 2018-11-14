@@ -14,7 +14,7 @@ export function ChangeTab(tab) {
   }
 }
 
-export function SelectItem(postid, userid, username, title, content,img) {
+export function SelectItem(postid, userid, username, title, content, img, picked) {
   return {
     type:"SELECTED_ITEM",
     postid: postid,
@@ -22,7 +22,8 @@ export function SelectItem(postid, userid, username, title, content,img) {
     username: username,
     title: title,
     content: content,
-    img:img
+    img:img,
+    picked:picked
   }
 }
 
@@ -33,6 +34,13 @@ export function SavedProfile( userid, name, bio, img) {
     name: name,
     bio: bio,
     img:img
+  }
+}
+
+export function UpdatePicked( picked) {
+  return {
+    type:"UPDATE_PICKED",
+    picked: picked
   }
 }
 

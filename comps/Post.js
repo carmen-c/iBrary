@@ -8,10 +8,10 @@ class Post extends React.Component {
   
   handleSelected=()=>{
     //pass or save all post props
-    this.props.dispatch(SelectItem(this.props.postid, this.props.userid, this.props.username,this.props.title, this.props.content, this.props.img));
+    this.props.dispatch(SelectItem(this.props.postid, this.props.userid, this.props.username,this.props.title, this.props.content, this.props.img, this.props.pickedComments));
     //change page
     this.props.dispatch(ChangeTab(4));
-    console.log("clicked: ", this.props.postid, this.props.img);
+    console.log("clicked: ", this.props.postid, this.props.pickedComments);
   }
 
   render() {

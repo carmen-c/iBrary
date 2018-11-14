@@ -7,10 +7,12 @@ import {ChangeTab} from '../redux/Actions';
 import {auth} from '../constants/FConfig';
 import CreateComment from './CreateComment';
 import CommentList from './CommentList';
+import PickedCommentList from './PickedCommentList';
 
 class PostDetail extends React.Component {
   
   check=()=>{
+    console.log("POSTDETAIL: ", this.props.picked)
     if (auth.currentUser.uid == this.props.userid){
       //enable editing stuff
     } else {
@@ -26,7 +28,6 @@ class PostDetail extends React.Component {
   render() {
     
     this.check();
-    console.log(this.props.img)
     return (
       <ScrollView>
       <View style={styles.container}>
@@ -60,6 +61,7 @@ class PostDetail extends React.Component {
               <Text style={{fontSize: 16}}>
                 {this.props.content}
               </Text>
+              <PickedCommentList pickedComments={this.props.picked}/>
            </View>
             <View style={styles.hairline}/>
           </View>
@@ -87,7 +89,7 @@ function mapStateToProps(state){
     content:state.SelectPost.content,
     username:state.SelectPost.username,
     img:state.SelectPost.img,
-
+    picked:state.SelectPost.picked
   }
 }
 export default connect (mapStateToProps)(PostDetail);

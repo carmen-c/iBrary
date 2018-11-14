@@ -19,6 +19,7 @@
     "react-native-image-converter": "git+https://git@github.com/voxmarkets/react-native-image-converter.git",
     "react-native-image-crop-picker": "^0.21.3",
     "react-native-image-resizer": "^1.0.0",
+    "react-native-swipeout": "^2.3.6",
     "react-native-vector-icons": "^4.6.0",
     "react-navigation": "^2.17.0",
     "react-redux": "^5.0.7",

@@ -49,7 +49,8 @@ class Home extends React.Component {
           content: child.val().content,
           date: child.val().date,
           username: child.val().username,
-          img:child.val().img
+          img:child.val().img,
+          pickedComments:child.val().pickedComments
         })
       });
       this.setState({arrData: items})
@@ -66,6 +67,7 @@ class Home extends React.Component {
        postid={item.key}
        username={item.username}
        img={item.img}
+       pickedComments={item.pickedComments}
        />
     )
   }

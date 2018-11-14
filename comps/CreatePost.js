@@ -37,11 +37,9 @@ handleGallery=()=>{
   //user image picker and set image as state
   addImgFromGallery = () => {
     ImagePicker.openPicker({
-      width: 120,
-      height: 120,
-      compressImageMaxWidth: 120,
-      compressImageMaxHeight: 120,
-      compressImageQuality: 0.7,
+      width: 30,
+      height: 30,
+      compressImageQuality: 0.5,
       cropping: true,
       includeBase64: true
     }).then(image => {
@@ -55,9 +53,7 @@ handleGallery=()=>{
     ImagePicker.openCamera({
       width: 120,
       height: 120,
-      compressImageMaxWidth: 120,
-      compressImageMaxHeight: 120,
-      compressImageQuality: 0.7,
+      compressImageQuality: 0.5,
       cropping: true,
       includeBase64: true
     }).then(image => {
@@ -77,7 +73,7 @@ handleGallery=()=>{
 //    console.log("upload",this.state.img)
     if(Object.keys(this.state.img).length != 0) {
       console.log("imageData", this.state.img.data);
-      var imgRef = storage.ref().child('postImages/'+this.newPostKey+this.state.filename+'.jpg');
+      var imgRef = storage.ref().child('postImages/'+this.newPostKey+this.state.filename);
         
         imgRef.putString(this.state.img.data, 'base64').then((snapshot)=>{
         
