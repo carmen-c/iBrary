@@ -4,7 +4,7 @@ import {Image, Button, Text, TextInput, View, StyleSheet, TouchableOpacity} from
 import {db, auth, auth2} from '../constants/FConfig';
 
 import {connect} from 'react-redux';
-import {ChangePage, SavedProfile} from '../redux/Actions';
+import {ChangePage, SavedProfile, ChangeTab} from '../redux/Actions';
 
 import {GoogleSignin, GoogleSigninButton, statusCodes} from 'react-native-google-signin';
 import GConfig from '../constants/GConfig';
@@ -101,6 +101,7 @@ class Login extends React.Component {
         ))
       
       }).then(()=>{
+      this.props.dispatch(ChangeTab(1))
         this.navigateToPage(4);
       });
     } else {}
@@ -126,36 +127,51 @@ class Login extends React.Component {
         </View>
         
         <View style={styles.inpBox}>
+          <View style={{flexDirection:'row', flexWrap:'wrap'}}>
+            <Image 
+              source={require('../assets/images/userID.png')}
+              style={{width:20,height:20, marginTop:10,opacity:0.6}}            
+            /> 
             <TextInput 
                 style={[styles.inps]}
                 placeholder='E-mail'
                 keyboardType='email-address'
                 onChangeText={(text) => this.setState({email: text})}/>
-
+          </View>
+          <View style={{flexDirection:'row', flexWrap:'wrap'}}>
+            <Image source={require('../assets/images/password.png')}
+              style={{width:20,height:25, marginTop:10,resizeMode:'contain',opacity:0.6}}            
+            /> 
             <TextInput 
                 style={styles.inps}
                 placeholder="Password"
                 keyboardType="default"
                 secureTextEntry={true}
                 onChangeText={(text) => this.setState({password: text})}/>
+          </View>
         </View>
+        
         <View style={styles.butBox}> 
-                <TouchableOpacity onPress={this.handleLogin}> 
-                    <View style={[styles.signBut]}>
-                        <Text style={styles.buttonText}>SIGN IN</Text>
-                    </View>
-                </TouchableOpacity>
-                <GoogleSigninButton
-                    style={{ width: '100%', height: 50, borderRadius:10 }}
-                    size={GoogleSigninButton.Size.Wide}
-                    color={GoogleSigninButton.Color.Light}
-                    onPress={this.signIn}
-                    disabled={this.state.isSigninInProgress} />
-                <Button
-                    style={styles.buttonText}
-                    title="Create Account"
-                    onPress={this.navigateToPage.bind(this, 3)}
-                />
+          
+          <TouchableOpacity onPress={this.handleLogin}> 
+              <View style={[styles.signBut]}>
+                  <Text style={styles.buttonText}>SIGN IN</Text>
+              </View>
+          </TouchableOpacity>
+          
+          <GoogleSigninButton
+              style={{ width: '100%', height: 50, borderRadius:10 }}
+              size={GoogleSigninButton.Size.Wide}
+              color={GoogleSigninButton.Color.Light}
+              onPress={this.signIn}
+              disabled={this.state.isSigninInProgress} />
+          
+          <TouchableOpacity style={{alignItems:'center'}} onPress={this.navigateToPage.bind(this, 3)}>
+            <Text style={{marginTop:10, fontSize:15, fontWeight:'600', color:'#676767'}}>
+              Create Account
+            </Text>
+          </TouchableOpacity>
+        
         </View>
       </View>
     );
@@ -179,9 +195,10 @@ const styles = StyleSheet.create({
   },
   inpBox: {
     flexDirection:'column',
-    width:'75%',
-    margin:'5%',
-    padding:'3%',
+    width:'77%',
+    margin:20,
+    padding:15,
+    paddingLeft:25,
     backgroundColor:'#FFF',
     borderRadius:10,
     shadowOffset:{  width: 0,  height: 5,  },
@@ -190,7 +207,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.5,
   },
   inps:{
-    margin:'7%',
+    margin:15,
     borderColor:'#000000',
   },
   buttonText:{

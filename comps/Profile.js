@@ -25,7 +25,7 @@ class Profile extends React.Component {
   navigatePage=(page)=>{
     this.props.dispatch(ChangePage(page));
   }
-  readProfile=()=>{
+  readProfile=async()=>{
     var firebase = require('firebase');
     currentUser = firebase.auth().currentUser;
       if (currentUser) {
@@ -51,6 +51,7 @@ class Profile extends React.Component {
   
   componentWillMount=()=>{
     this.readPosts();
+    this.readProfile();
   }
   readPosts=()=>{
     db.ref('posts/')
@@ -101,7 +102,7 @@ class Profile extends React.Component {
     )
   }
   render() {
-    this.readProfile();
+    
     return (
       <View style={styles.container}>
          <View style={styles.pageTitle}>
@@ -117,7 +118,7 @@ class Profile extends React.Component {
         <View style={styles.section}>  
             <View style={styles.box1}>
               <Image 
-                source={(this.state.img) ? { uri: this.state.img} : require('../assets/images/profileDefault.png')}
+                source={(this.props.img) ? { uri: this.props.img} : require('../assets/images/profileDefault.png')}
                 style={styles.profile}            
               /> 
             </View>
@@ -133,8 +134,8 @@ class Profile extends React.Component {
         <View style={styles.section2}>
           <Text style={styles.sectionTitle}>Interest</Text>
           <View style={{flexDirection:'row', paddingLeft:10}}>
-            <View style={styles.interestList}><Text style={{color:'white'}}>List1</Text></View>
-            <View style={styles.interestList}><Text style={{color:'white'}}>List2</Text></View>            
+            <View style={styles.interestList}><Text style={{color:'white'}}>App</Text></View>
+            <View style={styles.interestList}><Text style={{color:'white'}}>Video</Text></View>            
           </View>     
           
         </View>
@@ -235,6 +236,8 @@ function mapStateToProps(state){
   return {
     page:state.Page.page,
     img:state.Profile.img,
+    name:state.Profile.name,
+    bio:state.Profile.bio,
     userid:state.Profile.userid
   }
 }

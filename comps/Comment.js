@@ -37,8 +37,10 @@ class Comment extends React.Component {
         left={swipeoutBtns}
         autoClose={true}
         backgroundColor="#fff"
+        
         >
         <View style={styles.container}>
+          <View style={styles.hairline}/>
           <TouchableOpacity style={styles.list} refs={this.props.commentid} onPress={this.handleSelected}>
             <View>
               <View style={{width:'90%',flexDirection:'row'}}>
@@ -48,7 +50,7 @@ class Comment extends React.Component {
                
             </View>
           </TouchableOpacity>
-          <View style={styles.hairline}/>
+          
         </View>
       </Swipeout>
     );
@@ -59,7 +61,7 @@ const styles = StyleSheet.create({
   container: {
     width:"100%",
     alignItems:'center',
-    margin: 20,
+    
   },
   list:{
     width:'90%',

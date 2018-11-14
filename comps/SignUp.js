@@ -37,7 +37,7 @@ class SignUp extends React.Component {
 //      .then(()=>{
 //        this.props.dispatch(FirstTime("true"));
 //      });
-      this.props.dispatch(ChangePage(7));
+      this.props.dispatch(ChangePage(4));
 //      console.log(this.props.firsttime);
     }
     
@@ -53,7 +53,8 @@ class SignUp extends React.Component {
       
       db.ref('users/' + currentUser.uid).set({
           userID: currentUser.uid,
-          email: currentUser.email 
+          email: currentUser.email,
+          name:this.state.name
       }).catch(error => {
           this.setState({error: error.message})
       });
@@ -83,25 +84,32 @@ class SignUp extends React.Component {
           </View>
 
           <View style={styles.inpBox}>
+           
               <TextInput 
                   style={[styles.inps]}
-                  placeholder='E-mail'
+                  placeholder='Email'
                   keyboardType='email-address'
                   onChangeText={(text) => this.setState({email: text})}/>
-
+           
               <TextInput 
                   style={styles.inps}
                   placeholder="Password"
                   keyboardType="default"
                   secureTextEntry={true}
                   onChangeText={(text) => this.setState({password: text})}/>
-
+           
             <TextInput 
                   style={styles.inps}
-                  placeholder="Re-Type Password"
+                  placeholder="Re-type password"
                   keyboardType="default"
                   secureTextEntry={true}
                   onChangeText={(text) => this.setState({password2: text})}/>
+            
+            <TextInput 
+                  style={styles.inps}
+                  placeholder="Name"
+                  keyboardType="name-phone-pad"
+                  onChangeText={(text) => this.setState({name: text})}/>
           </View>
           <View style={styles.butBox}> 
                   <TouchableOpacity onPress={this.handleSignUp}> 
@@ -146,12 +154,20 @@ const styles = StyleSheet.create({
     color:'#138172'
   },
   pageDes:{
-    marginBottom:40
+    marginBottom:20
+  },
+  sectionTitle:{
+    color:'#8e8f91', 
+    fontWeight:'600'
   },
   inpBox: {
-    width:'75%',
-    marginBottom:'10%',
-    padding:'3%',
+    width:'76%',
+    marginTop:15,
+    marginBottom:20,
+    paddingTop:10,
+    paddingBottom:10,
+    paddingLeft:20,
+    paddingRight:20,
     backgroundColor:'#FFF',
     borderRadius:10,
     shadowOffset:{  width: 0,  height: 5,  },
@@ -160,7 +176,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.5,
   },
   inps:{
-    margin:18,
+    margin:15,
     borderColor:'#000000',
   },
   buttonText:{

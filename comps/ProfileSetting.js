@@ -1,5 +1,5 @@
 import React from 'react';
-import {Image, Button, Text, TextInput, View, StyleSheet, TouchableOpacity, ScrollView, Alert,ImageBackground} from 'react-native';
+import {Image, Button, Text, TextInput, View, StyleSheet, TouchableOpacity, ScrollView, Alert,ImageBackground, KeyboardAvoidingView} from 'react-native';
 import ImagePicker from 'react-native-image-crop-picker';
 
 import {auth, auth2, db, storage} from '../constants/FConfig';
@@ -15,6 +15,9 @@ state={
   img:this.props.img,
   newImg: {},
   filename: "profileImage",
+  social:'',
+  email:'',
+  
   }
   navigatePage=(page)=>{
     this.props.dispatch(ChangePage(page), ChangeTab(3));
@@ -34,8 +37,9 @@ state={
   
   addImgFromGallery=()=>{
     ImagePicker.openPicker({
-      width: 200,
-      height: 200,
+      width: 30,
+      height: 30,
+      compressImageQuality: 0.5,
       cropping: true,
       includeBase64: true
     }).then(image => {
@@ -61,33 +65,20 @@ state={
   }
   
   saveNewUserData=()=>{
-    
-    if (auth.currentUser) {
-            currentUser = auth.currentUser;
-            if (currentUser) {
-                db.ref('users/' + currentUser.uid).set({
-                    userID: currentUser.uid,
-                    email: currentUser.email,
-                    name : this.state.name,
-                    bio: this.state.bio,     
-                })
-            }
-      this.props.dispatch(SavedProfile(this.props.userid, this.state.name, this.state.bio, this.props.img));
-    }
-    if(this.state.newImg.data != '') {
+      
+    if(Object.keys(this.state.newImg).length != 0) {
       var imgURL = '';
       var imgRef = storage.ref().child('profileImages/'+this.props.userid+'.jpg');
-    
+      
       imgRef.putString(this.state.newImg.data, 'base64').then((snapshot)=>{
-//        console.log("it might be uploaded?");
-        console.log("A", snapshot.metadata.fullPath);
+//        console.log("A", snapshot.metadata.fullPath);
         
-        storage.ref().child(snapshot.metadata.fullPath).getDownloadURL().then((url)=>{
+      storage.ref().child(snapshot.metadata.fullPath).getDownloadURL().then((url)=>{
           
-          this.props.dispatch(SavedProfile(this.props.userid, this.state.name, this.state.bio, url));
+        this.props.dispatch(SavedProfile(this.props.userid, this.state.name, this.state.bio, url));
 //          console.log(url)
           
-          if (auth.currentUser) {
+        if (auth.currentUser) {
             currentUser = auth.currentUser;
             if (currentUser) {
                 db.ref('users/' + currentUser.uid).set({
@@ -102,27 +93,26 @@ state={
        })
       });
     }
+    else{
+      if (auth.currentUser) {
+            currentUser = auth.currentUser;
+            if (currentUser) {
+                db.ref('users/' + currentUser.uid).set({
+                    userID: currentUser.uid,
+                    email: currentUser.email,
+                    name : this.state.name,
+                    bio: this.state.bio, 
+                    
+                })
+            }
+      this.props.dispatch(SavedProfile(this.props.userid, this.state.name, this.state.bio, this.props.img));
+    }
+}
     
-    alert('User Profile is Saved')
+    Alert.alert('User Profile is Saved')
   }
     
-//    if(user.img === null){
-//      db.ref('users/' + currentUser.uid).set({
-//        img:
-//      })
-//    }
-    
-//    var firebase = require('firebase');
-    
-//      console.log(currentUser);
-//    }
 
-//      firebase.database().ref('users/' + auth.currentUser.uid).set({
-//        name : currentUser.name,
-//        bio: currentUser.bio
-//      })
-//      console.log(auth.currentUser);
-//  }
   logout = async ()=>{
     await GoogleSignin.revokeAccess();
     await GoogleSignin.signOut();
@@ -135,9 +125,29 @@ state={
   }
     
   render() {
-    
+    var profileImg =()=>{
+      if(this.props.img=="" && Object.keys(this.state.newImg).length == 0){
+        return (
+        <Image source={require('../assets/images/profileADD.png')}/>
+      )  
+      }
+       else if(this.props.img != "" && Object.keys(this.state.newImg).length == 0){
+        return (
+        <Image source={{uri:this.props.img}}/>
+      )  
+      }
+        if(Object.keys(this.state.newImg).length != 0){
+          return (
+          <Image source={{uri:this.state.newImg.path}}/>
+          )
+        }
+      
+     }
     return (
+      
+      <KeyboardAvoidingView style={{width:'100%'}} behavior="position" enabled>
         <ScrollView style={styles.container}>
+          {profileImg}
           <View style={styles.center}>
             <TouchableOpacity 
              style={styles.backBut}
@@ -153,39 +163,43 @@ state={
             </View>
             
 
-            <View >
+            <View style={{marginBottom:20 }}>
               <TouchableOpacity onPress={this.handleGallery}>
-               <Image
-                   style={{width:100, height:100,borderRadius:50, backgroundColor:'#ccc'}}
-                  source={{uri: (this.state.newImg.path) ? this.state.newImg.path : this.props.img}}
-                />
-                  
-                  <View sytle={{width:100, height:100,borderRadius:50, marginBottom:20, alignItem:'center'}}>
-                    <Text style={{fontSize:20}}>+</Text>
-                  </View>
-                    
-                 
-      
-                
-        </TouchableOpacity>
-           
-              
+                 <Image
+                     style={{width:100, height:100,borderRadius:50, backgroundColor:'#ccc'}}
+                    source={{uri: (this.state.newImg.path) ? this.state.newImg.path : this.props.img}}
+                  />
+                 <Image
+                   style={{width:40, height:40, position:'absolute', right:-10, bottom:0}}
+                   source={require('../assets/images/edit.png')}/>
+
+                </TouchableOpacity>      
             </View>
 
             <View style={styles.inpBox}>
+              <Text style={styles.sectionTitle}>Name</Text>
               <TextInput 
                     style={[styles.inps]}
                     value={this.state.name}
                     placeholder="name"
                     keyboardType='default'
                     onChangeText={(text) => this.setState({name: text})}/>
-                    
+             
+              <Text style={styles.sectionTitle}>Bio</Text>     
               <TextInput 
                     style={[styles.inps]}
                     value={this.state.bio}
                     placeholder="write something about yourself"
                     keyboardType="default"
                     onChangeText={(text) => this.setState({bio: text})}/>
+            </View>
+            <View style={[styles.inpBox]}>
+              <Text style={styles.sectionTitle}>Social media</Text>
+              <TextInput 
+                    style={[styles.inps]}
+                    placeholder="www.instagram.com/"
+                    keyboardType='url'
+                    onChangeText={(text) => this.setState({social: text})}/>
             </View>
             <View style={styles.butBox}> 
                 <TouchableOpacity onPress={this.saveNewUserData}> 
@@ -200,6 +214,7 @@ state={
             />
           </View>
         </ScrollView>
+      </KeyboardAvoidingView>
     );
   }
 }
@@ -207,6 +222,7 @@ state={
 const styles = StyleSheet.create({
   container: {
     width:'100%',
+    paddingBottom:100
   },
   backBut: {
     width:30,
@@ -243,10 +259,17 @@ const styles = StyleSheet.create({
     marginTop:10,
     marginBottom:30
   },
+  sectionTitle:{
+    color:'#8e8f91', 
+    fontWeight:'600'
+  },
   inpBox: {
     width:'75%', 
     marginBottom:'10%',
-    padding:'3%',
+    paddingTop:10,
+    paddingBottom:10,
+    paddingLeft:20,
+    paddingRight:20,
     backgroundColor:'#FFF',
     borderRadius:10,
     shadowOffset:{  width: 0,  height: 5,  },
@@ -255,9 +278,9 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.5,
   },
   inps:{
-    padding:18,
+    padding:10,
     borderColor:'#000000',
-    height:50
+    
   },
   buttonText:{
     fontSize:17,

@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, StyleSheet, Text, Button, Image, ImageBackground, ScrollView,TouchableOpacity } from 'react-native';
+import { View, StyleSheet, Text, Button, Image, ImageBackground, ScrollView,TouchableOpacity, KeyboardAvoidingView  } from 'react-native';
 
 import {connect} from 'react-redux';
 import {ChangeTab} from '../redux/Actions';
@@ -29,6 +29,7 @@ class PostDetail extends React.Component {
     
     this.check();
     return (
+      <KeyboardAvoidingView style={{marginTop:0}} behavior="position" enabled>
       <ScrollView>
       <View style={styles.container}>
         <View style={{height:60}}>
@@ -63,17 +64,18 @@ class PostDetail extends React.Component {
               </Text>
               <PickedCommentList pickedComments={this.props.picked}/>
            </View>
-            <View style={styles.hairline}/>
+ 
           </View>
-          <View style={{width:'100%',alignItems:'center', paddingBottom:90}}>
-            <CreateComment postid={this.props.postid}/>
+          <View style={{width:'100%',alignItems:'center', paddingBottom:80}}>       
+            <CommentList postid={this.props.postid}/> 
             <View style={styles.hairline}/>
-            <CommentList postid={this.props.postid}/>  
+            <CreateComment postid={this.props.postid}/>
           </View>
           
         </View>
       </View>
       </ScrollView>
+      </KeyboardAvoidingView>
         
     );
   }

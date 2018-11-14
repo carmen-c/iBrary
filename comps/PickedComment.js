@@ -39,14 +39,13 @@ class PickedComment extends React.Component {
         <View style={styles.container}>
           <TouchableOpacity style={styles.list} refs={this.props.commentid}>
             <View>
-              <View style={{width:'90%',flexDirection:'row'}}>
+              <View style={{flexDirection:'row',  backgroundColor:'#56ada1', padding:6, borderRadius:5}}>
                 <Text style={styles.username}>{this.props.username}</Text>
                 <Text>{this.props.comment}</Text>
               </View>
                
             </View>
           </TouchableOpacity>
-          <View style={styles.hairline}/>
         </View>
       </Swipeout>
     );
@@ -59,7 +58,7 @@ const styles = StyleSheet.create({
     alignItems:'center',
   },
   list:{
-    width:'90%',
+    width:'100%',
     padding:7,
   },
   hairline: {
