@@ -24,14 +24,16 @@ class CreateComment extends React.Component {
   
   writeNewComment=(uid, commentid, date, comment, timestamp, post, name)=>{
     db.ref('comments/' + commentid).set({
-        userID: uid,
-        commentID: commentid,
-        date: date,
-        comment: comment,
-        timestamp: timestamp,
-        postID: post,
-        username: name
-    })
+      userID: uid,
+      commentID: commentid,
+      date: date,
+      comment: comment,
+      timestamp: timestamp,
+      postID: post,
+      username: name
+    }).then(()=>{
+      this.setState({comment: ""})
+    });
   }
   
   render() {
@@ -41,6 +43,7 @@ class CreateComment extends React.Component {
            <TextInput   
               style={{height:30}}
               placeholder='Make an comment'
+              value={this.state.comment}
               multiline={true}
               onChangeText={(text)=> this.setState({comment: text})}
             />  
