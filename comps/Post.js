@@ -20,20 +20,24 @@ class Post extends React.Component {
         <View style={styles.container}>
           <TouchableOpacity style={styles.list} refs={this.props.postid} onPress={this.handleSelected}>
             <View>
+              
               <View style={{flexDirection:'row'}}>
                 <Image 
                   style={{ width:30, height:30, marginRight:7, borderRadius:15, opacity:0.9}} 
                   source={(this.props.userimg) ? { uri: this.props.userimg} : require('../assets/images/profileDefault.png') } />
+                
                 <Text style={{fontSize:15, color:'#7a7979', marginTop:5, fontWeight:'600'}}>{(this.props.username) ? this.props.username : "Usename"}</Text>
               </View>
+              
               <View style={{flexDirection:'row', marginBottom:10}}>
                 <Image 
                   style={{ width:70, height:70, marginRight:7, marginTop:10, borderRadius:5}} 
                   source={(this.props.img) ? { uri: this.props.img} : require('../assets/images/defaultPostingImg.png') }/>
+                
                 <View style={{width:'70%'}}>
                   <Text style={{ fontSize: 20, marginBottom:7, marginTop:15,marginLeft:5, fontWeight:'600'}}>{this.props.title}
                   </Text>
-                  <Text style={{fontSize: 16, marginLeft:5}}>{this.props.content}</Text>
+                  <Text style={{fontSize: 16, marginLeft:5}} ellipsizeMode='tail' numberOfLines={3}>{this.props.content}</Text>
                 </View>
               </View>
             
