@@ -1,5 +1,5 @@
 import React from 'react';
-import {Image, Button, Text, TextInput, View, StyleSheet, TouchableOpacity} from 'react-native';
+import {Image, Button, Text, TextInput, View, StyleSheet, TouchableOpacity,KeyboardAvoidingView} from 'react-native';
 
 import {auth, auth2, db} from '../constants/FConfig';
 

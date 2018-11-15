@@ -45,7 +45,9 @@ class PostDetail extends React.Component {
           <View style={styles.posting}>
             <View style={{width:'90%', marginTop:10, height:50, backgroundColor:'#fcfcfc'}}>
               <View style={{flexDirection:'row', backgroundColor:'#fcfcfc'}}>
-                <Image style={{ width:40, height:40, marginRight:10}} source={require('../assets/images/profileDefault.png')} />
+                <Image 
+                  style={{ width:40, height:40, marginRight:10, borderRadius:20}} 
+                  source={require('../assets/images/profileDefault.png')}/>
                 <Text style={{fontWeight:'bold', fontSize:18, color:'#7a7979', marginTop:7}}>{(this.props.username) ? this.props.username : "Usename"}</Text>
               </View>
               
@@ -62,14 +64,18 @@ class PostDetail extends React.Component {
               <Text style={{fontSize: 16}}>
                 {this.props.content}
               </Text>
-              <PickedCommentList pickedComments={this.props.picked}/>
+              
            </View>
- 
+          <View style={{width:'90%'}}>
+             <PickedCommentList pickedComments={this.props.picked}/>
+          </View>
+
           </View>
           <View style={{width:'100%',alignItems:'center', paddingBottom:80}}>       
             <CommentList postid={this.props.postid}/> 
             <View style={styles.hairline}/>
             <CreateComment postid={this.props.postid}/>
+            <View style={styles.hairline}/>
           </View>
           
         </View>
@@ -119,7 +125,8 @@ const styles = StyleSheet.create({
   },
   hairline: {
     backgroundColor: '#A2A2A2',
-    height: 0.6,
+    height: 0.8,
+    opacity:0.5,
     width: '90%'
   },
   list:{

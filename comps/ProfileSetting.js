@@ -24,7 +24,6 @@ class ProfileSetting extends React.Component {
     newImg: {},
     filename: "profileImage",
   }
-
   navigatePage=(page)=>{
     this.props.dispatch(ChangePage(page), ChangeTab(3));
   }

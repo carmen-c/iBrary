@@ -43,9 +43,9 @@ class Comment extends React.Component {
           <View style={styles.hairline}/>
           <TouchableOpacity style={styles.list} refs={this.props.commentid} onPress={this.handleSelected}>
             <View>
-              <View style={{width:'90%',flexDirection:'row'}}>
+              <View style={{width:'90%',flexDirection:'row',}}>
                 <Text style={styles.username}>{this.props.username}</Text>
-                <Text>{this.props.comment}</Text>
+                <Text style={{width:'80%'}}>{this.props.comment}</Text>
               </View>
                
             </View>
@@ -73,6 +73,7 @@ const styles = StyleSheet.create({
     width: '90%'
   },
   username:{
+    width:'20%',
     fontWeight:'bold',
     marginRight:10,
   }

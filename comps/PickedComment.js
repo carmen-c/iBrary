@@ -39,9 +39,16 @@ class PickedComment extends React.Component {
         <View style={styles.container}>
           <TouchableOpacity style={styles.list} refs={this.props.commentid}>
             <View>
-              <View style={{flexDirection:'row',  backgroundColor:'#56ada1', padding:6, borderRadius:5}}>
-                <Text style={styles.username}>{this.props.username}</Text>
-                <Text>{this.props.comment}</Text>
+              <Text style={{fontWeight:'600', color:'#bbb', marginBottom:5}}>Picked Comment</Text>
+              <View style={{flexDirection:'row',  backgroundColor:'rgba(86,173,161,0.5)', padding:10, borderRadius:5, width:'100%', flexWrap:'wrap'}}>
+                <View>
+                  <Text style={styles.username}>{this.props.username}</Text>
+                </View>
+                
+                <View style={{width:'75%'}}>
+                  <Text>{this.props.comment}</Text>
+                </View>
+                
               </View>
                
             </View>
