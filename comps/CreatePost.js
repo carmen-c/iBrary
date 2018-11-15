@@ -6,8 +6,15 @@ import {auth, db, storage} from '../constants/FConfig';
 import {connect} from 'react-redux';
 import {ChangeTab, ChangePage} from '../redux/Actions';
 
+import RNFetchBlob from 'rn-fetch-blob';
+const Blob = RNFetchBlob.polyfill.Blob;
+const fs = RNFetchBlob.fs;
+window.XMLHttpRequest = RNFetchBlob.polyfill.XMLHttpRequest;
+window.Blob = Blob;
+
 class CreatePost extends React.Component {
   
+  blob=null;
   state={
     title: "",
     content: "",
@@ -17,11 +24,12 @@ class CreatePost extends React.Component {
     filename: "",
     postid: "",
   }
-handleCategory=()=>{
-  
-}
 
-handleGallery=()=>{
+  handleCategory=()=>{
+
+  }
+
+  handleGallery=()=>{
     Alert.alert(
       'Add a Image',
       'Where do you want to get the picture?',
@@ -35,32 +43,39 @@ handleGallery=()=>{
   }
 
   //user image picker and set image as state
-  addImgFromGallery = () => {
-    ImagePicker.openPicker({
+  addImgFromGallery = async () => {
+    var image = await ImagePicker.openPicker({
       width: 30,
       height: 30,
       compressImageQuality: 0.5,
-      cropping: true,
-      includeBase64: true
-    }).then(image => {
-      this.setState({img: image});
-      this.setState({filename: image.filename});
-      console.log("chosen image:", this.state.img);
+      cropping: true
+    })
+    var imgF = await RNFetchBlob.fs.readFile(image.path, "base64");
+    var blob = await Blob.build(imgF, {type: 'image/jpg;BASE64'});
+    
+    this.blob = blob;
+    
+    this.setState({
+      img: image,
+      filename:image.filename
     });
   }
   
-   addImgFromCamera = () => {
-    ImagePicker.openCamera({
-      width: 120,
-      height: 120,
+   addImgFromCamera = async () => {
+    var image = await ImagePicker.openCamera({
+      width: 30,
+      height: 30,
       compressImageQuality: 0.5,
-      cropping: true,
-      includeBase64: true
-    }).then(image => {
-      this.setState({img: image});
-      this.setState({filename: image.filename});
-      this.setState({width: image.width});
-      this.setState({height: image.height});
+      cropping: true
+    })
+    var photo = await RNFetchBlob.fs.readFile(image.path, "base64");
+    var blob = await Blob.build(photo, {type:'image/jpg;BASE64'});
+     
+    this.blob = blob;
+    
+    this.setState({
+      img: image,
+      filename:image.filename
     });
   }
        
@@ -70,25 +85,24 @@ handleGallery=()=>{
     var date = new Date().toUTCString();
     var timestamp = new Date().getTime();
     var imgURL = "";
-//    console.log("upload",this.state.img)
+    
     if(Object.keys(this.state.img).length != 0) {
-      console.log("imageData", this.state.img.data);
+
       var imgRef = storage.ref().child('postImages/'+newPostKey+"/"+this.state.filename);
-        
-      imgRef.putString(this.state.img.data, 'base64').then((snapshot)=>{
-        
+      
+      imgRef.put(this.blob, {contentType:'image/jpg'}).then((snapshot)=>{
         storage.ref().child(snapshot.metadata.fullPath).getDownloadURL().then((url)=>{
           imgURL = url;  
           this.writeNewPost(current, newPostKey, date, this.state.title, this.state.content, timestamp, this.props.name, imgURL);
         })
-
       });
+      
     } else {
       this.writeNewPost(current, newPostKey, date, this.state.title, this.state.content, timestamp, this.props.name, imgURL);
     }
-    
-    Alert.alert("you posting has been saved!")
-    this.props.dispatch(ChangeTab(1))
+  
+    Alert.alert("you posting has been saved!");
+    this.props.dispatch(ChangeTab(1));
   }
   
   writeNewPost=(uid, postid, date, title, content, timestamp, name, imgURL)=>{
@@ -101,7 +115,7 @@ handleGallery=()=>{
         timestamp: timestamp,
         username: name,
         img: imgURL
-    })
+    });
   }
   
   navigatePage=(page)=>{

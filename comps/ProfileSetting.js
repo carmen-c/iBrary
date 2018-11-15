@@ -8,20 +8,27 @@ import {GoogleSignin, statusCodes} from 'react-native-google-signin';
 import {connect} from 'react-redux';
 import {ChangePage, ChangeTab,SavedProfile} from '../redux/Actions';
 
+import RNFetchBlob from 'rn-fetch-blob';
+const Blob = RNFetchBlob.polyfill.Blob;
+const fs = RNFetchBlob.fs;
+window.XMLHttpRequest = RNFetchBlob.polyfill.XMLHttpRequest;
+window.Blob = Blob;
+
 class ProfileSetting extends React.Component {
-state={
-  name:this.props.name,
-  bio:this.props.bio,
-  img:this.props.img,
-  newImg: {},
-  filename: "profileImage",
-  social:'',
-  email:'',
   
+  blob=null;
+  state={
+    name:this.props.name,
+    bio:this.props.bio,
+    img:this.props.img,
+    newImg: {},
+    filename: "profileImage",
   }
+
   navigatePage=(page)=>{
     this.props.dispatch(ChangePage(page), ChangeTab(3));
   }
+  
   handleGallery=()=>{
     Alert.alert(
       'Change Profile Picture',
@@ -35,81 +42,115 @@ state={
     )
   }
   
-  addImgFromGallery=()=>{
-    ImagePicker.openPicker({
+  addImgFromGallery = async () => {
+    var image = await ImagePicker.openPicker({
       width: 30,
       height: 30,
       compressImageQuality: 0.5,
-      cropping: true,
-      includeBase64: true
-    }).then(image => {
-      this.setState({
-        newImg: image
-      });
-//      this.setState({filename: image.filename});
-      console.log("chosen image:", this.state.newImg);
+      cropping: true
+    })
+    var imgF = await RNFetchBlob.fs.readFile(image.path, "base64");
+    var blob = await Blob.build(imgF, {type: 'image/jpg;BASE64'});
+    
+    this.blob = blob;
+    
+    this.setState({
+      newImg: image,
+      filename:image.filename
     });
   }
   
-  addImgFromCamera = () => {
-    ImagePicker.openCamera({
-      width: 200,
-      height: 200,
-      cropping: true,
-      includeBase64: true
-    }).then(image => {
-      this.setState({newImg: image.data});
-      this.setState({filename: image.filename});
-      console.log("chosen image:", this.state.img);
+   addImgFromCamera = async () => {
+    var image = await ImagePicker.openCamera({
+      width: 30,
+      height: 30,
+      compressImageQuality: 0.5,
+      cropping: true
+    })
+    var photo = await RNFetchBlob.fs.readFile(image.path, "base64");
+    var blob = await Blob.build(photo, {type:'image/jpg;BASE64'});
+     
+    this.blob = blob;
+    
+    this.setState({
+      newImg: image,
+      filename:image.filename
     });
   }
   
   saveNewUserData=()=>{
-      
+ 
+    if(this.state.name != "" && this.state.bio !=""){
+      var ref = db.ref('users/' + auth.currentUser.uid);
+    
     if(Object.keys(this.state.newImg).length != 0) {
-      var imgURL = '';
-      var imgRef = storage.ref().child('profileImages/'+this.props.userid+'.jpg');
+      var imgRef = storage.ref().child('profileImages/'+this.props.userid);
       
-      imgRef.putString(this.state.newImg.data, 'base64').then((snapshot)=>{
-//        console.log("A", snapshot.metadata.fullPath);
-        
-      storage.ref().child(snapshot.metadata.fullPath).getDownloadURL().then((url)=>{
+      imgRef.put(this.blob, {contentType:'image/jpg'}).then((snapshot)=>{
+        storage.ref().child(snapshot.metadata.fullPath).getDownloadURL().then((url)=>{
+          this.props.dispatch(SavedProfile(this.props.userid, this.state.name, this.state.bio, url));
           
-        this.props.dispatch(SavedProfile(this.props.userid, this.state.name, this.state.bio, url));
-//          console.log(url)
-          
-        if (auth.currentUser) {
-            currentUser = auth.currentUser;
-            if (currentUser) {
-                db.ref('users/' + currentUser.uid).set({
-                    userID: currentUser.uid,
-                    email: currentUser.email,
-                    name : this.state.name,
-                    bio: this.state.bio, 
-                    img :url
-                })
-            }
-          }
-       })
+           ref.update({
+              name : this.state.name,
+              bio: this.state.bio,
+              img: url
+           });
+        })
+      });
+
+    } else {
+      this.props.dispatch(SavedProfile(this.props.userid, this.state.name, this.state.bio, this.props.img));
+      ref.update({
+        name : this.state.name,
+        bio: this.state.bio,
+        img: this.props.img
       });
     }
-    else{
-      if (auth.currentUser) {
-            currentUser = auth.currentUser;
-            if (currentUser) {
-                db.ref('users/' + currentUser.uid).set({
-                    userID: currentUser.uid,
-                    email: currentUser.email,
-                    name : this.state.name,
-                    bio: this.state.bio, 
-                    
-                })
-            }
-      this.props.dispatch(SavedProfile(this.props.userid, this.state.name, this.state.bio, this.props.img));
+    console.log(this.props.img);
+   
+    } else {
+      alert('Please enter your name and bio.')
     }
-}
     
-    Alert.alert('User Profile is Saved')
+//    if (auth.currentUser) {
+//            currentUser = auth.currentUser;
+//            if (currentUser) {
+//                db.ref('users/' + currentUser.uid).update({
+//                    name : this.state.name,
+//                    bio: this.state.bio,     
+//                })
+//            }
+//      this.props.dispatch(SavedProfile(this.props.userid, this.state.name, this.state.bio, this.props.img));
+//    }
+//    if(this.state.newImg.data != '') {
+//      var imgURL = '';
+//      var imgRef = storage.ref().child('profileImages/'+this.props.userid+'.jpg')
+      
+//      imgRef.putString(this.state.newImg.data, 'base64').then((snapshot)=>{
+//        console.log("it might be uploaded?");
+//        console.log("A", snapshot.metadata.fullPath);
+        
+//        storage.ref().child(snapshot.metadata.fullPath).getDownloadURL().then((url)=>{
+          
+//          this.props.dispatch(SavedProfile(this.props.userid, this.state.name, this.state.bio, url));
+//          console.log(url)
+          
+//          if (auth.currentUser) {
+//            currentUser = auth.currentUser;
+//            if (currentUser) {
+//                db.ref('users/' + currentUser.uid).set({
+//                    userID: currentUser.uid,
+//                    email: currentUser.email,
+//                    name : this.state.name,
+//                    bio: this.state.bio, 
+//                    img :url
+//                })
+//            }
+//          }
+//       })
+//      });
+//    }
+    alert('User Profile is Saved')
   }
     
 
@@ -125,29 +166,11 @@ state={
   }
     
   render() {
-    var profileImg =()=>{
-      if(this.props.img=="" && Object.keys(this.state.newImg).length == 0){
-        return (
-        <Image source={require('../assets/images/profileADD.png')}/>
-      )  
-      }
-       else if(this.props.img != "" && Object.keys(this.state.newImg).length == 0){
-        return (
-        <Image source={{uri:this.props.img}}/>
-      )  
-      }
-        if(Object.keys(this.state.newImg).length != 0){
-          return (
-          <Image source={{uri:this.state.newImg.path}}/>
-          )
-        }
-      
-     }
+    
     return (
       
       <KeyboardAvoidingView style={{width:'100%'}} behavior="position" enabled>
         <ScrollView style={styles.container}>
-          {profileImg}
           <View style={styles.center}>
             <TouchableOpacity 
              style={styles.backBut}
