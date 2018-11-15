@@ -11,7 +11,7 @@ class Post extends React.Component {
     this.props.dispatch(SelectItem(this.props.postid, this.props.userid, this.props.username,this.props.title, this.props.content, this.props.img, this.props.pickedComments));
     //change page
     this.props.dispatch(ChangeTab(4));
-    console.log("clicked: ", this.props.postid, this.props.pickedComments);
+    console.log("clicked: ", this.props.userimg);
   }
 
   render() {
@@ -21,7 +21,9 @@ class Post extends React.Component {
           <TouchableOpacity style={styles.list} refs={this.props.postid} onPress={this.handleSelected}>
             <View>
               <View style={{flexDirection:'row'}}>
-                <Image style={{ width:30, height:30, marginRight:7}} source={require('../assets/images/profileDefault.png')} />
+                <Image 
+                  style={{ width:30, height:30, marginRight:7}} 
+                  source={(this.props.userimg) ? { uri: this.props.userimg} : require('../assets/images/profileDefault.png') } />
                 <Text style={{fontSize:15, color:'#7a7979', marginTop:5, fontWeight:'600'}}>{(this.props.username) ? this.props.username : "Usename"}</Text>
               </View>
               <View style={{flexDirection:'row', marginBottom:10}}>

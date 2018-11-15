@@ -13,7 +13,8 @@ class Home extends React.Component {
     error:"",
     arrData: [],
     loading: false,
-    search: ""
+    search: "",
+    refreshing: false
   }
   
   componentWillMount=()=>{
@@ -36,24 +37,37 @@ class Home extends React.Component {
   }
   
   readPosts=()=>{
+    this.setState({refreshing: true});
     db.ref('posts/')
       .limitToLast(100)
       .once('value')
       .then(snapshot => {
       var items = [];
+      var profileimg = "";
       
       snapshot.forEach(child =>{
-        items.unshift({
-          key: child.val().postID,
-          title: child.val().title,
-          content: child.val().content,
-          date: child.val().date,
-          username: child.val().username,
-          img:child.val().img,
-          pickedComments:child.val().pickedComments
+        
+        db.ref('users/'+child.val().userID+"/img").once('value').then((snapshot)=>{
+          var profileimg = snapshot.val();
+          items.push({
+            key: child.val().postID,
+            title: child.val().title,
+            content: child.val().content,
+            date: child.val().date,
+            username: child.val().username,
+            img:child.val().img,
+            pickedComments:child.val().pickedComments,
+            userimg: profileimg,
+            timestamp:child.val().timestamp
+          });
+        }).then(()=>{
+          var newthingy = items.sort((x,y)=>{
+            return x.timestamp - y.timestamp;
+          })
+          newthingy = newthingy.reverse();
+          this.setState({arrData: newthingy, refreshing: false});
         })
       });
-      this.setState({arrData: items})
     }).catch(error => {
       this.setState({error: error.message})
     });
@@ -68,12 +82,12 @@ class Home extends React.Component {
        username={item.username}
        img={item.img}
        pickedComments={item.pickedComments}
+       userimg = {item.userimg}
        />
     )
   }
     
   render() {
-    //this.readPosts();
     
     return (
 
@@ -93,6 +107,9 @@ class Home extends React.Component {
               data={this.state.arrData}
               keyExtractor={item => item.key}
               renderItem={this.renderList}
+              onRefresh={this.readPosts}
+              refreshing={this.state.refreshing}
+              ListEmpty=<Text>Oops empty list</Text>
             />
         </View>
       </View>
