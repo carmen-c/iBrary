@@ -31,15 +31,21 @@ class PickedComment extends React.Component {
     ]
     
     return (
-      <Swipeout 
+      
+        <View style={styles.container}>
+        <View style={{width:'100%'}}>
+          <Text style={{fontWeight:'600', color:'#bbb', marginBottom:5, marginLeft:'5%'}}>Picked Comment</Text>
+        </View>
+           
+        <Swipeout 
+          style={{width:'100%'}}
         left={swipeoutBtns}
         autoClose={true}
         backgroundColor="#fff"
         >
-        <View style={styles.container}>
           <TouchableOpacity style={styles.list} refs={this.props.commentid}>
             <View>
-              <Text style={{fontWeight:'600', color:'#bbb', marginBottom:5}}>Picked Comment</Text>
+             
               <View style={{flexDirection:'row',  backgroundColor:'rgba(86,173,161,0.5)', padding:10, borderRadius:5, width:'100%', flexWrap:'wrap'}}>
                 <View>
                   <Text style={styles.username}>{this.props.username}</Text>
@@ -53,8 +59,9 @@ class PickedComment extends React.Component {
                
             </View>
           </TouchableOpacity>
+            </Swipeout>
         </View>
-      </Swipeout>
+    
     );
   }
 }
@@ -66,7 +73,7 @@ const styles = StyleSheet.create({
   },
   list:{
     width:'100%',
-    padding:7,
+    alignItems:'center',
   },
   hairline: {
     backgroundColor: '#A2A2A2',

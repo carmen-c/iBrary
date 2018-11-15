@@ -66,7 +66,7 @@ class PostDetail extends React.Component {
               </Text>
               
            </View>
-          <View style={{width:'90%'}}>
+          <View style={{width:'100%'}}>
              <PickedCommentList pickedComments={this.props.picked}/>
           </View>
 
