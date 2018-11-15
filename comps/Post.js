@@ -31,7 +31,7 @@ class Post extends React.Component {
                   style={{ width:70, height:70, marginRight:7, marginTop:10, borderRadius:5}} 
                   source={(this.props.img) ? { uri: this.props.img} : require('../assets/images/defaultPostingImg.png') }/>
                 <View style={{width:'70%'}}>
-                  <Text style={{fontFamily: 'Raleway', fontSize: 20, marginBottom:7, marginTop:15,marginLeft:5, fontWeight:'600'}}>{this.props.title}
+                  <Text style={{ fontSize: 20, marginBottom:7, marginTop:15,marginLeft:5, fontWeight:'600'}}>{this.props.title}
                   </Text>
                   <Text style={{fontSize: 16, marginLeft:5}}>{this.props.content}</Text>
                 </View>
