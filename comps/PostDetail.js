@@ -71,7 +71,8 @@ class PostDetail extends React.Component {
           </View>
 
           </View>
-          <View style={{width:'100%',alignItems:'center', paddingBottom:80}}>       
+          <View style={{width:'100%',alignItems:'center', paddingBottom:80}}> 
+            
             <CommentList postid={this.props.postid}/> 
             <View style={styles.hairline}/>
             <CreateComment postid={this.props.postid}/>

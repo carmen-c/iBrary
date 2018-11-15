@@ -215,14 +215,6 @@ class ProfileSetting extends React.Component {
                     keyboardType="default"
                     onChangeText={(text) => this.setState({bio: text})}/>
             </View>
-            <View style={[styles.inpBox]}>
-              <Text style={styles.sectionTitle}>Social media</Text>
-              <TextInput 
-                    style={[styles.inps]}
-                    placeholder="www.instagram.com/"
-                    keyboardType='url'
-                    onChangeText={(text) => this.setState({social: text})}/>
-            </View>
             <View style={styles.butBox}> 
                 <TouchableOpacity onPress={this.saveNewUserData}> 
                     <View style={[styles.signBut]}>
