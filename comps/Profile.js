@@ -98,6 +98,8 @@ class Profile extends React.Component {
        postid={item.key}
        username={item.username}
        img={item.img}
+        pickedComments={item.pickedComments}
+       userimg = {item.userimg}
        />
     )
   }

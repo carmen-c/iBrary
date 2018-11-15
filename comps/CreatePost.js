@@ -47,7 +47,7 @@ class CreatePost extends React.Component {
     var image = await ImagePicker.openPicker({
       width: 30,
       height: 30,
-      compressImageQuality: 0.5,
+      compressImageQuality: 0.3,
       cropping: true
     })
     var imgF = await RNFetchBlob.fs.readFile(image.path, "base64");
@@ -65,7 +65,7 @@ class CreatePost extends React.Component {
     var image = await ImagePicker.openCamera({
       width: 30,
       height: 30,
-      compressImageQuality: 0.5,
+      compressImageQuality: 0.3,
       cropping: true
     })
     var photo = await RNFetchBlob.fs.readFile(image.path, "base64");
