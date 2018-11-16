@@ -54,7 +54,8 @@ class SignUp extends React.Component {
       db.ref('users/' + currentUser.uid).set({
           userID: currentUser.uid,
           email: currentUser.email,
-          name:this.state.name
+          name:this.state.name,
+          img: ""
       }).catch(error => {
           this.setState({error: error.message})
       });

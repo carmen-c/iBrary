@@ -26,10 +26,7 @@ class Comment extends React.Component {
   
   deleteComment=()=>{
     console.log("delete comment");
-    db.ref('comments/').child(this.props.commentid).remove().then(()=>{
-//      alert("stuff");
-//      this.props.refresh();
-    });
+    db.ref('comments/').child(this.props.commentid).remove();
   }
 
   render() {
@@ -51,9 +48,7 @@ class Comment extends React.Component {
        onPress:this.deleteComment
       }]
     }else {
-      swipeoutBtns = [{
-        disabled:true
-      }]
+      
     }
     
     return (
