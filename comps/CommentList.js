@@ -58,7 +58,7 @@ export default class CommentList extends React.Component {
     return (
 
       <View style={styles.container}>
-        <Text>{this.state.error}</Text>
+        <Text style={{height:8}}>{this.state.error}</Text>
         <View style={{width:'100%'}}>
             <FlatList
               extraData={this.state.arrData}

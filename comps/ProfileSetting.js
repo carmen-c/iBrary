@@ -45,7 +45,7 @@ class ProfileSetting extends React.Component {
     var image = await ImagePicker.openPicker({
       width: 30,
       height: 30,
-      compressImageQuality: 0.3,
+      compressImageQuality: 0.1,
       cropping: true
     })
     var imgF = await RNFetchBlob.fs.readFile(image.path, "base64");
@@ -63,7 +63,7 @@ class ProfileSetting extends React.Component {
     var image = await ImagePicker.openCamera({
       width: 30,
       height: 30,
-      compressImageQuality: 0.3,
+      compressImageQuality: 0.1,
       cropping: true
     })
     var photo = await RNFetchBlob.fs.readFile(image.path, "base64");
@@ -215,14 +215,6 @@ class ProfileSetting extends React.Component {
                     keyboardType="default"
                     onChangeText={(text) => this.setState({bio: text})}/>
             </View>
-            <View style={[styles.inpBox]}>
-              <Text style={styles.sectionTitle}>Social media</Text>
-              <TextInput 
-                    style={[styles.inps]}
-                    placeholder="www.instagram.com/"
-                    keyboardType='url'
-                    onChangeText={(text) => this.setState({social: text})}/>
-            </View>
             <View style={styles.butBox}> 
                 <TouchableOpacity onPress={this.saveNewUserData}> 
                     <View style={[styles.signBut]}>
@@ -247,11 +239,11 @@ const styles = StyleSheet.create({
     paddingBottom:100
   },
   backBut: {
-    width:30,
-    height:30,
+    width:22,
+    height:22,
     position:'absolute',
-    left:5,
-    top:15,
+    left:3,
+    top:13,
     resizeMode:'contain',
     zIndex:50
   },

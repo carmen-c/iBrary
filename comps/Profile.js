@@ -144,10 +144,7 @@ class Profile extends React.Component {
           <View>
         <View style={styles.hairline} />
           </View>
-        <View style={styles.section2}>
-           <Text style={styles.sectionTitle}>Social Media</Text>
-        </View>
-         <View style={styles.hairline} /> 
+
        
           
         <View style={styles.section2}>

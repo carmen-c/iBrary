@@ -94,16 +94,41 @@ class Home extends React.Component {
     return (
 
       <View style={styles.container}>
-        
-        <TextInput
+        <View style={{position:'absolute', top:0, left:0, width:'100%', alignItems:'center', height:85}}>
+          <TextInput
             style={styles.searchBar}
             placeholder="Search"
             autoCorrect={false}
             onChangeText={(text) => this.handleSearch(text)}
-        />
-      
+          />
+          <ScrollView 
+            horizontal={true} 
+            overScrollMode='auto'
+            showsHorizontalScrollIndicator='false'>  
+          <View 
+            style={{flexDirection:'row', flexWrap:'wrap', justifyContent:'space-between', marginLeft:10, }}>
+           
+              <TouchableOpacity style={styles.catrgory}>
+                <Text style={{color:'#fff'}}>Category1</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.catrgory}>
+                <Text>Category2</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.catrgory}>
+                <Text>Category3</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.catrgory}>
+                <Text>Category4</Text>
+              </TouchableOpacity>
+              <TouchableOpacity style={styles.catrgory}>
+                <Text>All</Text>
+              </TouchableOpacity>  
+          </View>
+          </ScrollView>
+        </View>
+              
         <Text>{this.state.error}</Text>
-        <View style={{width:"95%",marginTop:50, marginBottom:50, paddingBottom:40}}>
+        <View style={{width:"95%",marginTop:80, marginBottom:50, paddingBottom:40}}>
             <FlatList
               extraData={this.state.arrData}
               data={this.state.arrData}
@@ -135,13 +160,22 @@ const styles = StyleSheet.create({
     backgroundColor:'#e6e6e6',   
   },
   searchBar: {
-    position:'absolute',
-    top:8,
+//    position:'absolute',
+//    top:8,
     width:'90%',
     marginTop:7,
-    marginBottom:20,
+    marginBottom:10,
     padding:10 ,
     backgroundColor:'#fff',
     borderRadius:10,
-  }
+  },
+  catrgory:{
+    backgroundColor:'rgba(19,129,114,0.7)', 
+    padding:5, 
+    marginRight:20,
+    borderRadius:5, 
+    shadowOffset:{ width: 0,  height: 3, },
+    shadowRadius: 5,
+    shadowColor: '#ccc', 
+    shadowOpacity: 1,}
 });

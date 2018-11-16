@@ -1,5 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, View, Button } from 'react-native';
+import { ifIphoneX } from 'react-native-iphone-x-helper'
 
 import Login from '../comps/Login';
 import Welcome from '../comps/Welcome';
@@ -59,8 +60,14 @@ class Main extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    fontFamily:'Avenir',
     backgroundColor: '#e6e6e6',
     alignItems: 'center',
+    ...ifIphoneX({
+            paddingTop: 25
+        }, {
+            paddingTop: 8
+        })
   },
 });
 

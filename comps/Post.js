@@ -27,8 +27,8 @@ class Post extends React.Component {
                 <Image 
                   style={{ width:30, height:30, marginRight:7, borderRadius:15, opacity:0.9}} 
                   source={(this.props.userimg) ? { uri: this.props.userimg} : require('../assets/images/profileDefault.png') } />
-                
-                <Text style={{fontSize:15, color:'#7a7979', marginTop:5, fontWeight:'600'}}>{(this.props.username) ? this.props.username : "Usename"}</Text>
+
+                <Text style={{fontFamily:'Avenir',fontSize:15, color:'#7a7979', marginTop:5, fontWeight:'700'}}>{(this.props.username) ? this.props.username : "Usename"}</Text>
               </View>
               
               <View style={{flexDirection:'row', marginBottom:10}}>
@@ -37,9 +37,19 @@ class Post extends React.Component {
                   source={(this.props.img) ? { uri: this.props.img} : require('../assets/images/defaultPostingImg.png') }/>
                 
                 <View style={{width:'70%'}}>
-                  <Text style={{ fontSize: 20, marginBottom:7, marginTop:15,marginLeft:5, fontWeight:'600'}}>{this.props.title}
+                  <Text 
+                    style={{fontFamily:'Avenir',fontSize: 18, marginBottom:3, marginTop:10,marginLeft:5,fontWeight:'800' }}
+                    ellipsuzeMode='tail'
+                    numberOfLines={1}
+                  >{this.props.title}
                   </Text>
-                  <Text style={{fontSize: 16, marginLeft:5}} ellipsizeMode='tail' numberOfLines={3}>{this.props.content}</Text>
+                  
+                  <Text 
+                    style={{fontFamily:'Avenir',fontSize: 15, marginLeft:5}}
+                    ellipsizeMode='tail'
+                    numberOfLines={2}>
+                    {this.props.content}
+                  </Text>
                 </View>
               </View>
             
@@ -64,6 +74,7 @@ const styles = StyleSheet.create({
   container: {
     width:"100%",
     alignItems:'center',
+    fontFamily:'Avenir'
   },
   list:{
     width:'95%',

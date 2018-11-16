@@ -1,5 +1,6 @@
 import React from 'react';
 import {Image, Button, Text, TextInput, View, StyleSheet, TouchableOpacity} from 'react-native';
+import { ifIphoneX } from 'react-native-iphone-x-helper';
 
 import {db, auth, auth2} from '../constants/FConfig';
 
@@ -133,7 +134,7 @@ class Login extends React.Component {
               style={{width:20,height:20, marginTop:10,opacity:0.6}}            
             /> 
             <TextInput 
-                style={[styles.inps]}
+                style={[styles.inps,styles.font]}
                 placeholder='E-mail'
                 keyboardType='email-address'
                 onChangeText={(text) => this.setState({email: text})}/>
@@ -143,7 +144,7 @@ class Login extends React.Component {
               style={{width:20,height:25, marginTop:10,resizeMode:'contain',opacity:0.6}}            
             /> 
             <TextInput 
-                style={styles.inps}
+                style={[styles.inps,styles.font]}
                 placeholder="Password"
                 keyboardType="default"
                 secureTextEntry={true}
@@ -155,19 +156,19 @@ class Login extends React.Component {
           
           <TouchableOpacity onPress={this.handleLogin}> 
               <View style={[styles.signBut]}>
-                  <Text style={styles.buttonText}>SIGN IN</Text>
+                  <Text style={[styles.buttonText,styles.font]}>SIGN IN</Text>
               </View>
           </TouchableOpacity>
           
           <GoogleSigninButton
-              style={{ width: '100%', height: 50, borderRadius:10 }}
+              style={{ width: '100%', height: 50, borderRadius:10}}
               size={GoogleSigninButton.Size.Wide}
               color={GoogleSigninButton.Color.Light}
               onPress={this.signIn}
               disabled={this.state.isSigninInProgress} />
           
           <TouchableOpacity style={{alignItems:'center'}} onPress={this.navigateToPage.bind(this, 3)}>
-            <Text style={{marginTop:10, fontSize:15, fontWeight:'600', color:'#676767'}}>
+            <Text style={[styles.creactAccount, styles.font]}>
               Create Account
             </Text>
           </TouchableOpacity>
@@ -184,14 +185,22 @@ const styles = StyleSheet.create({
     alignItems: 'center',
     justifyContent: 'center',
     backgroundColor:'#e6e6e6',
-    paddingTop:'20%'
+    ...ifIphoneX({
+            paddingTop:'40%',
+        }, {
+            paddingTop:'20%',
+        })
   },
-  logoImg: {
-      marginTop:'5%',
+  logoImg: {   
       marginBottom:'5%',
       width:130, 
       height:150, 
-      resizeMode:'contain'
+      resizeMode:'contain',
+      ...ifIphoneX({
+              marginTop:'15%',
+          }, {
+              marginTop:'5%',
+          })
   },
   inpBox: {
     flexDirection:'column',
@@ -232,7 +241,16 @@ const styles = StyleSheet.create({
   },
   red: {
     backgroundColor:'#d34836'
-}
+  },
+  creactAccount:{
+    marginTop:10, 
+    fontSize:15, 
+    fontWeight:'600', 
+    color:'#676767'
+  },
+  font:{
+    fontFamily:'Avenir'
+  }
 });
 
 function mapStateToProps(state){
