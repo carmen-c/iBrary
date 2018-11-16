@@ -1,5 +1,5 @@
 import React from 'react';
-import {Image, Button, Text, TextInput, View, StyleSheet, TouchableOpacity} from 'react-native';
+import {Image, Button, Text, TextInput, View, StyleSheet, TouchableOpacity, ActivityIndicator} from 'react-native';
 import { ifIphoneX } from 'react-native-iphone-x-helper';
 
 import {db, auth, auth2} from '../constants/FConfig';
@@ -11,9 +11,6 @@ import {GoogleSignin, GoogleSigninButton, statusCodes} from 'react-native-google
 import GConfig from '../constants/GConfig';
 
 class Login extends React.Component {
-  static navigationOptions = {
-    header: null,
-  };
 
   state={
     email: '',
@@ -23,12 +20,12 @@ class Login extends React.Component {
     bio:'',
     img:'',
     uid:'',
+    loading: false
   }
   
   componentWillMount=()=>{
     auth.onAuthStateChanged(user=> {
       if (user) {
-        // User is signed in.
         this.handleUserInfo(user);
       } else {
         // No user is signed in.
@@ -36,15 +33,10 @@ class Login extends React.Component {
     });  
   }
   
-  componentWillUnMount=()=>{
-    //have to put something here to get rid of warning
-  }
-  
   handleLogin=()=>{
-    //keep user logged in?
+    this.setState({loading: true});
     auth.setPersistence(auth2.Auth.Persistence.LOCAL).then(a => {
       
-    //sign in using email and password
     return auth.signInWithEmailAndPassword(this.state.email, this.state.password)
     .then(user => {
         this.handleUserInfo(auth.currentUser);
@@ -58,11 +50,12 @@ class Login extends React.Component {
   }
   
   signIn = async () => {
+    this.setState({loading: true});
     await GoogleSignin.signIn().then((user)=>{
       const credential = auth2.GoogleAuthProvider.credential(user.idToken, user.accessToken);
       auth.signInAndRetrieveDataWithCredential(credential);
       this.handleUserInfo(auth.currentUser);
-      this.navigateToPage.bind(this, 4);
+//      this.navigateToPage.bind(this, 4);
       
     }).catch((error) =>{
       if (error.code === statusCodes.SIGN_IN_CANCELLED) {
@@ -78,6 +71,7 @@ class Login extends React.Component {
   }
   
   handleUserInfo=(user)=>{
+    this.setState({loading: true});
     if(user.uid != null){
     db.ref('users/'+ user.uid)
       .once('value')
@@ -110,23 +104,22 @@ class Login extends React.Component {
   
   navigateToPage=(page)=>{
     this.props.dispatch(ChangePage(page));
+    this.setState({loading: false});
   }
 
   render() {
     
     GoogleSignin.configure(GConfig);
     
-    return (
-      <View style={styles.container}>
-        <Image 
-            source={require('../assets/images/logo.png')}
-            style={styles.logoImg}            
-        /> 
-        
-        <View>
-          <Text>{this.state.error}</Text>
+    var indicator = null;
+    
+    if(this.state.loading == true) {
+      indicator = 
+        <View style={styles.inpBox}>
+          <ActivityIndicator size="large" color="#138172" />
         </View>
-        
+    } else {
+      indicator = 
         <View style={styles.inpBox}>
           <View style={{flexDirection:'row', flexWrap:'wrap'}}>
             <Image 
@@ -151,6 +144,20 @@ class Login extends React.Component {
                 onChangeText={(text) => this.setState({password: text})}/>
           </View>
         </View>
+    }
+    
+    return (
+      <View style={styles.container}>
+        <Image 
+            source={require('../assets/images/logo.png')}
+            style={styles.logoImg}            
+        /> 
+        
+        <View>
+          <Text>{this.state.error}</Text>
+        </View>
+        
+        {indicator}
         
         <View style={styles.butBox}> 
           
