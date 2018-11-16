@@ -31,7 +31,8 @@ export default class CommentList extends React.Component {
           key: child.val().commentID,
           postid: child.val().postID,
           comment: child.val().comment,
-          username: child.val().username
+          username: child.val().username,
+          userid: child.val().userID
         })
       });
     console.log(items)
@@ -46,6 +47,7 @@ export default class CommentList extends React.Component {
        postid={item.postid}
        comment={item.comment}
        username={item.username}
+       author={item.userid}
        />
     )
   }

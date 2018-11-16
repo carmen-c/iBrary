@@ -12,7 +12,7 @@ import PickedCommentList from './PickedCommentList';
 class PostDetail extends React.Component {
   
   check=()=>{
-    console.log("POSTDETAIL: ", this.props.picked)
+    console.log("POSTDETAIL: ", this.props.userid)
     if (auth.currentUser.uid == this.props.userid){
       //enable editing stuff
     } else {
@@ -24,7 +24,6 @@ class PostDetail extends React.Component {
     this.props.dispatch(ChangeTab(1));
   }
 
-  //back button, post info, comments, createcomment
   render() {
     
     this.check();

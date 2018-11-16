@@ -4,9 +4,11 @@ import Swipeout from 'react-native-swipeout';
 
 import {connect} from 'react-redux';
 import {ChangeTab} from '../redux/Actions';
-import {db} from '../constants/FConfig';
+import {db, auth} from '../constants/FConfig';
 
 class Comment extends React.Component {
+  
+  //passed into this comp: key, postid, comment, username, author
   
   handleSelected=()=>{
 //    console.log("clicked: ", this.props.postid);
@@ -21,23 +23,44 @@ class Comment extends React.Component {
 //      this.props.refresh();
     });
   }
+  
+  deleteComment=()=>{
+    console.log("delete comment");
+    db.ref('comments/').child(this.props.commentid).remove().then(()=>{
+//      alert("stuff");
+//      this.props.refresh();
+    });
+  }
 
   render() {
     
-    var swipeoutBtns = [
-      {
+    var swipeoutBtns = [];
+    var user = auth.currentUser.uid;
+    console.log(auth.currentUser.uid, this.props.uidSelectedPost, this.props.author)
+    
+    if(user == this.props.uidSelectedPost) {
+      swipeoutBtns = [{
        text:'Pick', 
        backgroundColor:'#138172', 
        onPress:this.addToPost
-      }
-    ]
+      }]
+    } else if (user == this.props.author){
+      swipeoutBtns = [{
+       text:'Delete', 
+       backgroundColor:'#138172', 
+       onPress:this.deleteComment
+      }]
+    }else {
+      swipeoutBtns = [{
+        disabled:true
+      }]
+    }
     
     return (
       <Swipeout 
         left={swipeoutBtns}
         autoClose={true}
         backgroundColor="#fff"
-        
         >
         <View style={styles.container}>
           <View style={styles.hairline}/>
@@ -84,7 +107,8 @@ const styles = StyleSheet.create({
 function mapStateToProps(state){
   return {
     page:state.Page.page,
-    tab: state.Page.tab
+    tab: state.Page.tab,
+    uidSelectedPost: state.SelectPost.userid
   }
 }
 export default connect (mapStateToProps)(Comment);

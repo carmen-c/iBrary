@@ -58,7 +58,8 @@ class Home extends React.Component {
             img:child.val().img,
             pickedComments:child.val().pickedComments,
             userimg: profileimg,
-            timestamp:child.val().timestamp
+            timestamp:child.val().timestamp,
+            author:child.val().userID
           });
         }).then(()=>{
           var newthingy = items.sort((x,y)=>{
@@ -82,7 +83,8 @@ class Home extends React.Component {
        username={item.username}
        img={item.img}
        pickedComments={item.pickedComments}
-       userimg = {item.userimg}
+       userimg={item.userimg}
+       author={item.author}
        />
     )
   }

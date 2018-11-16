@@ -6,9 +6,11 @@ import {ChangeTab, SelectItem} from '../redux/Actions';
 
 class Post extends React.Component {
   
+  //passed into this comp: title, content, postid, username, img, pickedComments, userimg, author
+  
   handleSelected=()=>{
     //pass or save all post props
-    this.props.dispatch(SelectItem(this.props.postid, this.props.userid, this.props.username,this.props.title, this.props.content, this.props.img, this.props.pickedComments));
+    this.props.dispatch(SelectItem(this.props.postid, this.props.author, this.props.username,this.props.title, this.props.content, this.props.img, this.props.pickedComments));
     //change page
     this.props.dispatch(ChangeTab(4));
     console.log("clicked: ", this.props.userimg);
