@@ -1,6 +1,6 @@
 import React from 'react';
 import ImagePicker from 'react-native-image-crop-picker';
-import { View, StyleSheet, Text, Button, TextInput, TouchableOpacity, ScrollView, Image, Alert, Picker } from 'react-native';
+import { View, StyleSheet, Text, Button, TextInput, TouchableOpacity, ScrollView, Image, Alert, Picker, TouchableWithoutFeedback, Keyboard } from 'react-native';
 import {auth, db, storage} from '../constants/FConfig';
 
 import {connect} from 'react-redux';
@@ -11,6 +11,12 @@ const Blob = RNFetchBlob.polyfill.Blob;
 const fs = RNFetchBlob.fs;
 window.XMLHttpRequest = RNFetchBlob.polyfill.XMLHttpRequest;
 window.Blob = Blob;
+
+const DismissKeyboard = ({ children })=>(
+  <TouchableWithoutFeedback onPress={()=> Keyboard.dismiss()}>
+    {children}
+  </TouchableWithoutFeedback>
+)
 
 class CreatePost extends React.Component {
   
@@ -125,10 +131,10 @@ class CreatePost extends React.Component {
   render() {
     
     return (
-      
+      <DismissKeyboard>
       <View style={styles.container}>
         <View style={styles.pageTitle}>
-            <Text style={styles.titleFont}>Create an Idea</Text>
+            <Text style={[styles.titleFont, styles.font]}>Create an Idea</Text>
         </View>
         <View style={styles.boxes}>          
               <TouchableOpacity onPress={this.handleGallery}>
@@ -139,31 +145,33 @@ class CreatePost extends React.Component {
               </TouchableOpacity>
          
         </View>
-        <View style={[styles.items, styles.title]}>
+        <View style={styles.items}>
           <TextInput
-              style={{fontSize:18, fontWeight:'500'}}
+              style={[styles.font, styles.title]}
               placeholder='Title'
+              keyboardType='default'
               onChangeText={(text)=> this.setState({title: text})}
           />
         </View>
         <View style={styles.hairline} />
         <View style={[styles.items, styles.content]}>
            <TextInput
-              style={{fontSize:16}}
+              style={[styles.font,{fontSize:16}]}
               placeholder='Description'
               multiline={true}
+              keyboardType='default'
               onChangeText={(text)=> this.setState({content: text})}
             />  
         </View> 
         <View style={styles.hairline} />
         
-        <View style={{width:'95%', flexDirection:'row'}}>
-          <Text style={{padding:10}}>Category</Text>
+        <View style={styles.category}>
+          <Text style={[styles.font,{padding:10}]}>Category</Text>
           <Picker
             selectedValue={this.state.handleCategory}
             iosHeader="Select one"
-            style={{ height: 60, width: 100 }}
-            itemStyle={{fontSize:15, height:40}}
+            style={{height: 60, width: 100}}
+            itemStyle={[styles.font,{fontSize:15, height:40}]}
             onValueChange={(itemValue, itemIndex) => this.setState({handleCategory: itemValue})}>
             <Picker.Item label="App" value="app" />
             <Picker.Item label="Product" value="product"/>
@@ -173,12 +181,13 @@ class CreatePost extends React.Component {
         <View style={styles.butBox}> 
           <TouchableOpacity onPress={this.createNewPost}> 
             <View style={[styles.signBut]}>
-                <Text style={styles.buttonText}>SAVE</Text>
+                <Text style={[styles.buttonText,styles.font]}>POST</Text>
             </View>
           </TouchableOpacity>
          
        </View>
-        </View>
+      </View>
+      </DismissKeyboard>
       
     );
   }
@@ -190,6 +199,9 @@ const styles = StyleSheet.create({
     height:'100%',   
     backgroundColor: '#fff',
     alignItems: 'center',
+  },
+  font:{
+    fontFamily:'Avenir'
   },
   hairline: {
     backgroundColor: '#A2A2A2',
@@ -206,9 +218,7 @@ const styles = StyleSheet.create({
     paddingBottom:15,
     width:'100%',
     backgroundColor:'#e6e6e6',
-//    alignContent:'center',
-    alignItems:'center',
-    
+    alignItems:'center',   
   },
   titleFont:{
     fontSize:25,
@@ -234,14 +244,15 @@ const styles = StyleSheet.create({
     padding:10,
   },
   title: {
-    fontSize:20
+    fontSize:18, 
+    fontWeight:'500'
   },
   content: {
     height:'30%' 
   },
-  hashtag: {
-    height:'10%',
-    marginBottom:'5%'
+  category:{
+    width:'95%', 
+    flexDirection:'row'
   },
   buttonText:{
     fontSize:17,

@@ -41,7 +41,7 @@ class CreateComment extends React.Component {
       <View style={styles.container}>
         <View style={{width:'75%',padding:5, marginLeft:'5%'}}>
            <TextInput   
-              style={{height:30, borderStyle:'solid', borderStartColor:'#ccc', borderWidth:0.2, borderRadius:4, padding:5}}
+              style={{height:30,}}
               placeholder='Make an comment'
               value={this.state.comment}
               multiline={true}

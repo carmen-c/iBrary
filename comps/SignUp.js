@@ -75,10 +75,10 @@ class SignUp extends React.Component {
         </TouchableOpacity>
         <View style={styles.center}>
           <View style={styles.pageTitle}>
-              <Text style={styles.titleFont}>Create Account</Text>
+              <Text style={[styles.titleFont, styles.font]}>Create Account</Text>
           </View>
 
-          <Text>Sign up with your email address</Text>
+          <Text style={styles.font}>Sign up with your email address</Text>
           <View>
             <Text>{this.state.error}</Text>
           </View>
@@ -86,27 +86,27 @@ class SignUp extends React.Component {
           <View style={styles.inpBox}>
            
               <TextInput 
-                  style={[styles.inps]}
+                  style={[styles.inps,styles.font]}
                   placeholder='Email'
                   keyboardType='email-address'
                   onChangeText={(text) => this.setState({email: text})}/>
            
               <TextInput 
-                  style={styles.inps}
+                  style={[styles.inps, styles.font]}
                   placeholder="Password"
                   keyboardType="default"
                   secureTextEntry={true}
                   onChangeText={(text) => this.setState({password: text})}/>
            
             <TextInput 
-                  style={styles.inps}
+                  style={[styles.inps, styles.font]}
                   placeholder="Re-type password"
                   keyboardType="default"
                   secureTextEntry={true}
                   onChangeText={(text) => this.setState({password2: text})}/>
             
             <TextInput 
-                  style={styles.inps}
+                  style={[styles.inps, styles.fonts]}
                   placeholder="Name"
                   keyboardType="name-phone-pad"
                   onChangeText={(text) => this.setState({name: text})}/>
@@ -114,7 +114,7 @@ class SignUp extends React.Component {
           <View style={styles.butBox}> 
                   <TouchableOpacity onPress={this.handleSignUp}> 
                       <View style={[styles.signBut]}>
-                          <Text style={styles.buttonText}>SIGN UP</Text>
+                          <Text style={[styles.buttonText,styles.font]}>SIGN UP</Text>
                       </View>
                   </TouchableOpacity>
           </View>
@@ -129,6 +129,9 @@ class SignUp extends React.Component {
 const styles = StyleSheet.create({
   container: {
     width:'100%',
+  },
+  font:{
+    fontFamily:'Avenir'
   },
   backBut: {
     width:30,

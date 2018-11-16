@@ -1,5 +1,6 @@
 import React from 'react';
 import { StyleSheet, Text, View, Button, Image, TouchableOpacity } from 'react-native';
+import { ifIphoneX } from 'react-native-iphone-x-helper';
 
 import Home from '../comps/Home';
 import CreatePost from '../comps/CreatePost';
@@ -73,7 +74,8 @@ class TabBar extends React.Component {
         <View style={styles.hairline} />
         
         <View style={styles.nav}>
-          <TouchableOpacity onPress={this.handleButton.bind(this, 2)}>
+          <View style={styles.flex}>
+            <TouchableOpacity onPress={this.handleButton.bind(this, 2)}>
               <Image
                   style={styles.navIcon}
                   source={this.state.postImg}/>
@@ -88,6 +90,8 @@ class TabBar extends React.Component {
                   style={styles.navIcon}
                   source={this.state.profileImg}/>
           </TouchableOpacity>
+          </View>
+          
         </View>
         
       </View>
@@ -114,21 +118,35 @@ const styles = StyleSheet.create({
     padding:0,
     position:'absolute',
     bottom:65,
+    ...ifIphoneX({
+            bottom: 75
+        }, {
+            bottom: 65
+        })
+  },
+  flex:{
+    width:'88%',
+    flexDirection:'row',
+    justifyContent:'space-between',
   },
   nav: {
-    height:65,
+    width:'100%',
     backgroundColor: '#f1f1f1',
-    flexDirection:'row',
+    alignItems:'center',
     paddingTop:20,
     position:'absolute',
     bottom:0,
+    ...ifIphoneX({
+            height: 75
+        }, {
+            height: 65
+        })
     
   },
   navIcon: {
     width:27,
     height:27,
     resizeMode:'contain',
-    marginLeft:'30%'
   }
 });
 
