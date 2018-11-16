@@ -59,6 +59,8 @@ class Main extends React.Component {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
+    fontFamily:'Avenir',
+    paddingTop:8,
     backgroundColor: '#e6e6e6',
     alignItems: 'center',
   },

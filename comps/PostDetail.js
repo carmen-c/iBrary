@@ -29,10 +29,9 @@ class PostDetail extends React.Component {
     
     this.check();
     return (
-      <KeyboardAvoidingView style={{marginTop:0}} behavior="position" enabled>
-      <ScrollView>
       <View style={styles.container}>
-        <View style={{height:60}}>
+     
+        <View style={{ width:'100%'}}>
           <TouchableOpacity 
            onPress={this.navigateToHome}> 
            <Image 
@@ -41,14 +40,25 @@ class PostDetail extends React.Component {
             />
           </TouchableOpacity>
         </View>
+      
+       <KeyboardAvoidingView style={{marginTop:57}} behavior="position" enabled>
+        <ScrollView style={{margionTop:0}}>
         <View style={styles.contents}>
           <View style={styles.posting}>
-            <View style={{width:'90%', marginTop:10, height:50, backgroundColor:'#fcfcfc'}}>
-              <View style={{flexDirection:'row', backgroundColor:'#fcfcfc'}}>
+            <View style={{width:'90%', marginTop:10, height:50, flexDirection:'row', justifyContent:'space-between'}}>
+              <View style={{flexDirection:'row'}}>
                 <Image 
-                  style={{ width:40, height:40, marginRight:10, borderRadius:20}} 
+                  style={{ width:35, height:35, marginRight:10, borderRadius:17.5}} 
                   source={require('../assets/images/profileDefault.png')}/>
                 <Text style={{fontWeight:'bold', fontSize:18, color:'#7a7979', marginTop:7}}>{(this.props.username) ? this.props.username : "Usename"}</Text>
+              </View>
+              <View style={{width:30}}>
+                <TouchableOpacity>
+                  <Image 
+                  style={{ width:30, height:30, marginRight:10, resizeMode:'contain'}} 
+                  source={require('../assets/images/progress.png')}/>
+                </TouchableOpacity>
+                
               </View>
               
             </View>
@@ -56,7 +66,9 @@ class PostDetail extends React.Component {
            <View style={{width:'85%', marginBottom:25}} >
              
               <View style={{alignItems:'center'}} refs={this.props.postid}>
-                <Image style={{width:150, height:150, marginBottom:5, borderRadius:5}} source={(this.props.img) ? { uri: this.props.img} : require('../assets/images/defaultPostingImg.png') } />
+                <Image 
+                  style={{width:200, height:200, marginBottom:5, borderRadius:5}} 
+                  source={(this.props.img) ? { uri: this.props.img} : require('../assets/images/defaultPostingImg.png') } />
                 <Text style={{fontSize: 20, marginTop:15,marginBottom:15, fontWeight: 'bold',}}>
                  {this.props.title}
                 </Text>
@@ -71,8 +83,12 @@ class PostDetail extends React.Component {
           </View>
 
           </View>
-          <View style={{width:'100%',alignItems:'center', paddingBottom:80}}> 
-            
+          <View style={{width:'100%',alignItems:'center', paddingBottom:80, backgroundColor:'#fff'}}> 
+            <View style={{width:'90%'}}>
+              <Image 
+              style={{width:25, height:20, resizeMode:'contain'}}
+              source={require('../assets/images/comment.png')}/>
+            </View>
             <CommentList postid={this.props.postid}/> 
             <View style={styles.hairline}/>
             <CreateComment postid={this.props.postid}/>
@@ -80,10 +96,11 @@ class PostDetail extends React.Component {
           </View>
           
         </View>
-      </View>
       </ScrollView>
+    
+      
       </KeyboardAvoidingView>
-        
+         </View> 
     );
   }
 }
@@ -106,14 +123,14 @@ export default connect (mapStateToProps)(PostDetail);
 
 const styles = StyleSheet.create({
   container: {
-    marginTop: 15, 
+    position:'absolute',
     width:'100%',
     height:'100%',
   },
   contents:{
     width:'100%',
     height:'100%', 
-    backgroundColor:'#fff'
+    backgroundColor:'#fff',  
   },
   posting:{
     width:'100%', 
@@ -127,7 +144,7 @@ const styles = StyleSheet.create({
   hairline: {
     backgroundColor: '#A2A2A2',
     height: 0.8,
-    opacity:0.5,
+    opacity:0.3,
     width: '90%'
   },
   list:{
@@ -138,11 +155,11 @@ const styles = StyleSheet.create({
     padding:15
   },
   backBut: {
-    width:30,
-    height:30,
+    width:22,
+    height:22,
     position:'absolute',
     left:5,
-    top:15,
+    top:23,
     resizeMode:'contain',
     zIndex:50
   },

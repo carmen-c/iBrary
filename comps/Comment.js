@@ -69,7 +69,8 @@ const styles = StyleSheet.create({
   },
   hairline: {
     backgroundColor: '#A2A2A2',
-    height: 0.6,
+    height: 0.8,
+    opacity:0.3,
     width: '90%'
   },
   username:{

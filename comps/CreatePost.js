@@ -125,7 +125,7 @@ class CreatePost extends React.Component {
   render() {
     
     return (
-      <ScrollView style={{width:'100%',backgroundColor:'#fff'}}>
+      
       <View style={styles.container}>
         <View style={styles.pageTitle}>
             <Text style={styles.titleFont}>Create an Idea</Text>
@@ -149,7 +149,8 @@ class CreatePost extends React.Component {
         <View style={styles.hairline} />
         <View style={[styles.items, styles.content]}>
            <TextInput
-              placeholder='Content'
+              style={{fontSize:16}}
+              placeholder='Description'
               multiline={true}
               onChangeText={(text)=> this.setState({content: text})}
             />  
@@ -178,7 +179,7 @@ class CreatePost extends React.Component {
          
        </View>
         </View>
-      </ScrollView>
+      
     );
   }
 }
@@ -233,7 +234,6 @@ const styles = StyleSheet.create({
     padding:10,
   },
   title: {
-    height:'10%',
     fontSize:20
   },
   content: {

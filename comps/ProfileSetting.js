@@ -45,7 +45,7 @@ class ProfileSetting extends React.Component {
     var image = await ImagePicker.openPicker({
       width: 30,
       height: 30,
-      compressImageQuality: 0.3,
+      compressImageQuality: 0.1,
       cropping: true
     })
     var imgF = await RNFetchBlob.fs.readFile(image.path, "base64");
@@ -63,7 +63,7 @@ class ProfileSetting extends React.Component {
     var image = await ImagePicker.openCamera({
       width: 30,
       height: 30,
-      compressImageQuality: 0.3,
+      compressImageQuality: 0.1,
       cropping: true
     })
     var photo = await RNFetchBlob.fs.readFile(image.path, "base64");
@@ -239,11 +239,11 @@ const styles = StyleSheet.create({
     paddingBottom:100
   },
   backBut: {
-    width:30,
-    height:30,
+    width:22,
+    height:22,
     position:'absolute',
-    left:5,
-    top:15,
+    left:3,
+    top:13,
     resizeMode:'contain',
     zIndex:50
   },

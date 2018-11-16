@@ -24,7 +24,7 @@ class Post extends React.Component {
                 <Image 
                   style={{ width:30, height:30, marginRight:7, borderRadius:15, opacity:0.9}} 
                   source={(this.props.userimg) ? { uri: this.props.userimg} : require('../assets/images/profileDefault.png') } />
-                <Text style={{fontSize:15, color:'#7a7979', marginTop:5, fontWeight:'600'}}>{(this.props.username) ? this.props.username : "Usename"}</Text>
+                <Text style={{fontFamily:'Avenir',fontSize:15, color:'#7a7979', marginTop:5, fontWeight:'700'}}>{(this.props.username) ? this.props.username : "Usename"}</Text>
               </View>
               <View style={{flexDirection:'row', marginBottom:10}}>
                 <Image 
