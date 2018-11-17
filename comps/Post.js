@@ -10,10 +10,10 @@ class Post extends React.Component {
   
   handleSelected=()=>{
     //pass or save all post props
-    this.props.dispatch(SelectItem(this.props.postid, this.props.author, this.props.username,this.props.title, this.props.content, this.props.img, this.props.pickedComments));
+    this.props.dispatch(SelectItem(this.props.postid, this.props.author, this.props.username,this.props.userimg, this.props.title, this.props.content, this.props.img, this.props.pickedComments, this.props.category));
     //change page
     this.props.dispatch(ChangeTab(4));
-    console.log("clicked: ", this.props.userimg);
+    console.log("clicked: ", this.props.category);
   }
 
   render() {
@@ -28,7 +28,7 @@ class Post extends React.Component {
                   style={{ width:30, height:30, marginRight:7, borderRadius:15, opacity:0.9}} 
                   source={(this.props.userimg) ? { uri: this.props.userimg} : require('../assets/images/profileDefault.png') } />
 
-                <Text style={{fontFamily:'Avenir',fontSize:15, color:'#7a7979', marginTop:5, fontWeight:'700'}}>{(this.props.username) ? this.props.username : "Usename"}</Text>
+                <Text style={{fontSize:15, color:'#7a7979', marginTop:5, fontWeight:'700'}}>{(this.props.username) ? this.props.username : "Usename"}</Text>
               </View>
               
               <View style={{flexDirection:'row', marginBottom:10}}>
@@ -38,14 +38,14 @@ class Post extends React.Component {
                 
                 <View style={{width:'70%'}}>
                   <Text 
-                    style={{fontFamily:'Avenir',fontSize: 18, marginBottom:3, marginTop:10,marginLeft:5,fontWeight:'800' }}
+                    style={{fontSize: 18, marginBottom:3, marginTop:10,marginLeft:5,fontWeight:'800' }}
                     ellipsuzeMode='tail'
                     numberOfLines={1}
                   >{this.props.title}
                   </Text>
                   
                   <Text 
-                    style={{fontFamily:'Avenir',fontSize: 15, marginLeft:5}}
+                    style={{fontSize: 15, marginLeft:5}}
                     ellipsizeMode='tail'
                     numberOfLines={2}>
                     {this.props.content}

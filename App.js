@@ -7,14 +7,18 @@ import {createStore, applyMiddleware} from "redux";
 import combine from './redux/Combine';
 import Navigator from './navigation/Navigator';
 
+
+
 const store = createStore (
   combine, 
   applyMiddleware(
     thunkMiddleware
   )
-);
+)
 
 export default class App extends React.Component {
+  
+
   render() {
     return (
       <Provider store={store}>

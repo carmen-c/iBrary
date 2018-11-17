@@ -59,9 +59,10 @@ class Profile extends React.Component {
       .once('value')
       .then(snapshot => {
       var items = [];
+      var profileimg = "";
       
       snapshot.forEach(child =>{
-        items.unshift({
+        items.push({
           key: child.val().postID,
           userID:child.val().userID,
           title: child.val().title,
@@ -71,12 +72,13 @@ class Profile extends React.Component {
           img:child.val().img
         })
       });
-     
+  
       this.setState({arrData: items})
       
+//      console.log(this.state.arrData)
       //filter posting with uid
       var newResult = this.state.arrData.filter((post)=>{
-      var matchThis = new RegExp(this.props.userid, 'g');
+      var matchThis = new RegExp(this.state.uid, 'g');
         var arr = post.userID.match(matchThis);
       return arr;
       })
@@ -94,12 +96,12 @@ class Profile extends React.Component {
       <Post 
        title={item.title} 
        content={item.content} 
-       userID={item.userID}
        postid={item.key}
        username={item.username}
        img={item.img}
-        pickedComments={item.pickedComments}
-       userimg = {item.userimg}
+       pickedComments={item.pickedComments}
+       userimg = {this.state.img}
+       author={item.author}
        />
     )
   }

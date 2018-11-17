@@ -27,8 +27,10 @@ const selectedPost ={
   title: "",
   content: "",
   username: "",
+  userimg:'',
   img:"",
-  picked: ""
+  picked: "",
+  category:""
 };
 
 export function SelectPost(state= selectedPost, action) {
@@ -41,8 +43,10 @@ export function SelectPost(state= selectedPost, action) {
       obj.title = action.title;
       obj.content = action.content;
       obj.username = action.username;
+      obj.userimg = action.userimg;
       obj.img = action.img;
       obj.picked = action.picked;
+      obj.category = action.category;
       return obj;
     
     case "UPDATE_PICKED":

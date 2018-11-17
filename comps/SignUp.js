@@ -87,27 +87,27 @@ class SignUp extends React.Component {
           <View style={styles.inpBox}>
            
               <TextInput 
-                  style={[styles.inps,styles.font]}
+                  style={[styles.inps]}
                   placeholder='Email'
                   keyboardType='email-address'
                   onChangeText={(text) => this.setState({email: text})}/>
            
               <TextInput 
-                  style={[styles.inps, styles.font]}
+                  style={[styles.inps]}
                   placeholder="Password"
                   keyboardType="default"
                   secureTextEntry={true}
                   onChangeText={(text) => this.setState({password: text})}/>
            
             <TextInput 
-                  style={[styles.inps, styles.font]}
+                  style={[styles.inps]}
                   placeholder="Re-type password"
                   keyboardType="default"
                   secureTextEntry={true}
                   onChangeText={(text) => this.setState({password2: text})}/>
             
             <TextInput 
-                  style={[styles.inps, styles.fonts]}
+                  style={[styles.inps]}
                   placeholder="Name"
                   keyboardType="name-phone-pad"
                   onChangeText={(text) => this.setState({name: text})}/>
@@ -130,9 +130,6 @@ class SignUp extends React.Component {
 const styles = StyleSheet.create({
   container: {
     width:'100%',
-  },
-  font:{
-    fontFamily:'Avenir'
   },
   backBut: {
     width:30,
