@@ -64,14 +64,17 @@ class Profile extends React.Component {
       snapshot.forEach(child =>{
         items.push({
           key: child.val().postID,
-          userID:child.val().userID,
+          author:child.val().userID,
           title: child.val().title,
           content: child.val().content,
           date: child.val().date,
           username: child.val().username,
-          img:child.val().img
+          img:child.val().img,
+          pickedComments:child.val().pickedComments,
+          timestamp:child.val().timestamp,
+          category:child.val().category
         })
-      });
+      })
   
       this.setState({arrData: items})
       
@@ -79,13 +82,20 @@ class Profile extends React.Component {
       //filter posting with uid
       var newResult = this.state.arrData.filter((post)=>{
       var matchThis = new RegExp(this.state.uid, 'g');
-        var arr = post.userID.match(matchThis);
+        var arr = post.author.match(matchThis);
       return arr;
       })
       this.setState({
       arrData:newResult
       })     
       console.log(this.state.arrData)
+    }).then(()=>{
+      var newthingy = this.state.arrData.sort((x,y)=>{
+        return x.timestamp - y.timestamp;
+      })
+      newthingy =newthingy.reverse();
+      this.setState({arrData:newthingy})
+      
     }).catch(error => {
       this.setState({error: error.message})
     });
@@ -102,6 +112,7 @@ class Profile extends React.Component {
        pickedComments={item.pickedComments}
        userimg = {this.state.img}
        author={item.author}
+       category={item.category}
        />
     )
   }

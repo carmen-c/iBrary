@@ -47,7 +47,7 @@ console.log(this.state.category)
       ],
       { cancelable: true }
     )
-    console.log(this.state.category)
+//    console.log(this.state.category)
   }
 
   //user image picker and set image as state

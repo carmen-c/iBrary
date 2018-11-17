@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, StyleSheet, Text, Button, Image, ImageBackground, ScrollView,TouchableOpacity, KeyboardAvoidingView  } from 'react-native';
+import { View, StyleSheet, Text, Button, Image, ImageBackground, ScrollView,TouchableOpacity, KeyboardAvoidingView, Alert  } from 'react-native';
 
 import {connect} from 'react-redux';
 import {ChangeTab} from '../redux/Actions';
@@ -24,13 +24,17 @@ class PostDetail extends React.Component {
   navigateToHome=()=>{
     this.props.dispatch(ChangeTab(1));
   }
+  addProgress=()=>{
+   
+ 
+  }
 
   render() {
     var editIcon = null;
     if(auth.currentUser.uid == this.props.userid){
       editIcon=(
         <View style={{position:'absolute', right:10, top:23, flexDirection:'row'}}>
-          <TouchableOpacity>
+          <TouchableOpacity onPress={this.addProgress}>
             <Text style={{fontWeight:'600', opacity:0.8, paddingRight:20}}>
               Add Progress
               </Text>
