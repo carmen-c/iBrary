@@ -3,15 +3,40 @@ import { View, StyleSheet, Text, Flatlist, Button, TouchableOpacity, Image } fro
 
 import {connect} from 'react-redux';
 import {ChangePage} from '../redux/Actions';
+import SectionedMultiSelect from 'react-native-sectioned-multi-select';
 
-class Category extends React.Component {
+const items = [
+  {  
+    name: "category",
+    id: 0,
+    children: [{
+        name: "Application",
+        id: 10,
+      },{
+        name: "Graphics",
+        id: 17,
+      },{
+        name: "Video",
+        id: 13,
+      },{
+        name: "Marketing",
+        id: 14,
+      }]
+  },
+  ]
+class Interest extends React.Component {
 
+ 
 state={
   cat1BG:'rgba(255,255,255,0.5)',
   cat2BG:'rgba(255,255,255,0.5)',
   cat3BG:'rgba(255,255,255,0.5)',
-  cat4BG:'rgba(255,255,255,0.5)'
+  cat4BG:'rgba(255,255,255,0.5)',
+  selectedItems: [],
 }
+ onSelectedItemsChange = (selectedItems) => {
+    this.setState({ selectedItems });
+  }
   handleCategory=(type)=>{
     if(type === "app"){
       this.setState({
@@ -40,7 +65,12 @@ state={
   }
   render() {
     return (
-      <View style={styles.container}>
+    
+    
+        
+  <View style={styles.container}>
+    
+          
         <TouchableOpacity 
            style={styles.backBut}
            onPress={this.navigatePage.bind(this,2)}> 
@@ -53,8 +83,10 @@ state={
         <View style={styles.pageTitle}>
             <Text style={styles.titleFont}>Interest</Text>
         </View>
+          
         <Text style={styles.pageDes}>Tap on the categories you like</Text>
-        
+     
+        {/*
         <View style={styles.boxes}>
           <TouchableOpacity 
             style={[styles.box,{backgroundColor:this.state.cat1BG}]}
@@ -70,7 +102,7 @@ state={
             <Text style={styles.featureText}>VIDEO</Text>
           </TouchableOpacity>
         </View>
-        <View style={styles.boxes}>
+       <View style={styles.boxes}>
           <TouchableOpacity 
             style={[styles.box,{backgroundColor:this.state.cat3BG}]}
             onPress={this.handleCategory.bind(this,'product')}
@@ -84,7 +116,20 @@ state={
             <Text style={styles.featureText}>CAMPAGIN</Text>
           </TouchableOpacity>
         </View>
+       */}    
         
+          <SectionedMultiSelect
+              style={{width:'100%', height:100}}
+          items={items} 
+          uniqueKey='id'
+          subKey='children'
+          selectText='Choose some thing...'
+          showDropDowns={false}
+          readOnlyHeadings={false}
+          onSelectedItemsChange={this.onSelectedItemsChange}
+          selectedItems={this.state.selectedItems}
+        />
+          
         <View style={styles.butBox}>
             <TouchableOpacity onPress={this.navigatePage.bind(this,7)}> 
                 <View style={[styles.signBut] }>
@@ -93,7 +138,8 @@ state={
             </TouchableOpacity>
         </View>
         </View> 
-      </View>
+    </View>
+     
     );
   }
 }
@@ -104,19 +150,19 @@ const styles = StyleSheet.create({
     flex:1,
   },
   backBut: {
-    width:30,
-    height:30,
+    width:22,
+    height:22,
     position:'absolute',
-    left:5,
-    top:15,
+    left:3,
+    top:13,
     resizeMode:'contain',
-    zIndex:50,
+    zIndex:50
   },
   center: {
     alignItems:'center'
   },
   pageTitle: {
-    marginTop:76,
+    marginTop:65,
     marginBottom:10,
     width:'100%',
 //    backgroundColor:'#e6e6e6',
@@ -129,7 +175,9 @@ const styles = StyleSheet.create({
     color:'#138172'
   },
   pageDes:{
-    marginBottom:30
+    marginTop:5,
+    marginBottom:20,
+    fontSize:16
   },
   boxes:{
     width:'75%',
@@ -179,4 +227,4 @@ function mapStateToProps(state){
   }
 }
  
-export default connect (mapStateToProps)(Category);
+export default connect (mapStateToProps)(Interest);

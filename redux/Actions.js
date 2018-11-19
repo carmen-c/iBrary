@@ -29,13 +29,14 @@ export function SelectItem(postid, userid, username, userimg,title, content, img
   }
 }
 
-export function SavedProfile( userid, name, bio, img) {
+export function SavedProfile( userid, name, bio, img, interest) {
   return {
     type:"SAVED_PROFILE",
     userid: userid,
     name: name,
     bio: bio,
-    img:img
+    img:img,
+    interest:interest
   }
 }
 

@@ -63,6 +63,7 @@ const savedProfile ={
   name: "",
   bio: "",
   img: "",
+  interest:""
 };
 
 export function Profile(state= savedProfile, action) {
@@ -74,6 +75,7 @@ export function Profile(state= savedProfile, action) {
       obj.name = action.name;
       obj.bio = action.bio;
       obj.img = action.img;
+      obj.interest = action.interest;
       return obj;
       
     default:

@@ -14,6 +14,23 @@ const fs = RNFetchBlob.fs;
 window.XMLHttpRequest = RNFetchBlob.polyfill.XMLHttpRequest;
 window.Blob = Blob;
 
+import SectionedMultiSelect from 'react-native-sectioned-multi-select';
+
+const items = [
+  {
+    name: "Application",
+    id: 'Application',
+  },{
+    name: "Graphics",
+    id: "Graphics",
+  },{
+    name: "Video",
+    id: "Video",
+  },{
+    name: "Marketing",
+    id: "Marketing",
+  },
+  ]
 class ProfileSetting extends React.Component {
   
   blob=null;
@@ -23,8 +40,13 @@ class ProfileSetting extends React.Component {
     img:this.props.img,
     newImg: {},
     filename: "profileImage",
+    selectedItems: this.props.interest,
   }
-  navigatePage=(page)=>{
+  onSelectedItemsChange = (selectedItems) => {
+    this.setState({ selectedItems });
+  }
+
+  navigatePage=async(page)=>{
     this.props.dispatch(ChangePage(page), ChangeTab(3));
   }
   
@@ -100,69 +122,35 @@ class ProfileSetting extends React.Component {
       
       imgRef.put(this.blob, {contentType:'image/jpg'}).then((snapshot)=>{
         storage.ref().child(snapshot.metadata.fullPath).getDownloadURL().then((url)=>{
-          this.props.dispatch(SavedProfile(this.props.userid, this.state.name, this.state.bio, url));
+          this.props.dispatch(SavedProfile(this.props.userid, this.state.name, this.state.bio, url,this.state.selectedItems));
           
            ref.update({
               name : this.state.name,
               bio: this.state.bio,
-              img: url
+              img: url,
+              interest:this.state.selectedItems
            });
         })
       });
 
     } else {
-      this.props.dispatch(SavedProfile(this.props.userid, this.state.name, this.state.bio, this.props.img));
+      this.props.dispatch(SavedProfile(this.props.userid, this.state.name, this.state.bio, this.props.img,this.state.selectedItems));
       ref.update({
         name : this.state.name,
         bio: this.state.bio,
-        img: this.props.img
+        img: this.props.img,
+        interest:this.state.selectedItems
       });
     }
     console.log(this.props.img);
+    console.log(this.props.interest);
    
     } else {
-      alert('Please enter your name and bio.')
+      Alert.alert('Please enter your name and bio.')
     }
     
-//    if (auth.currentUser) {
-//            currentUser = auth.currentUser;
-//            if (currentUser) {
-//                db.ref('users/' + currentUser.uid).update({
-//                    name : this.state.name,
-//                    bio: this.state.bio,     
-//                })
-//            }
-//      this.props.dispatch(SavedProfile(this.props.userid, this.state.name, this.state.bio, this.props.img));
-//    }
-//    if(this.state.newImg.data != '') {
-//      var imgURL = '';
-//      var imgRef = storage.ref().child('profileImages/'+this.props.userid+'.jpg')
-      
-//      imgRef.putString(this.state.newImg.data, 'base64').then((snapshot)=>{
-//        console.log("it might be uploaded?");
-//        console.log("A", snapshot.metadata.fullPath);
-        
-//        storage.ref().child(snapshot.metadata.fullPath).getDownloadURL().then((url)=>{
-          
-//          this.props.dispatch(SavedProfile(this.props.userid, this.state.name, this.state.bio, url));
-//          console.log(url)
-          
-//          if (auth.currentUser) {
-//            currentUser = auth.currentUser;
-//            if (currentUser) {
-//                db.ref('users/' + currentUser.uid).set({
-//                    userID: currentUser.uid,
-//                    email: currentUser.email,
-//                    name : this.state.name,
-//                    bio: this.state.bio, 
-//                    img :url
-//                })
-//            }
-//          }
-//       })
-//      });
-//    }
-    alert('User Profile is Saved')
+
+    Alert.alert('User Profile is Saved')
   }
     
 
@@ -202,7 +190,7 @@ class ProfileSetting extends React.Component {
             </TouchableOpacity>
             <View style={styles.pageTitle}>
                 <Text style={styles.titleFont}>Profile Setting</Text>
-                <Text  style={styles.pageDes}>Create your profile</Text>
+                <Text  style={styles.pageDes}>Express yourself</Text>
             </View>
             
 
@@ -236,6 +224,20 @@ class ProfileSetting extends React.Component {
                     keyboardType="default"
                     onChangeText={(text) => this.setState({bio: text})}/>
             </View>
+            <View style={{width:'75%', marginBottom:15}}>
+              <Text style={{fontSize:17,fontWeight:'600'}}>Interest</Text>
+              <SectionedMultiSelect
+              items={items} 
+              uniqueKey='id'
+              selectText='Choose Interest'
+              showDropDowns={false}
+              readOnlyHeadings={false}
+              onSelectedItemsChange={this.onSelectedItemsChange}
+              selectedItems={this.state.selectedItems}
+            />
+            </View>
+            
+            
             <View style={styles.butBox}> 
                 <TouchableOpacity onPress={this.saveNewUserData}> 
                     <View style={[styles.signBut]}>
@@ -288,7 +290,8 @@ const styles = StyleSheet.create({
   },
   pageDes:{
     marginTop:10,
-    marginBottom:30
+    marginBottom:30,
+    fontSize:18
   },
   sectionTitle:{
     color:'#8e8f91', 
@@ -346,7 +349,8 @@ function mapStateToProps(state){
     bio:state.Profile.bio,
     img:state.Profile.img,
     Pimg:state.Profile.Pimg,
-    userid:state.Profile.userid
+    userid:state.Profile.userid,
+    interest:state.Profile.interest
   }
 }
  

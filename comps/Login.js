@@ -92,8 +92,10 @@ class Login extends React.Component {
           thisuser.userID,
           thisuser.name,
           thisuser.bio,
-          pimg
+          pimg,
+          thisuser.interest
         ))
+      console.log(this.props.interest);
       
       }).then(()=>{
       this.props.dispatch(ChangeTab(1))
@@ -263,6 +265,7 @@ function mapStateToProps(state){
     name:state.Profile.name,
     bio:state.Profile.bio,
     img:state.Profile.img,
+    interest:state.Profile.interest,
   }
 }
 export default connect (mapStateToProps)(Login);

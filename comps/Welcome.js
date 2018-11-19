@@ -3,6 +3,7 @@ import { View, StyleSheet, Text, Flatlist, Button, TouchableOpacity, Image, Scro
 
 import {connect} from 'react-redux';
 import {ChangePage} from '../redux/Actions';
+import Swiper from 'react-native-swiper';
 
 class Welcome extends React.Component {
 
@@ -24,19 +25,46 @@ class Welcome extends React.Component {
         <View style={styles.pageTitle}>
             <Text style={styles.titleFont}>Welcome!</Text>
         </View>
-        <Text>Browse our features, it will help</Text>
-        
-        <View style={styles.box}>
-          <Image 
-            source={require('../assets/images/sharingIcon.png')}
-            style={styles.featureImg}           
-          />
-            <Text style={styles.featureText}>Share your ideas with people</Text>
+        <Text style={styles.pageDes}>Browse our features, it will help</Text>
+        <View style={{height:400}}>
+        <Swiper 
+          showsButtons={false} 
+          autoplay={false}>
+          <View style={{width:'100%',height:350, alignItems:'center'}}>
+            <View style={styles.box}>
+              <Image 
+                source={require('../assets/images/sharingIcon.png')}
+                style={styles.featureImg}           
+              />
+              <Text style={styles.featureText}>Share your ideas or Ask help</Text>
+            </View>
+          </View>
+
+          <View style={{width:'100%', alignItems:'center'}}>
+            <View style={styles.box}>
+              <Image 
+                source={require('../assets/images/swipe.gif')}
+                style={styles.featureImg}           
+              />
+              <Text style={styles.featureText}>Select the most helpful comment</Text>
+            </View>
+          </View>
+          <View style={{width:'100%', alignItems:'center'}}>
+            <View style={styles.box}>
+              <Image 
+                source={require('../assets/images/sharingIcon.png')}
+                style={styles.featureImg}           
+              />
+              <Text style={styles.featureText}>Add your progress</Text>
+            </View>
+          </View>
+        </Swiper>
         </View>
+        
         <View style={styles.butBox}>
             <TouchableOpacity onPress={this.navigatePage.bind(this,6)}> 
                 <View style={[styles.signBut] }>
-                    <Text style={[styles.buttonText]}>GET STASRTED </Text>
+                    <Text style={[styles.buttonText]}>GET STARTED </Text>
                 </View>
           </TouchableOpacity>
         </View>
@@ -50,7 +78,7 @@ const styles = StyleSheet.create({
   container: {
     width:'100%',
     height:'100%',
-    flex:1,
+//    flex:1,
     alignItems: 'center',
   },
   backBut: {
@@ -63,7 +91,7 @@ const styles = StyleSheet.create({
     zIndex:50
   },
   pageTitle: {
-    marginTop:35,
+    marginTop:65,
     marginBottom:10,
     width:'100%',
 //    backgroundColor:'#e6e6e6',
@@ -75,17 +103,21 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color:'#138172'
   },
+  pageDes:{
+    marginTop:5,
+    marginBottom:20,
+    fontSize:16
+  },
   box: {
-    width:'55%',
+    width:'65%',
     height:300,
     marginTop:'10%',
-    marginBottom:'10%',
+    marginBottom:10,
     paddingTop:'10%',
     paddingLeft:'5%',
     paddingRight:'5%',
-    alignContent:'center',
+    alignItems:'center',
     backgroundColor:"#FFFFFF",
-    alignContent:'center',
     borderRadius:20,
     shadowOffset:{  width: 0,  height: 5,  },
     shadowRadius: 5,
@@ -96,7 +128,7 @@ const styles = StyleSheet.create({
     width:'90%',
     height:150,
     resizeMode:'contain',
-    alignContent:'center',
+    alignItems:'center',
     margin:'5%',
     marginBottom:30
   },
@@ -129,5 +161,6 @@ function mapStateToProps(state){
     page:state.Page.page
   }
 }
+
  
 export default connect (mapStateToProps)(Welcome);

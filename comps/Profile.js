@@ -16,6 +16,7 @@ class Profile extends React.Component {
     userN:'',
     bio:'',
     img:'',
+    interest:[],
     uid:this.props.userid
 
   }
@@ -36,7 +37,8 @@ class Profile extends React.Component {
           this.setState({
             userN:user.name,
             bio:user.bio,
-            img:user.img
+            img:user.img,
+            interest:user.interest
           })
 
    
@@ -107,7 +109,7 @@ class Profile extends React.Component {
        title={item.title} 
        content={item.content} 
        postid={item.key}
-       username={item.username}
+       username={this.state.userN}
        img={item.img}
        pickedComments={item.pickedComments}
        userimg = {this.state.img}
@@ -116,6 +118,7 @@ class Profile extends React.Component {
        />
     )
   }
+
   render() {
     
     return (
@@ -152,8 +155,13 @@ class Profile extends React.Component {
         <View style={styles.section2}>
           <Text style={styles.sectionTitle}>Interest</Text>
           <View style={{flexDirection:'row', paddingLeft:10}}>
-            <View style={styles.interestList}><Text style={{color:'white'}}>App</Text></View>
-            <View style={styles.interestList}><Text style={{color:'white'}}>Video</Text></View>            
+            {(this.state.interest) ? <View style={styles.interestList}><Text style={{color:'white'}}> {this.state.interest[0]} </Text></View> : null}
+            {(this.state.interest.length > 1) ? <View style={styles.interestList}><Text style={{color:'white'}}> {this.state.interest[1]} </Text></View> : null}
+            {(this.state.interest.length > 2) ? <View style={styles.interestList}><Text style={{color:'white'}}> {this.state.interest[2]} </Text></View> : null}
+            {(this.state.interest.length > 3) ? <View style={styles.interestList}><Text style={{color:'white'}}> {this.state.interest[3]} </Text></View> : null}
+             
+              
+            
           </View>     
           
         </View>
@@ -222,9 +230,12 @@ const styles = StyleSheet.create({
     paddingBottom:10
   },
   interestList:{
-    width:60, 
+    
     backgroundColor:'#138172',
-    padding:5,
+    paddingTop:5,
+    paddingBottom:5,
+    paddingLeft:8,
+    paddingRight:8,
     borderRadius:5,
     marginRight:10,
     alignItems:'center'
@@ -243,7 +254,8 @@ const styles = StyleSheet.create({
   },
   hairline: {
     backgroundColor: '#A2A2A2',
-    height: 0.5,
+    height: 0.8,
+    opacity:0.5,
     width: '100%'
 },
 });
@@ -253,7 +265,8 @@ function mapStateToProps(state){
     img:state.Profile.img,
     name:state.Profile.name,
     bio:state.Profile.bio,
-    userid:state.Profile.userid
+    userid:state.Profile.userid,
+    interest:state.Profile.interest,
   }
 }
  

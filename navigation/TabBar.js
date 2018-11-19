@@ -16,7 +16,7 @@ class TabBar extends React.Component {
     postImg:require('../assets/images/createButton.png'),
     profileImg:require('../assets/images/profileButton.png')
   }
-  handleButton=(tab)=>{
+  handleButton=async(tab)=>{
     
     //change icon to colored one
     if(tab === 1){
@@ -44,7 +44,7 @@ class TabBar extends React.Component {
   }
   
   render() {
-    var curtab = <Home/>;
+    var curtab = null;
     
     //we are changing state to use the global state
     switch(this.props.tab){

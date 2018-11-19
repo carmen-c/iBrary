@@ -79,7 +79,7 @@ class SignUp extends React.Component {
               <Text style={[styles.titleFont, styles.font]}>Create Account</Text>
           </View>
 
-          <Text style={styles.font}>Sign up with your email address</Text>
+          <Text style={styles.pageDes}>Sign up with your email address</Text>
           <View>
             <Text>{this.state.error}</Text>
           </View>
@@ -132,11 +132,11 @@ const styles = StyleSheet.create({
     width:'100%',
   },
   backBut: {
-    width:30,
-    height:30,
+    width:22,
+    height:22,
     position:'absolute',
-    left:5,
-    top:15,
+    left:3,
+    top:13,
     resizeMode:'contain',
     zIndex:50
   },
@@ -154,8 +154,10 @@ const styles = StyleSheet.create({
     fontWeight: 'bold',
     color:'#138172'
   },
-  pageDes:{
-    marginBottom:20
+   pageDes:{
+    marginTop:5,
+    marginBottom:20,
+    fontSize:16
   },
   sectionTitle:{
     color:'#8e8f91', 
@@ -163,8 +165,8 @@ const styles = StyleSheet.create({
   },
   inpBox: {
     width:'76%',
-    marginTop:15,
-    marginBottom:20,
+    marginTop:'7%',
+    marginBottom:30,
     paddingTop:10,
     paddingBottom:10,
     paddingLeft:20,
@@ -198,7 +200,8 @@ const styles = StyleSheet.create({
   },
   butBox: {
     flexDirection:'column',
-    width:'80%'  
+    width:'80%',
+    marginTop:10
   },
   red: {
     backgroundColor:'#d34836'

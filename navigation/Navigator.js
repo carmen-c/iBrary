@@ -15,7 +15,7 @@ import GlobalFont from 'react-native-global-font';
 
 class Main extends React.Component {
   
-  handleButton=(page)=>{
+  handleButton=async(page)=>{
     this.props.dispatch(ChangePage(page));
   }
 
