@@ -127,7 +127,7 @@ class Login extends React.Component {
               style={{width:20,height:20, marginTop:10,opacity:0.6}}            
             /> 
             <TextInput 
-                style={[styles.inps,styles.font]}
+                style={[styles.inps]}
                 placeholder='E-mail'
                 keyboardType='email-address'
                 onChangeText={(text) => this.setState({email: text})}/>
@@ -137,7 +137,7 @@ class Login extends React.Component {
               style={{width:20,height:25, marginTop:10,resizeMode:'contain',opacity:0.6}}            
             /> 
             <TextInput 
-                style={[styles.inps,styles.font]}
+                style={[styles.inps]}
                 placeholder="Password"
                 keyboardType="default"
                 secureTextEntry={true}
@@ -175,7 +175,7 @@ class Login extends React.Component {
               disabled={this.state.isSigninInProgress} />
           
           <TouchableOpacity style={{alignItems:'center'}} onPress={this.navigateToPage.bind(this, 3)}>
-            <Text style={[styles.creactAccount, styles.font]}>
+            <Text style={[styles.creactAccount]}>
               Create Account
             </Text>
           </TouchableOpacity>
@@ -254,9 +254,6 @@ const styles = StyleSheet.create({
     fontSize:15, 
     fontWeight:'600', 
     color:'#676767'
-  },
-  font:{
-    fontFamily:'Avenir'
   }
 });
 

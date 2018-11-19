@@ -59,31 +59,43 @@ class Profile extends React.Component {
       .once('value')
       .then(snapshot => {
       var items = [];
+      var profileimg = "";
       
       snapshot.forEach(child =>{
-        items.unshift({
+        items.push({
           key: child.val().postID,
-          userID:child.val().userID,
+          author:child.val().userID,
           title: child.val().title,
           content: child.val().content,
           date: child.val().date,
           username: child.val().username,
-          img:child.val().img
+          img:child.val().img,
+          pickedComments:child.val().pickedComments,
+          timestamp:child.val().timestamp,
+          category:child.val().category
         })
-      });
-     
+      })
+  
       this.setState({arrData: items})
       
+//      console.log(this.state.arrData)
       //filter posting with uid
       var newResult = this.state.arrData.filter((post)=>{
-      var matchThis = new RegExp(this.props.userid, 'g');
-        var arr = post.userID.match(matchThis);
+      var matchThis = new RegExp(this.state.uid, 'g');
+        var arr = post.author.match(matchThis);
       return arr;
       })
       this.setState({
       arrData:newResult
       })     
       console.log(this.state.arrData)
+    }).then(()=>{
+      var newthingy = this.state.arrData.sort((x,y)=>{
+        return x.timestamp - y.timestamp;
+      })
+      newthingy =newthingy.reverse();
+      this.setState({arrData:newthingy})
+      
     }).catch(error => {
       this.setState({error: error.message})
     });
@@ -94,12 +106,13 @@ class Profile extends React.Component {
       <Post 
        title={item.title} 
        content={item.content} 
-       userID={item.userID}
        postid={item.key}
        username={item.username}
        img={item.img}
-        pickedComments={item.pickedComments}
-       userimg = {item.userimg}
+       pickedComments={item.pickedComments}
+       userimg = {this.state.img}
+       author={item.author}
+       category={item.category}
        />
     )
   }
@@ -110,17 +123,20 @@ class Profile extends React.Component {
          <View style={styles.pageTitle}>
             <Text style={styles.titleFont}>Profile</Text>
         </View>
-        <TouchableOpacity style={{position:'absolute', top:30, right:5, width:35, height:35}}onPress={this.navigatePage.bind(this,7)}>
+        <TouchableOpacity 
+          style={{position:'absolute', top:30, right:5, width:35, height:35}}
+          onPress={this.navigatePage.bind(this,7)}>
           <Image 
-                  source={require('../assets/images/setting.png')}
-                  style={{width:25, height:25}}
-                  />
+            source={require('../assets/images/setting.png')}
+            style={{width:25, height:25}}
+          />
         </TouchableOpacity>
+      
         <ScrollView style={{width:'100%'}}>
         <View style={styles.section}>  
             <View style={styles.box1}>
               <Image 
-                source={(this.props.img) ? { uri: this.props.img} : require('../assets/images/profileDefault.png')}
+                source={(this.props.img == "") ? require('../assets/images/profileDefault.png'):{ uri: this.props.img}  }
                 style={styles.profile}            
               /> 
             </View>

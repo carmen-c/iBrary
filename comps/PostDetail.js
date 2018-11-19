@@ -1,5 +1,6 @@
 import React from 'react';
-import { View, StyleSheet, Text, Image, ImageBackground, ScrollView,TouchableOpacity, KeyboardAvoidingView, Modal} from 'react-native';
+
+import { View, StyleSheet, Text, Button, Image, ImageBackground, ScrollView,TouchableOpacity, KeyboardAvoidingView, Alert  } from 'react-native';
 
 import {connect} from 'react-redux';
 import {ChangeTab} from '../redux/Actions';
@@ -15,6 +16,7 @@ class PostDetail extends React.Component {
     console.log("POSTDETAIL: ", this.props.userid)
     if (auth.currentUser.uid == this.props.userid){
       //enable editing stuff
+      return (<Text>...</Text>)
     } else {
       
     }
@@ -23,12 +25,37 @@ class PostDetail extends React.Component {
   navigateToHome=()=>{
     this.props.dispatch(ChangeTab(1));
   }
+  addProgress=()=>{
+   
+   
+  }
 
   render() {
+    var editIcon = null;
+    if(auth.currentUser.uid == this.props.userid){
+      editIcon=(
+        <View style={{position:'absolute', right:10, top:23, flexDirection:'row'}}>
+          <TouchableOpacity onPress={this.addProgress}>
+            <Text style={{fontWeight:'600', opacity:0.8, paddingRight:20}}>
+              Add Progress
+              </Text>
+          </TouchableOpacity>
+          <TouchableOpacity>
+            <Text style={{fontWeight:'600', opacity:0.8, paddingRight:10}}>
+              Edit
+            </Text>
+          </TouchableOpacity>
+          
+          
+        </View>
+      )
+        
+    }
     
     this.check();
     return (
       <View style={styles.container}>
+       
      
         <View style={{ width:'100%'}}>
           <TouchableOpacity 
@@ -36,8 +63,9 @@ class PostDetail extends React.Component {
            <Image 
               style={styles.backBut}
               source={require('../assets/images/backButton.png')}
-            />
+            />         
           </TouchableOpacity>
+           {editIcon}
         </View>
       
        <KeyboardAvoidingView style={{marginTop:57}} behavior="position" enabled>
@@ -48,9 +76,11 @@ class PostDetail extends React.Component {
               <View style={{flexDirection:'row'}}>
                 <Image 
                   style={{ width:35, height:35, marginRight:10, borderRadius:17.5}} 
-                  source={require('../assets/images/profileDefault.png')}/>
+                 source={(this.props.userimg) ? { uri: this.props.userimg} : require('../assets/images/profileDefault.png') }/>
+                
                 <Text style={{fontWeight:'bold', fontSize:18, color:'#7a7979', marginTop:7}}>{(this.props.username) ? this.props.username : "Usename"}</Text>
               </View>
+             
               <View style={{width:30}}>
                 <TouchableOpacity>
                   <Image 
@@ -61,9 +91,8 @@ class PostDetail extends React.Component {
               </View>
               
             </View>
-              
-           <View style={{width:'85%', marginBottom:25}} >
-             
+                
+            <View style={{width:'85%', marginBottom:10}} >
               <View style={{alignItems:'center'}} refs={this.props.postid}>
                 <Image 
                   style={{width:200, height:200, marginBottom:5, borderRadius:5}} 
@@ -75,11 +104,13 @@ class PostDetail extends React.Component {
               <Text style={{fontSize: 16}}>
                 {this.props.content}
               </Text>
-              
-           </View>
-          <View style={{width:'100%'}}>
-             <PickedCommentList pickedComments={this.props.picked}/>
-          </View>
+            </View>
+            <View style={{width:'90%'}}>
+               <Text style={{fontWeight:'600', color:'#bbb', marginBottom:5, }}>Category : {this.props.category}</Text>
+            </View>
+            <View style={{width:'100%'}}>
+               <PickedCommentList pickedComments={this.props.picked}/>
+            </View>
 
           </View>
           <View style={{width:'100%',alignItems:'center', paddingBottom:80, backgroundColor:'#fff'}}> 
@@ -114,7 +145,9 @@ function mapStateToProps(state){
     content:state.SelectPost.content,
     username:state.SelectPost.username,
     img:state.SelectPost.img,
-    picked:state.SelectPost.picked
+    picked:state.SelectPost.picked,
+    category:state.SelectPost.category,
+    userimg:state.SelectPost.userimg,
   }
 }
 export default connect (mapStateToProps)(PostDetail);

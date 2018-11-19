@@ -11,13 +11,20 @@ import TabBar from './TabBar';
 
 import {connect} from 'react-redux';
 import {ChangePage} from '../redux/Actions';
+import GlobalFont from 'react-native-global-font';
 
 class Main extends React.Component {
   
   handleButton=(page)=>{
     this.props.dispatch(ChangePage(page));
   }
-  
+
+   
+   componentDidMount() {
+   let Avenir = 'Avenir'
+   GlobalFont.applyGlobal(Avenir)
+
+   }
   render() {
     var curpage = <Login/>;
     

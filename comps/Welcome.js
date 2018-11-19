@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, StyleSheet, Text, Flatlist, Button, TouchableOpacity, Image, ScrollView } from 'react-native';
+import { View, StyleSheet, Text, Flatlist, Button, TouchableOpacity, Image, ScrollView, Animated, Dimensions } from 'react-native';
 
 import {connect} from 'react-redux';
 import {ChangePage} from '../redux/Actions';
@@ -25,6 +25,7 @@ class Welcome extends React.Component {
             <Text style={styles.titleFont}>Welcome!</Text>
         </View>
         <Text>Browse our features, it will help</Text>
+        
         <View style={styles.box}>
           <Image 
             source={require('../assets/images/sharingIcon.png')}
@@ -53,16 +54,16 @@ const styles = StyleSheet.create({
     alignItems: 'center',
   },
   backBut: {
-    width:30,
-    height:30,
+    width:22,
+    height:22,
     position:'absolute',
-    left:5,
-    top:15,
+    left:3,
+    top:13,
     resizeMode:'contain',
     zIndex:50
   },
   pageTitle: {
-    marginTop:76,
+    marginTop:35,
     marginBottom:10,
     width:'100%',
 //    backgroundColor:'#e6e6e6',

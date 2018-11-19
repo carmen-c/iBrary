@@ -59,7 +59,8 @@ class Home extends React.Component {
             pickedComments:child.val().pickedComments,
             userimg: profileimg,
             timestamp:child.val().timestamp,
-            author:child.val().userID
+            author:child.val().userID,
+            category:child.val().category
           });
         }).then(()=>{
           var newthingy = items.sort((x,y)=>{
@@ -85,6 +86,7 @@ class Home extends React.Component {
        pickedComments={item.pickedComments}
        userimg={item.userimg}
        author={item.author}
+       category={item.category}
        />
     )
   }
@@ -97,6 +99,7 @@ class Home extends React.Component {
         <View style={{position:'absolute', top:0, left:0, width:'100%', alignItems:'center', height:85}}>
           <TextInput
             style={styles.searchBar}
+            autoCapitalize = 'none'
             placeholder="Search"
             autoCorrect={false}
             onChangeText={(text) => this.handleSearch(text)}
@@ -109,16 +112,16 @@ class Home extends React.Component {
             style={{flexDirection:'row', flexWrap:'wrap', justifyContent:'space-between', marginLeft:10, }}>
            
               <TouchableOpacity style={styles.catrgory}>
-                <Text style={{color:'#fff'}}>Category1</Text>
+                <Text style={{color:'#fff'}}>App</Text>
               </TouchableOpacity>
               <TouchableOpacity style={styles.catrgory}>
-                <Text>Category2</Text>
+                <Text>Graphics</Text>
               </TouchableOpacity>
               <TouchableOpacity style={styles.catrgory}>
-                <Text>Category3</Text>
+                <Text>Video</Text>
               </TouchableOpacity>
               <TouchableOpacity style={styles.catrgory}>
-                <Text>Category4</Text>
+                <Text>Product</Text>
               </TouchableOpacity>
               <TouchableOpacity style={styles.catrgory}>
                 <Text>All</Text>

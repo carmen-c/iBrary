@@ -29,10 +29,11 @@ class CreatePost extends React.Component {
     imgURL: "",
     filename: "",
     postid: "",
+    category:''
   }
 
   handleCategory=()=>{
-
+console.log(this.state.category)
   }
 
   handleGallery=()=>{
@@ -46,6 +47,7 @@ class CreatePost extends React.Component {
       ],
       { cancelable: true }
     )
+//    console.log(this.state.category)
   }
 
   //user image picker and set image as state
@@ -99,19 +101,19 @@ class CreatePost extends React.Component {
       imgRef.put(this.blob, {contentType:'image/jpg'}).then((snapshot)=>{
         storage.ref().child(snapshot.metadata.fullPath).getDownloadURL().then((url)=>{
           imgURL = url;  
-          this.writeNewPost(current, newPostKey, date, this.state.title, this.state.content, timestamp, this.props.name, imgURL);
+          this.writeNewPost(current, newPostKey, date, this.state.title, this.state.content, timestamp, this.props.name, imgURL,this.state.category);
         })
       });
       
     } else {
-      this.writeNewPost(current, newPostKey, date, this.state.title, this.state.content, timestamp, this.props.name, imgURL);
+      this.writeNewPost(current, newPostKey, date, this.state.title, this.state.content, timestamp, this.props.name, imgURL, this.state.category);
     }
   
     Alert.alert("you posting has been saved!");
     this.props.dispatch(ChangeTab(1));
   }
   
-  writeNewPost=(uid, postid, date, title, content, timestamp, name, imgURL)=>{
+  writeNewPost=(uid, postid, date, title, content, timestamp, name, imgURL,category)=>{
     db.ref('posts/' + postid).set({
         userID: uid,
         postID: postid,
@@ -120,7 +122,8 @@ class CreatePost extends React.Component {
         content: content,
         timestamp: timestamp,
         username: name,
-        img: imgURL
+        img: imgURL,
+        category:category
     });
   }
   
@@ -147,7 +150,7 @@ class CreatePost extends React.Component {
         </View>
         <View style={styles.items}>
           <TextInput
-              style={[styles.font, styles.title]}
+              style={[styles.title]}
               placeholder='Title'
               keyboardType='default'
               onChangeText={(text)=> this.setState({title: text})}
@@ -156,7 +159,7 @@ class CreatePost extends React.Component {
         <View style={styles.hairline} />
         <View style={[styles.items, styles.content]}>
            <TextInput
-              style={[styles.font,{fontSize:16}]}
+              style={{fontSize:16}}
               placeholder='Description'
               multiline={true}
               keyboardType='default'
@@ -166,16 +169,19 @@ class CreatePost extends React.Component {
         <View style={styles.hairline} />
         
         <View style={styles.category}>
-          <Text style={[styles.font,{padding:10}]}>Category</Text>
+          <Text style={{padding:10}}>Category</Text>
           <Picker
-            selectedValue={this.state.handleCategory}
+            selectedValue={this.state.category}
             iosHeader="Select one"
             style={{height: 60, width: 100}}
-            itemStyle={[styles.font,{fontSize:15, height:40}]}
-            onValueChange={(itemValue, itemIndex) => this.setState({handleCategory: itemValue})}>
-            <Picker.Item label="App" value="app" />
-            <Picker.Item label="Product" value="product"/>
-            <Picker.Item label="Video" value="video" />
+            itemStyle={{fontSize:15, height:40}}
+            onValueChange={(itemValue, itemIndex) => this.setState({category: itemValue})}>
+            <Picker.Item label='Application' value='Graphic Design' />
+            <Picker.Item label='Graphic Design' value='Graphic Design' />
+            <Picker.Item label='Product' value='Product'/>
+            <Picker.Item label='Video' value='Video' />
+            <Picker.Item label='Marketing' value='Marketing' />
+            
           </Picker>
         </View>
         <View style={styles.butBox}> 
@@ -199,9 +205,6 @@ const styles = StyleSheet.create({
     height:'100%',   
     backgroundColor: '#fff',
     alignItems: 'center',
-  },
-  font:{
-    fontFamily:'Avenir'
   },
   hairline: {
     backgroundColor: '#A2A2A2',
