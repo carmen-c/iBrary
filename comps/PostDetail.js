@@ -1,5 +1,5 @@
 import React from 'react';
-import { View, StyleSheet, Text, Button, Image, ImageBackground, ScrollView,TouchableOpacity, KeyboardAvoidingView  } from 'react-native';
+import { View, StyleSheet, Text, Image, ImageBackground, ScrollView,TouchableOpacity, KeyboardAvoidingView, Modal} from 'react-native';
 
 import {connect} from 'react-redux';
 import {ChangeTab} from '../redux/Actions';
