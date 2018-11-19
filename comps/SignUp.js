@@ -37,7 +37,7 @@ class SignUp extends React.Component {
 //      .then(()=>{
 //        this.props.dispatch(FirstTime("true"));
 //      });
-      this.props.dispatch(ChangePage(4));
+      this.props.dispatch(ChangePage(2));
 //      console.log(this.props.firsttime);
     }
     

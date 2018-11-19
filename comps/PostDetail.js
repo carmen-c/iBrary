@@ -26,7 +26,7 @@ class PostDetail extends React.Component {
   }
   addProgress=()=>{
    
- 
+   
   }
 
   render() {

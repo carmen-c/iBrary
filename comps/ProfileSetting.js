@@ -28,6 +28,8 @@ class ProfileSetting extends React.Component {
     this.props.dispatch(ChangePage(page), ChangeTab(3));
   }
   
+
+  
   handleGallery=()=>{
     Alert.alert(
       'Change Profile Picture',
@@ -36,6 +38,17 @@ class ProfileSetting extends React.Component {
         {text: 'Camera', onPress: () => this.addImgFromCamera()},
         {text: 'Gallery', onPress: () => this.addImgFromGallery()},
         {text: 'Cancel', onPress: () => console.log('Cancel Pressed'), style: 'cancel'},
+      ],
+      { cancelable: true }
+    )
+  }
+    handleLogout=()=>{
+    Alert.alert(
+      'Log Out',
+       'Do you want to logout?',
+      [
+        {text: 'Yes', onPress: () => this.logout()},
+        {text: 'Cancel', onPress: () => console.log('Cancel Pressed2'), style: 'cancel'},
       ],
       { cancelable: true }
     )
@@ -178,7 +191,15 @@ class ProfileSetting extends React.Component {
                   style={styles.backBut}
                   source={require('../assets/images/backButton.png')}
                 />
-          </TouchableOpacity>
+            </TouchableOpacity>
+            <TouchableOpacity
+              onPress={this.handleLogout}
+              style={{position:'absolute', top:25, right:5, width:35, height:35, zIndex:60}}>
+              <Image 
+                 style={{width:25, height:25, resizeMode:'contain'}}
+                source={require('../assets/images/logout.png')}
+              />
+            </TouchableOpacity>
             <View style={styles.pageTitle}>
                 <Text style={styles.titleFont}>Profile Setting</Text>
                 <Text  style={styles.pageDes}>Create your profile</Text>
@@ -193,7 +214,7 @@ class ProfileSetting extends React.Component {
                   />
                  <Image
                    style={{width:40, height:40, position:'absolute', right:-10, bottom:0}}
-                   source={require('../assets/images/edit.png')}/>
+                   source={require('../assets/images/add.png')}/>
 
                 </TouchableOpacity>      
             </View>
@@ -222,10 +243,6 @@ class ProfileSetting extends React.Component {
                     </View>
                 </TouchableOpacity>
             </View>
-            <Button
-            title="Logout"
-            onPress={this.logout}
-            />
           </View>
         </ScrollView>
       </KeyboardAvoidingView>

@@ -123,17 +123,20 @@ class Profile extends React.Component {
          <View style={styles.pageTitle}>
             <Text style={styles.titleFont}>Profile</Text>
         </View>
-        <TouchableOpacity style={{position:'absolute', top:30, right:5, width:35, height:35}}onPress={this.navigatePage.bind(this,7)}>
+        <TouchableOpacity 
+          style={{position:'absolute', top:30, right:5, width:35, height:35}}
+          onPress={this.navigatePage.bind(this,7)}>
           <Image 
-                  source={require('../assets/images/setting.png')}
-                  style={{width:25, height:25}}
-                  />
+            source={require('../assets/images/setting.png')}
+            style={{width:25, height:25}}
+          />
         </TouchableOpacity>
+      
         <ScrollView style={{width:'100%'}}>
         <View style={styles.section}>  
             <View style={styles.box1}>
               <Image 
-                source={(this.props.img) ? { uri: this.props.img} : require('../assets/images/profileDefault.png')}
+                source={(this.props.img == "") ? require('../assets/images/profileDefault.png'):{ uri: this.props.img}  }
                 style={styles.profile}            
               /> 
             </View>
