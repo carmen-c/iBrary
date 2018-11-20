@@ -5,7 +5,7 @@ import { ifIphoneX } from 'react-native-iphone-x-helper'
 import Login from '../comps/Login';
 import Welcome from '../comps/Welcome';
 import SignUp from '../comps/SignUp';
-import Category from '../comps/Category';
+import FirstProfile from '../comps/FirstProfile';
 import ProfileSetting from '../comps/ProfileSetting';
 import TabBar from './TabBar';
 
@@ -46,7 +46,7 @@ class Main extends React.Component {
       case 5:
         break;
       case 6:
-        curpage = <Category />
+        curpage = <FirstProfile />
         break;
       case 7:
         curpage = <ProfileSetting/>
