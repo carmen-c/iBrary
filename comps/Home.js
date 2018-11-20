@@ -77,7 +77,8 @@ class Home extends React.Component {
             userimg: profileimg,
             timestamp:child.val().timestamp,
             author:child.val().userID,
-            category:child.val().category
+            category:child.val().category,
+            progress:child.val().progress
           });
           items = items.sort((x,y)=>{
           return x.timestamp - y.timestamp;
@@ -105,6 +106,7 @@ class Home extends React.Component {
        userimg={item.userimg}
        author={item.author}
        category={item.category}
+       progress={item.progress}
        />
     )
   }
