@@ -7,6 +7,13 @@ import Post from './Post';
 import {connect} from 'react-redux';
 import {ChangePage} from '../redux/Actions';
 
+const data = []
+listEmptyComponent = () => {
+    <View>
+        <Text>Empty List</Text>
+    </View>
+}
+
 class Home extends React.Component {
   
   state={
@@ -36,17 +43,26 @@ class Home extends React.Component {
     } 
   }
   
+  readInterestPosts=(interest)=>{
+    this.setState({refreshing: true});
+    db.ref('posts/')
+      .orderByChild('category')
+      .equalTo(interest)
+      .on('value', this.managePosts);
+  }
+  
   readPosts=()=>{
     this.setState({refreshing: true});
     db.ref('posts/')
       .limitToLast(100)
-      .once('value')
-      .then(snapshot => {
+      .once('value', this.managePosts);
+  }
+  
+  managePosts=(snapshot)=>{
+    if(snapshot.exists()){
       var items = [];
-      var profileimg = "";
-      
+
       snapshot.forEach(child =>{
-        
         db.ref('users/'+child.val().userID).once('value').then((snapshot)=>{
           var profileimg = snapshot.val().img;
           var profilename = snapshot.val().name;
@@ -63,19 +79,20 @@ class Home extends React.Component {
             author:child.val().userID,
             category:child.val().category
           });
-        }).then(()=>{
-          var newthingy = items.sort((x,y)=>{
-            return x.timestamp - y.timestamp;
+          items = items.sort((x,y)=>{
+          return x.timestamp - y.timestamp;
           })
-          newthingy = newthingy.reverse();
-          this.setState({arrData: newthingy, refreshing: false});
-        })
-      });
-    }).catch(error => {
-      this.setState({error: error.message})
-    });
+          items = items.reverse();
+          this.setState({arrData: items, refreshing: false}); 
+          console.log(items)
+          });
+      })
+    } else {
+      var items = [];
+      this.setState({arrData: items, refreshing: false}); 
+    }
   }
-  
+
   renderList=({item}) =>  {
     return(
       <Post 
@@ -112,21 +129,21 @@ class Home extends React.Component {
           <View 
             style={{flexDirection:'row', flexWrap:'wrap', justifyContent:'space-between', marginLeft:10, }}>
            
-              <TouchableOpacity style={styles.catrgory}>
-                <Text style={{color:'#fff'}}>App</Text>
+              <TouchableOpacity style={styles.catrgory} onPress={this.readPosts}>
+                <Text style={{color:'#fff'}}>Latest</Text>
               </TouchableOpacity>
-              <TouchableOpacity style={styles.catrgory}>
-                <Text>Graphics</Text>
+              <TouchableOpacity style={styles.catrgory} onPress={this.readInterestPosts.bind(this, 'App')}>
+                <Text>App</Text>
               </TouchableOpacity>
-              <TouchableOpacity style={styles.catrgory}>
+              <TouchableOpacity style={styles.catrgory} onPress={this.readInterestPosts.bind(this, 'Video')}>
                 <Text>Video</Text>
               </TouchableOpacity>
-              <TouchableOpacity style={styles.catrgory}>
+              <TouchableOpacity style={styles.catrgory} onPress={this.readInterestPosts.bind(this, 'Product')}>
                 <Text>Product</Text>
               </TouchableOpacity>
-              <TouchableOpacity style={styles.catrgory}>
-                <Text>All</Text>
-              </TouchableOpacity>  
+              <TouchableOpacity style={styles.catrgory} onPress={this.readInterestPosts.bind(this, 'Marketing')}>
+                <Text>Marketing</Text>
+              </TouchableOpacity>    
           </View>
           </ScrollView>
         </View>
@@ -134,13 +151,13 @@ class Home extends React.Component {
         <Text>{this.state.error}</Text>
         <View style={{width:"95%",marginTop:80, marginBottom:50, paddingBottom:40}}>
             <FlatList
-              extraData={this.state.arrData}
+              extraData={this.state}
               data={this.state.arrData}
               keyExtractor={item => item.key}
               renderItem={this.renderList}
               onRefresh={this.readPosts}
               refreshing={this.state.refreshing}
-              ListEmpty=<Text>Oops empty list</Text>
+              ListEmptyComponent={this.listEmptyComponent}
             />
         </View>
       </View>
