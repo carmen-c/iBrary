@@ -57,7 +57,6 @@ class Profile extends React.Component {
   }
   readPosts=()=>{
     db.ref('posts/')
-      .limitToLast(100)
       .once('value')
       .then(snapshot => {
       var items = [];
