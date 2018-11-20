@@ -1,16 +1,34 @@
 import React from 'react';
 
-import { View, StyleSheet, Text, Button, Image, ImageBackground, ScrollView,TouchableOpacity, KeyboardAvoidingView, Alert  } from 'react-native';
+import { View, 
+        StyleSheet, 
+        Text, 
+        TextInput,
+        Button, 
+        Image, 
+        ImageBackground, 
+        ScrollView,
+        TouchableOpacity, 
+        KeyboardAvoidingView, 
+        Modal
+       } from 'react-native';
 
 import {connect} from 'react-redux';
-import {ChangeTab} from '../redux/Actions';
+import {ChangeTab, UpdateProgress} from '../redux/Actions';
 
-import {auth} from '../constants/FConfig';
+import {auth, db} from '../constants/FConfig';
 import CreateComment from './CreateComment';
 import CommentList from './CommentList';
 import PickedCommentList from './PickedCommentList';
 
 class PostDetail extends React.Component {
+  
+  state={
+    content: this.props.content,
+    button: "progress",
+    modal: false,
+    progress: this.props.progress
+  }
   
   check=()=>{
     console.log("POSTDETAIL: ", this.props.userid)
@@ -25,9 +43,25 @@ class PostDetail extends React.Component {
   navigateToHome=()=>{
     this.props.dispatch(ChangeTab(1));
   }
+  
   addProgress=()=>{
-   
-   
+    this.setState({modal: true})
+  }
+  
+  viewProgress=()=>{
+    if(this.state.button == "progress"){
+      this.setState({content: this.props.progress, button: "content"})
+    } else {
+      this.setState({content: this.props.content, button: "progress"})
+    }
+  }
+  
+  saveProgress=()=>{
+    db.ref('posts/' + this.props.postid).update({
+      progress: this.state.progress
+    });
+    this.props.dispatch(UpdateProgress(this.state.progress));
+    this.setState({modal: false})
   }
 
   render() {
@@ -40,22 +74,46 @@ class PostDetail extends React.Component {
               Add Progress
               </Text>
           </TouchableOpacity>
+          
           <TouchableOpacity>
             <Text style={{fontWeight:'600', opacity:0.8, paddingRight:10}}>
               Edit
             </Text>
           </TouchableOpacity>
-          
-          
         </View>
-      )
-        
+      ) 
+    }
+    
+    var btntxt = "";
+    if(this.state.button == "progress"){
+      btntxt = "VIEW PROGRESS";
+    } else {
+      btntxt = "VIEW IDEA";
     }
     
     this.check();
     return (
       <View style={styles.container}>
-       
+        <Modal
+          animationType='fade'
+          visible={this.state.modal}
+          >
+        <View>
+          <TextInput
+            style={{fontSize:16, height:300}}
+            placeholder='Add Progress'
+            value={this.state.progress}
+            multiline={true}
+            keyboardType='default'
+            onChangeText={(text)=> this.setState({progress: text})}
+          />
+          <TouchableOpacity onPress={this.saveProgress}> 
+            <View style={styles.signBut}>
+                <Text style={styles.buttonText}>SAVE</Text>
+            </View>
+          </TouchableOpacity>
+        </View>
+        </Modal>
      
         <View style={{ width:'100%'}}>
           <TouchableOpacity 
@@ -72,6 +130,7 @@ class PostDetail extends React.Component {
         <ScrollView style={{margionTop:0}}>
         <View style={styles.contents}>
           <View style={styles.posting}>
+            
             <View style={{width:'90%', marginTop:10, height:50, flexDirection:'row', justifyContent:'space-between'}}>
               <View style={{flexDirection:'row'}}>
                 <Image 
@@ -87,9 +146,7 @@ class PostDetail extends React.Component {
                   style={{ width:30, height:30, marginRight:10, resizeMode:'contain'}} 
                   source={require('../assets/images/progress.png')}/>
                 </TouchableOpacity>
-                
               </View>
-              
             </View>
                 
             <View style={{width:'85%', marginBottom:10}} >
@@ -101,18 +158,27 @@ class PostDetail extends React.Component {
                  {this.props.title}
                 </Text>
               </View>
-              <Text style={{fontSize: 16}}>
-                {this.props.content}
-              </Text>
+              <Text>{this.state.content}</Text>
             </View>
+            
             <View style={{width:'90%'}}>
                <Text style={{fontWeight:'600', color:'#bbb', marginBottom:5, }}>Category : {this.props.category}</Text>
             </View>
+            
             <View style={{width:'100%'}}>
                <PickedCommentList pickedComments={this.props.picked}/>
             </View>
+            
+            <View>
+            <TouchableOpacity onPress={this.viewProgress}> 
+                <View style={styles.signBut}>
+                    <Text style={styles.buttonText}>{btntxt}</Text>
+                </View>
+            </TouchableOpacity>
+          </View>
 
           </View>
+          
           <View style={{width:'100%',alignItems:'center', paddingBottom:80, backgroundColor:'#fff'}}> 
             <View style={{width:'90%'}}>
               <Image 
@@ -148,6 +214,7 @@ function mapStateToProps(state){
     picked:state.SelectPost.picked,
     category:state.SelectPost.category,
     userimg:state.SelectPost.userimg,
+    progress:state.SelectPost.progress
   }
 }
 export default connect (mapStateToProps)(PostDetail);
@@ -195,5 +262,22 @@ const styles = StyleSheet.create({
     resizeMode:'contain',
     zIndex:50
   },
+  signBut:{
+    alignItems:'center',
+    margin:5,
+    padding:15,
+    borderRadius:10,
+    backgroundColor:'#138172',
+    shadowOffset:{  width: 0,  height: 5,  },
+    shadowRadius: 5,
+    shadowColor: '#ccc',
+    shadowOpacity: 1,
+  },
+  buttonText:{
+    fontSize:17,
+    color:'#fff',
+    fontWeight:"300",
+  },
+  
 
 });

@@ -123,7 +123,8 @@ console.log(this.state.category)
         timestamp: timestamp,
         username: name,
         img: imgURL,
-        category:category
+        category:category,
+        progress: ""
     });
   }
   

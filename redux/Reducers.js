@@ -30,7 +30,8 @@ const selectedPost ={
   userimg:'',
   img:"",
   picked: "",
-  category:""
+  category:"",
+  progress: ""
 };
 
 export function SelectPost(state= selectedPost, action) {
@@ -47,12 +48,16 @@ export function SelectPost(state= selectedPost, action) {
       obj.img = action.img;
       obj.picked = action.picked;
       obj.category = action.category;
+      obj.progress = action.progress;
       return obj;
     
     case "UPDATE_PICKED":
       obj.picked = action.picked;
       return obj;
       
+    case "UPDATE_PROGRESS":
+      obj.progress = action.progress;
+      return obj;
     default:
       return state;
   }
@@ -91,7 +96,7 @@ export function PostImg(state= selectedPostImg, action) {
   let obj = Object.assign({}, state);
   
   switch(action.type) {
-    case "SSELECT_POSTIMG":
+    case "SELECT_POSTIMG":
       obj.postImg = action.postImg;
       return obj;
       
