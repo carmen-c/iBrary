@@ -47,14 +47,15 @@ class Home extends React.Component {
       
       snapshot.forEach(child =>{
         
-        db.ref('users/'+child.val().userID+"/img").once('value').then((snapshot)=>{
-          var profileimg = snapshot.val();
+        db.ref('users/'+child.val().userID).once('value').then((snapshot)=>{
+          var profileimg = snapshot.val().img;
+          var profilename = snapshot.val().name;
           items.push({
             key: child.val().postID,
             title: child.val().title,
             content: child.val().content,
             date: child.val().date,
-            username: child.val().username,
+            username: profilename,
             img:child.val().img,
             pickedComments:child.val().pickedComments,
             userimg: profileimg,
