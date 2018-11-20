@@ -55,6 +55,12 @@ export function UpdatePicked( picked) {
   }
 }
 
+export function DeletePicked() {
+  return {
+    type:"DELETE_PICKED"
+  }
+}
+
 export function SelectProfileImg(Pimg) {
   return {
     type:"SELECTED_PROFILEIMG",
@@ -66,5 +72,12 @@ export function SelectPostImg(postimg) {
   return {
     type:"SELECT_POSTIMG",
     postImg:postImg
+  }
+}
+
+export function GetAllComments(comments) {
+  return {
+    type:"GET_ALLCOMMENTS",
+    comments: comments
   }
 }

@@ -3,21 +3,18 @@ import { View, StyleSheet, Text, Button, Image, ImageBackground, ScrollView,Touc
 import Swipeout from 'react-native-swipeout';
 
 import {connect} from 'react-redux';
-import {ChangeTab, UpdatePicked} from '../redux/Actions';
+import {ChangeTab, DeletePicked} from '../redux/Actions';
 import {db} from '../constants/FConfig';
 
 class PickedComment extends React.Component {
   
   deleteFromPost=()=>{
-    db.ref('posts/' + this.props.postid).update({
-      //pop to remove from array??
-        pickedComments: ""
+    db.ref('comments/' + this.props.commentid).update({
+        picked: false
     }).then(()=>{
-//      alert("stuff");
       this.props.refresh();
     });
-    this.props.dispatch(UpdatePicked(""));
-    console.log("UPDATED: ", this.props.picked);
+    this.props.dispatch(DeletePicked());
   }
 
   render() {

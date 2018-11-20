@@ -1,5 +1,5 @@
 import React from 'react';
-import {Image, Button, Text, TextInput, View, StyleSheet, TouchableOpacity, ActivityIndicator} from 'react-native';
+import {Image, Button, Text, TextInput, View, StyleSheet, TouchableOpacity, ActivityIndicator, AsyncStorage} from 'react-native';
 import { ifIphoneX } from 'react-native-iphone-x-helper';
 
 import {db, auth, auth2} from '../constants/FConfig';
@@ -23,14 +23,28 @@ class Login extends React.Component {
     loading: false
   }
   
-  componentWillMount=()=>{
-    auth.onAuthStateChanged(user=> {
-      if (user) {
-        this.handleUserInfo(user);
+  componentWillMount=async ()=>{
+    //check asyncstorage for "firsttime"
+    try {
+      const value = await AsyncStorage.getItem('firsttime');
+      if (value !== "YES") {
+        auth.onAuthStateChanged(user=>{
+          if (user){
+            this.handleUserInfo(user);
+          }
+        })
+        // We have data!!
+        console.log("NOTFIRSTIME");
+        //change page to 2nd time
       } else {
-        // No user is signed in.
+        //value is null -> firsttime
+        await AsyncStorage.setItem('firsttime', "NO");
+        //change page to first time page
+        console.log("FIRSTTIME");
       }
-    });  
+     } catch (error) {
+       this.setState({error: error.message})
+     }
   }
   
   handleLogin=()=>{
@@ -39,9 +53,10 @@ class Login extends React.Component {
       
     return auth.signInWithEmailAndPassword(this.state.email, this.state.password)
     .then(user => {
+        //store uid to asyncStorage
         this.handleUserInfo(auth.currentUser);
     }).catch(error => {
-      this.setState({error: error.message})
+      this.setState({error: error.message, loading: false})
       
     //navigate to app if there are no errors
     })
@@ -60,10 +75,11 @@ class Login extends React.Component {
     }).catch((error) =>{
       if (error.code === statusCodes.SIGN_IN_CANCELLED) {
         // user cancelled the login flow
+        this.setState({error: error.message, loading: false})
       } else if (error.code === statusCodes.IN_PROGRESS) {
-        this.setState({error: error.message})
+        this.setState({error: error.message, loading: false})
       } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
-        this.setState({error: error.message})
+        this.setState({error: error.message, loading: false})
       } else {
         // some other error happened
       }
@@ -106,7 +122,7 @@ class Login extends React.Component {
   
   navigateToPage=(page)=>{
     this.props.dispatch(ChangePage(page));
-    this.setState({loading: false});
+    //this.setState({loading: false});
   }
 
   render() {

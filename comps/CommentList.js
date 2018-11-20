@@ -3,8 +3,10 @@ import {Image, StyleSheet, Text, TouchableOpacity, View, FlatList} from 'react-n
 import {db} from '../constants/FConfig';
 
 import Comment from './Comment';
+import {connect} from 'react-redux';
+import {GetAllComments} from '../redux/Actions';
 
-export default class CommentList extends React.Component {
+class CommentList extends React.Component {
   
   state={
     error:"",
@@ -35,9 +37,10 @@ export default class CommentList extends React.Component {
           userid: child.val().userID
         })
       });
-    console.log(items)
+//    console.log(items)
       this.setState({arrData: items});
-     console.log(this.state.arrData);
+      this.props.dispatch(GetAllComments(items));
+    console.log(this.props.comments)
   }
 
   renderList=({item}) =>  {
@@ -65,6 +68,7 @@ export default class CommentList extends React.Component {
               data={this.state.arrData}
               keyExtractor={item => item.key}
               renderItem={this.renderList}
+              refresh={this.readComments}
             />
         </View>
       </View>
@@ -72,6 +76,12 @@ export default class CommentList extends React.Component {
     );
   }
 }
+function mapStateToProps(state){
+  return {
+    comments:state.AllComments.comments
+  }
+}
+export default connect (mapStateToProps)(CommentList);
 
 const styles = StyleSheet.create({
   container: {

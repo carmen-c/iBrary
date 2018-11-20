@@ -30,7 +30,8 @@ class CreateComment extends React.Component {
       comment: comment,
       timestamp: timestamp,
       postID: post,
-      username: name
+      username: name,
+      picked: false
     }).then(()=>{
       this.setState({comment: ""})
     });

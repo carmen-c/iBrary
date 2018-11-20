@@ -16,6 +16,32 @@ class TabBar extends React.Component {
     postImg:require('../assets/images/createButton.png'),
     profileImg:require('../assets/images/profileButton.png')
   }
+
+  componentWillMount=()=>{
+    //change icon to colored one
+    if(this.props.tab === 1){
+       this.setState({
+         homeImg:require('../assets/images/homeButtonClicked.png'),
+         postImg:require('../assets/images/createButton.png'),
+         profileImg:require('../assets/images/profileButton.png')
+        })
+    }
+    else if(this.props.tab === 2){
+       this.setState({
+         homeImg:require('../assets/images/homeButton.png'),
+         postImg:require('../assets/images/createButtonClicked.png'),
+         profileImg:require('../assets/images/profileButton.png')
+        })
+    }
+    else{
+       this.setState({
+         homeImg:require('../assets/images/homeButton.png'),
+         postImg:require('../assets/images/createButton.png'),
+         profileImg:require('../assets/images/profileButtonClicked.png')
+        })
+    }
+  }
+  
   handleButton=async(tab)=>{
     
     //change icon to colored one

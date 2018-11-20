@@ -31,10 +31,10 @@ class PostDetail extends React.Component {
   }
   
   check=()=>{
-    console.log("POSTDETAIL: ", this.props.userid)
     if (auth.currentUser.uid == this.props.userid){
       //enable editing stuff
       return (<Text>...</Text>)
+      console.log(this.state.progress)
     } else {
       
     }
@@ -84,12 +84,26 @@ class PostDetail extends React.Component {
       ) 
     }
     
-    var btntxt = "";
-    if(this.state.button == "progress"){
-      btntxt = "VIEW PROGRESS";
-    } else {
-      btntxt = "VIEW IDEA";
-    }
+    var progressBtn = null;
+    if(this.state.progress != ""){
+      var btntxt = "";
+      if(this.state.button == "progress"){
+        btntxt = "VIEW PROGRESS";
+      } else {
+        btntxt = "VIEW IDEA";
+      }
+      progressBtn = (
+      <View>
+        <TouchableOpacity onPress={this.viewProgress}> 
+            <View style={styles.signBut}>
+                <Text style={styles.buttonText}>{btntxt}</Text>
+            </View>
+        </TouchableOpacity>
+      </View>
+      )
+    } else {}
+    
+    
     
     this.check();
     return (
@@ -169,13 +183,7 @@ class PostDetail extends React.Component {
                <PickedCommentList pickedComments={this.props.picked}/>
             </View>
             
-            <View>
-            <TouchableOpacity onPress={this.viewProgress}> 
-                <View style={styles.signBut}>
-                    <Text style={styles.buttonText}>{btntxt}</Text>
-                </View>
-            </TouchableOpacity>
-          </View>
+            {progressBtn}
 
           </View>
           

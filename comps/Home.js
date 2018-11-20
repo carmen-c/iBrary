@@ -1,5 +1,5 @@
 import React from 'react';
-import {Image, Platform, ScrollView, StyleSheet, Text, TouchableOpacity, View, FlatList, TextInput, Button, SearchBar, ListItem} from 'react-native';
+import {Image, Platform, ScrollView, StyleSheet, Text, TouchableOpacity, View, FlatList, TextInput, Button, SearchBar, ListItem, AsyncStorage} from 'react-native';
 import {db, auth} from '../constants/FConfig';
 import {GoogleSignin, statusCodes} from 'react-native-google-signin';
 import Post from './Post';
@@ -19,6 +19,7 @@ class Home extends React.Component {
   state={
     error:"",
     arrData: [],
+    filterData:[],
     loading: false,
     search: "",
     refreshing: false
@@ -26,9 +27,15 @@ class Home extends React.Component {
   
   componentWillMount=()=>{
     this.readPosts();
+    this.storage();
+  }
+  
+  storage=async()=>{
+    await AsyncStorage.setItem('firsttime', "YES");
   }
   
   handleSearch=(keyword)=>{
+    console.log(keyword)
     if(keyword.length == 0) {
       this.readPosts();
     } else { 
@@ -38,7 +45,7 @@ class Home extends React.Component {
       return arr;
       })
       this.setState({
-      arrData:newResult
+        filterData:newResult
       })
     } 
   }
@@ -84,8 +91,8 @@ class Home extends React.Component {
           return x.timestamp - y.timestamp;
           })
           items = items.reverse();
-          this.setState({arrData: items, refreshing: false}); 
-          console.log(items)
+          this.setState({arrData: items, filterData:items, refreshing: false}); 
+//          console.log(items)
           });
       })
     } else {
@@ -157,7 +164,7 @@ class Home extends React.Component {
         <View style={{width:"95%",marginTop:80, marginBottom:50, paddingBottom:40}}>
             <FlatList
               extraData={this.state}
-              data={this.state.arrData}
+              data={this.state.filterData}
               keyExtractor={item => item.key}
               renderItem={this.renderList}
               onRefresh={this.readPosts}

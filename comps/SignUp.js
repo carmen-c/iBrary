@@ -1,5 +1,5 @@
 import React from 'react';
-import {Image, Button, Text, TextInput, View, StyleSheet, TouchableOpacity,KeyboardAvoidingView} from 'react-native';
+import {Image, Button, Text, TextInput, View, StyleSheet, TouchableOpacity,KeyboardAvoidingView, AsyncStorage} from 'react-native';
 
 import {auth, auth2, db} from '../constants/FConfig';
 
@@ -60,6 +60,7 @@ class SignUp extends React.Component {
           this.setState({error: error.message})
       });
     }
+    AsyncStorage.setItem('firsttime', "NO");
   }
   
   render() {

@@ -3,7 +3,7 @@ import { View, StyleSheet, Text, Button, Image, ImageBackground, ScrollView,Touc
 import Swipeout from 'react-native-swipeout';
 
 import {connect} from 'react-redux';
-import {ChangeTab} from '../redux/Actions';
+import {ChangeTab, UpdatePicked} from '../redux/Actions';
 import {db, auth} from '../constants/FConfig';
 
 class Comment extends React.Component {
@@ -15,12 +15,10 @@ class Comment extends React.Component {
   }
   
   addToPost=()=>{
-    console.log("add to post");
-    db.ref('posts/' + this.props.postid).update({
-        pickedComments: this.props.commentid
+    db.ref('comments/' + this.props.commentid).update({
+      picked: true
     }).then(()=>{
-//      alert("stuff");
-//      this.props.refresh();
+//      this.props.dispatch(UpdatePicked(this.props.commentid));
     });
   }
   
@@ -33,7 +31,6 @@ class Comment extends React.Component {
     
     var swipeoutBtns = [];
     var user = auth.currentUser.uid;
-    console.log(auth.currentUser.uid, this.props.uidSelectedPost, this.props.author)
     
     if(user == this.props.uidSelectedPost) {
       swipeoutBtns = [{
@@ -104,7 +101,8 @@ function mapStateToProps(state){
   return {
     page:state.Page.page,
     tab: state.Page.tab,
-    uidSelectedPost: state.SelectPost.userid
+    uidSelectedPost: state.SelectPost.userid,
+    picked: state.SelectPost.picked
   }
 }
 export default connect (mapStateToProps)(Comment);

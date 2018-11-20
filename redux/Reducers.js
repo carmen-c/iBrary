@@ -52,12 +52,18 @@ export function SelectPost(state= selectedPost, action) {
       return obj;
     
     case "UPDATE_PICKED":
-      obj.picked = action.picked;
+      obj.picked = action.picked
+      //console.log(obj);
       return obj;
       
     case "UPDATE_PROGRESS":
       obj.progress = action.progress;
       return obj;
+      
+    case "DELETE_PICKED":
+      obj.picked = "";
+      return obj;
+      
     default:
       return state;
   }
@@ -98,6 +104,24 @@ export function PostImg(state= selectedPostImg, action) {
   switch(action.type) {
     case "SELECT_POSTIMG":
       obj.postImg = action.postImg;
+      return obj;
+      
+    default:
+      return state;
+  }
+}
+
+const allComments ={
+  comments: [],
+};
+
+export function AllComments(state= allComments, action) {
+  let obj = Object.assign({}, state);
+  
+  switch(action.type) {
+    case "GET_ALLCOMMENTS":
+      obj.comments = action.comments;
+      console.log("object", obj)
       return obj;
       
     default:
