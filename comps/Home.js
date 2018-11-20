@@ -135,6 +135,9 @@ class Home extends React.Component {
               <TouchableOpacity style={styles.catrgory} onPress={this.readInterestPosts.bind(this, 'App')}>
                 <Text>App</Text>
               </TouchableOpacity>
+              <TouchableOpacity style={styles.catrgory} onPress={this.readInterestPosts.bind(this, 'Graphic Design')}>
+                <Text>Graphic Design</Text>
+              </TouchableOpacity>
               <TouchableOpacity style={styles.catrgory} onPress={this.readInterestPosts.bind(this, 'Video')}>
                 <Text>Video</Text>
               </TouchableOpacity>
