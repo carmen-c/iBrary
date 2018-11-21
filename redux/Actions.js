@@ -14,7 +14,7 @@ export function ChangeTab(tab) {
   }
 }
 
-export function SelectItem(postid, userid, username, userimg,title, content, img, picked, category, progress) {
+export function SelectItem(postid, userid, username, userimg,title, content, img, category, progress) {
   return {
     type:"SELECTED_ITEM",
     postid: postid,
@@ -24,7 +24,6 @@ export function SelectItem(postid, userid, username, userimg,title, content, img
     title: title,
     content: content,
     img:img,
-    picked:picked,
     category:category,
     progress:progress
   }
@@ -45,19 +44,6 @@ export function SavedProfile( userid, name, bio, img, interest) {
     bio: bio,
     img:img,
     interest:interest
-  }
-}
-
-export function UpdatePicked( picked) {
-  return {
-    type:"UPDATE_PICKED",
-    picked: picked
-  }
-}
-
-export function DeletePicked() {
-  return {
-    type:"DELETE_PICKED"
   }
 }
 

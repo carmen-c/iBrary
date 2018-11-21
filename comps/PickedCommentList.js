@@ -13,19 +13,8 @@ class PickedCommentList extends React.Component {
     loading: false,
   }
 
-  componentWillMount=()=>{
-    this.readPickedComments();
-  }
-  
   readPickedComments=()=>{
-    //filter props array
-    var items = this.props.comments.filter((comment)=>{
-      if(status == true){
-        return comment
-      }
-    })
-    this.setState({arrData:items});
-    console.log("PICKED COMMENTS :",this.props.arrData)
+    
   }
 
   renderList=({item}) =>  {
@@ -41,8 +30,10 @@ class PickedCommentList extends React.Component {
   }
     
   render() {
-//    this.readComments();
-    
+    var arr = this.props.comments.filter((obj, i)=>{
+      return obj.picked;
+    })
+    console.log(this.props.comments)
     return (
 
       <View style={styles.container}>
@@ -50,8 +41,8 @@ class PickedCommentList extends React.Component {
         
         <View style={{width:'100%'}}>
             <FlatList
-              extraData={this.props.comments}
-              data={this.state.arrData}
+              extraData={this.state}
+              data={arr}
               keyExtractor={item => item.key}
               renderItem={this.renderList}
             />

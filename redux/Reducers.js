@@ -29,7 +29,6 @@ const selectedPost ={
   username: "",
   userimg:'',
   img:"",
-  picked: "",
   category:"",
   progress: ""
 };
@@ -46,22 +45,12 @@ export function SelectPost(state= selectedPost, action) {
       obj.username = action.username;
       obj.userimg = action.userimg;
       obj.img = action.img;
-      obj.picked = action.picked;
       obj.category = action.category;
       obj.progress = action.progress;
-      return obj;
-    
-    case "UPDATE_PICKED":
-      obj.picked = action.picked
-      //console.log(obj);
       return obj;
       
     case "UPDATE_PROGRESS":
       obj.progress = action.progress;
-      return obj;
-      
-    case "DELETE_PICKED":
-      obj.picked = "";
       return obj;
       
     default:
@@ -121,7 +110,7 @@ export function AllComments(state= allComments, action) {
   switch(action.type) {
     case "GET_ALLCOMMENTS":
       obj.comments = action.comments;
-      console.log("object", obj)
+//      console.log("object", obj)
       return obj;
       
     default:

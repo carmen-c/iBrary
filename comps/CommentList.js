@@ -1,5 +1,10 @@
 import React from 'react';
-import {Image, StyleSheet, Text, TouchableOpacity, View, FlatList} from 'react-native';
+import {Image, 
+        StyleSheet, 
+        Text, 
+        TouchableOpacity, 
+        View, 
+        FlatList} from 'react-native';
 import {db} from '../constants/FConfig';
 
 import Comment from './Comment';
@@ -34,13 +39,12 @@ class CommentList extends React.Component {
           postid: child.val().postID,
           comment: child.val().comment,
           username: child.val().username,
-          userid: child.val().userID
+          userid: child.val().userID,
+          picked: child.val().picked
         })
       });
-//    console.log(items)
       this.setState({arrData: items});
       this.props.dispatch(GetAllComments(items));
-    console.log(this.props.comments)
   }
 
   renderList=({item}) =>  {
@@ -51,12 +55,12 @@ class CommentList extends React.Component {
        comment={item.comment}
        username={item.username}
        author={item.userid}
+       refresh={this.readComments}
        />
     )
   }
     
   render() {
-//    this.readComments();
     
     return (
 
