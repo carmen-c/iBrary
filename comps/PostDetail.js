@@ -45,6 +45,7 @@ class PostDetail extends React.Component {
   }
   
   navigateToHome=()=>{
+    alert("back");
     this.props.dispatch(ChangeTab(1));
   }
   
@@ -201,11 +202,15 @@ class PostDetail extends React.Component {
      
         <View style={{ width:'100%'}}>
           <TouchableOpacity 
-           onPress={this.navigateToHome}> 
-           <Image 
+           onPress={this.navigateToHome}
+            style={{width:30,height:20}}> 
+            <View >
+              <Image 
               style={styles.backBut}
               source={require('../assets/images/backButton.png')}
-            />         
+            /> 
+            </View>
+                   
           </TouchableOpacity>
            {editIcon}
         </View>
