@@ -33,11 +33,25 @@ class Comment extends React.Component {
     var user = auth.currentUser.uid;
     
     if(user == this.props.uidSelectedPost) {
-      swipeoutBtns = [{
-       text:'Pick', 
-       backgroundColor:'#138172', 
-       onPress:this.addToPost
-      }]
+      if(user ==this.props.author){
+        swipeoutBtns = [{
+         text:'Pick', 
+         backgroundColor:'#138172', 
+         onPress:this.addToPost
+        },
+        {
+         text:'Delete', 
+         backgroundColor:'#138172', 
+         onPress:this.deleteComment
+        }]
+      } else {
+        swipeoutBtns = [{
+         text:'Pick', 
+         backgroundColor:'#138172', 
+         onPress:this.addToPost
+        }]
+      }
+      
     } else if (user == this.props.author){
       swipeoutBtns = [{
        text:'Delete', 
