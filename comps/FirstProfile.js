@@ -121,7 +121,7 @@ class FirstProfile extends React.Component {
 
   saveNewUserData=()=>{
  
-    if(this.state.name != "" && this.state.bio !=""){
+    if(this.state.name != "" && this.state.bio !="" && this.state.selectedItems !=""){
       var ref = db.ref('users/' + auth.currentUser.uid);
     
     if(Object.keys(this.state.newImg).length != 0) {
