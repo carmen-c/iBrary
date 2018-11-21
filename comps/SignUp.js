@@ -60,7 +60,6 @@ class SignUp extends React.Component {
           this.setState({error: error.message})
       });
     }
-    AsyncStorage.setItem('firsttime', "NO");
   }
   
   render() {
