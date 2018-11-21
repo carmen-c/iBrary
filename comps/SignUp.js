@@ -24,25 +24,18 @@ class SignUp extends React.Component {
   handleSignUp=()=>{
 //    this.props.dispatch(FirstTime("true"))
     //check if passwords match
-    if(this.state.password === this.state.password2) {
+    if(this.state.password === this.state.password2 && this.state.name.length != 0) {
       
       //create user
       auth.createUserWithEmailAndPassword(this.state.email, this.state.password).then(user => {
-          this.saveNewUserData();
+        this.saveNewUserData();
+        this.props.dispatch(ChangePage(2));
         
       }).catch(error => {
-//        this.setState({error: error.message})
-        
-      //navigate to welcome screen if there are no errors
+        this.setState({error: error.message})
       })
-//      .then(()=>{
-//        this.props.dispatch(FirstTime("true"));
-//      });
-      this.props.dispatch(ChangePage(2));
-//      console.log(this.props.firsttime);
+
     }
-    
-    //if passwords don't match tell the user
     else {
       this.setState({error: "your passwords don't match"})
     }
@@ -70,7 +63,6 @@ class SignUp extends React.Component {
         ))
     console.log("userID",currentUser.uid)
     }
-     
   }
   
   render() {
