@@ -27,7 +27,7 @@ class Login extends React.Component {
     //check asyncstorage for "firsttime"
     try {
       const value = await AsyncStorage.getItem('firsttime');
-      if (value !== "YES") {
+      if (value == "NO") {
         auth.onAuthStateChanged(user=>{
           if (user){
             this.handleUserInfo(user);
@@ -38,7 +38,7 @@ class Login extends React.Component {
         //change page to 2nd time
       } else {
         //value is null -> firsttime
-        await AsyncStorage.setItem('firsttime', "NO");
+        await AsyncStorage.setItem('firsttime', "YES");
         //change page to first time page
         console.log("FIRSTTIME");
       }

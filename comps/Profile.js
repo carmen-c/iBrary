@@ -158,6 +158,7 @@ class Profile extends React.Component {
             {(this.state.interest.length > 1) ? <View style={styles.interestList}><Text style={{color:'white'}}> {this.state.interest[1]} </Text></View> : null}
             {(this.state.interest.length > 2) ? <View style={styles.interestList}><Text style={{color:'white'}}> {this.state.interest[2]} </Text></View> : null}
             {(this.state.interest.length > 3) ? <View style={styles.interestList}><Text style={{color:'white'}}> {this.state.interest[3]} </Text></View> : null}
+            {(this.state.interest.length > 4) ? <View style={styles.interestList}><Text style={{color:'white'}}> {this.state.interest[4]} </Text></View> : null}
              
               
             

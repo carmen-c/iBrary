@@ -27,6 +27,9 @@ const items = [
     name: "Video",
     id: "Video",
   },{
+    name: "Product",
+    id: "Product",
+  },{
     name: "Marketing",
     id: "Marketing",
   },
@@ -48,6 +51,9 @@ class FirstProfile extends React.Component {
 
   navigatePage=async(page)=>{
     this.props.dispatch(ChangePage(page));
+  }
+  componentWillMount=()=>{
+    console.log(this.state.name)
   }
   
 

@@ -113,19 +113,21 @@ class PostDetail extends React.Component {
           visible={this.state.modal}
           >
         <View>
-          <TextInput
-            style={{fontSize:16, height:300}}
-            placeholder='Add Progress'
-            value={this.state.progress}
-            multiline={true}
-            keyboardType='default'
-            onChangeText={(text)=> this.setState({progress: text})}
-          />
-          <TouchableOpacity onPress={this.saveProgress}> 
-            <View style={styles.signBut}>
-                <Text style={styles.buttonText}>SAVE</Text>
-            </View>
-          </TouchableOpacity>
+          <View style={{width:'90%',marginTop:40}}>
+            <TextInput
+              style={{fontSize:16, height:300}}
+              placeholder='Add Progress'
+              value={this.state.progress}
+              multiline={true}
+              keyboardType='default'
+              onChangeText={(text)=> this.setState({progress: text})}
+            />
+            <TouchableOpacity onPress={this.saveProgress}> 
+              <View style={styles.signBut}>
+                  <Text style={styles.buttonText}>SAVE</Text>
+              </View>
+            </TouchableOpacity>
+          </View>
         </View>
         </Modal>
      

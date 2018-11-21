@@ -2,7 +2,7 @@ import React from 'react';
 import { View, StyleSheet, Text, Flatlist, Button, TouchableOpacity, Image, ScrollView, Animated, Dimensions } from 'react-native';
 
 import {connect} from 'react-redux';
-import {ChangePage} from '../redux/Actions';
+import {ChangePage, SavedProfile} from '../redux/Actions';
 import Swiper from 'react-native-swiper';
 
 class Welcome extends React.Component {
@@ -23,7 +23,7 @@ class Welcome extends React.Component {
               />
         </TouchableOpacity>
         <View style={styles.pageTitle}>
-            <Text style={styles.titleFont}>Welcome!</Text>
+            <Text style={styles.titleFont}>Welcome, {this.props.name}!</Text>
         </View>
         <Text style={styles.pageDes}>Browse our features, it will help</Text>
         <View style={{height:400}}>
@@ -158,7 +158,8 @@ const styles = StyleSheet.create({
 });
 function mapStateToProps(state){
   return {
-    page:state.Page.page
+    page:state.Page.page,
+    name:state.Profile.name,
   }
 }
 

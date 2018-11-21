@@ -27,6 +27,9 @@ const items = [
     name: "Video",
     id: "Video",
   },{
+    name: "Product",
+    id: "Product",
+  },{
     name: "Marketing",
     id: "Marketing",
   },
@@ -74,6 +77,7 @@ class ProfileSetting extends React.Component {
       ],
       { cancelable: true }
     )
+      
   }
   
   addImgFromGallery = async () => {
@@ -155,6 +159,7 @@ class ProfileSetting extends React.Component {
     
 
   logout = async ()=>{
+    
     await GoogleSignin.revokeAccess();
     await GoogleSignin.signOut();
     auth.signOut().then(()=> {
@@ -163,6 +168,7 @@ class ProfileSetting extends React.Component {
     }).catch(error => {
       console.log(error.message);
     });
+    
   }
     
   render() {

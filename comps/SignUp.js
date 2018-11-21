@@ -4,7 +4,7 @@ import {Image, Button, Text, TextInput, View, StyleSheet, TouchableOpacity,Keybo
 import {auth, auth2, db} from '../constants/FConfig';
 
 import {connect} from 'react-redux';
-import {ChangePage, FirstTime} from '../redux/Actions';
+import {ChangePage, FirstTime,SavedProfile} from '../redux/Actions';
 
 class SignUp extends React.Component {
 
@@ -29,6 +29,7 @@ class SignUp extends React.Component {
       //create user
       auth.createUserWithEmailAndPassword(this.state.email, this.state.password).then(user => {
           this.saveNewUserData();
+        
       }).catch(error => {
 //        this.setState({error: error.message})
         
@@ -58,8 +59,18 @@ class SignUp extends React.Component {
           img: ""
       }).catch(error => {
 //          this.setState({error: error.message})
+       
       });
+      this.props.dispatch(SavedProfile(
+          currentUser.uid,
+          this.state.name,
+          "",
+          "",
+          ""
+        ))
+    console.log("userID",currentUser.uid)
     }
+     
   }
   
   render() {
@@ -212,7 +223,8 @@ const styles = StyleSheet.create({
 function mapStateToProps(state){
   return {
     page:state.Page.page,
-    firsttime:state.Page.firsttime
+    firsttime:state.Page.firsttime,
+    userid:state.Profile.userid,
   }
 }
 export default connect (mapStateToProps)(SignUp);
