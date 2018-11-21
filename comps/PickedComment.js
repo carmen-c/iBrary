@@ -1,12 +1,17 @@
 import React from 'react';
-import { View, StyleSheet, Text, Button, Image, ImageBackground, ScrollView,TouchableOpacity } from 'react-native';
+import { View, 
+        StyleSheet, 
+        Text, 
+        Button, 
+        Image, 
+        ImageBackground, 
+        ScrollView,
+        TouchableOpacity 
+       } from 'react-native';
 import Swipeout from 'react-native-swipeout';
-
-import {connect} from 'react-redux';
-import {ChangeTab, DeletePicked} from '../redux/Actions';
 import {db} from '../constants/FConfig';
 
-class PickedComment extends React.Component {
+export default class PickedComment extends React.Component {
   
   deleteFromPost=()=>{
     db.ref('comments/' + this.props.commentid).update({
@@ -14,7 +19,7 @@ class PickedComment extends React.Component {
     }).then(()=>{
       this.props.refresh();
     });
-    this.props.dispatch(DeletePicked());
+    
   }
 
   render() {
@@ -30,10 +35,7 @@ class PickedComment extends React.Component {
     return (
       
         <View style={styles.container}>
-        <View style={{width:'100%'}}>
-          <Text style={{fontWeight:'600', color:'#bbb', marginBottom:5, marginLeft:'5%'}}>Picked Comment</Text>
-        </View>
-           
+       
         <Swipeout 
           style={{width:'100%'}}
         left={swipeoutBtns}
@@ -84,13 +86,3 @@ const styles = StyleSheet.create({
   }
 
 });
-
-
-function mapStateToProps(state){
-  return {
-    page:state.Page.page,
-    tab: state.Page.tab,
-    picked: state.SelectPost.picked
-  }
-}
-export default connect (mapStateToProps)(PickedComment);

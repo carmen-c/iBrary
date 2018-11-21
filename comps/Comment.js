@@ -18,7 +18,7 @@ class Comment extends React.Component {
     db.ref('comments/' + this.props.commentid).update({
       picked: true
     }).then(()=>{
-//      this.props.dispatch(UpdatePicked(this.props.commentid));
+      this.props.refresh();
     });
   }
   

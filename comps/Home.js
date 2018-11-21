@@ -97,7 +97,7 @@ class Home extends React.Component {
       })
     } else {
       var items = [];
-      this.setState({arrData: items, refreshing: false}); 
+      this.setState({filterData: items, refreshing: false}); 
     }
   }
 
