@@ -175,7 +175,7 @@ class ProfileSetting extends React.Component {
     
     return (
       
-      <KeyboardAvoidingView style={{width:'100%'}} behavior="position" enabled>
+   
         <ScrollView style={styles.container}>
           <View style={styles.center}>
             <TouchableOpacity 
@@ -233,14 +233,14 @@ class ProfileSetting extends React.Component {
             <View style={{width:'75%', marginBottom:15}}>
               <Text style={{fontSize:17,fontWeight:'600'}}>Interest</Text>
               <SectionedMultiSelect
-              items={items} 
-              uniqueKey='id'
-              selectText='Choose Interest'
-              showDropDowns={false}
-              readOnlyHeadings={false}
-              onSelectedItemsChange={this.onSelectedItemsChange}
-              selectedItems={this.state.selectedItems}
-            />
+                items={items} 
+                uniqueKey='id'
+                selectText='Choose Interest'
+                showDropDowns={false}
+                readOnlyHeadings={false}
+                onSelectedItemsChange={this.onSelectedItemsChange}
+                selectedItems={this.state.selectedItems}
+              />
             </View>
             
             
@@ -253,7 +253,7 @@ class ProfileSetting extends React.Component {
             </View>
           </View>
         </ScrollView>
-      </KeyboardAvoidingView>
+ 
     );
   }
 }
@@ -261,7 +261,7 @@ class ProfileSetting extends React.Component {
 const styles = StyleSheet.create({
   container: {
     width:'100%',
-    paddingBottom:100
+    paddingBottom:150
   },
   backBut: {
     width:22,
@@ -279,7 +279,9 @@ const styles = StyleSheet.create({
     marginBottom:20
   },
   center: {
-    alignItems:'center'
+    alignItems:'center',
+    paddingBottom:50,
+    marginBottom:50
   },
   pageTitle: {
     marginTop:35,
@@ -295,8 +297,8 @@ const styles = StyleSheet.create({
     color:'#138172'
   },
   pageDes:{
-    marginTop:10,
-    marginBottom:30,
+    marginTop:5,
+    marginBottom:20,
     fontSize:18
   },
   sectionTitle:{

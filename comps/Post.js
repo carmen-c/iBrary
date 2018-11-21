@@ -10,7 +10,7 @@ class Post extends React.Component {
   
   handleSelected=()=>{
     //pass or save all post props
-    this.props.dispatch(SelectItem(this.props.postid, this.props.author, this.props.username,this.props.userimg, this.props.title, this.props.content, this.props.img, this.props.category, this.props.progress));
+    this.props.dispatch(SelectItem(this.props.postid, this.props.author, this.props.username,this.props.userimg, this.props.title, this.props.content, this.props.img, this.props.picked, this.props.category, this.props.progress));
     //change page
     this.props.dispatch(ChangeTab(4));
   }

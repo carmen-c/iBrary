@@ -110,7 +110,10 @@ console.log(this.state.category)
     }
   
     Alert.alert("you posting has been saved!");
-    this.props.dispatch(ChangeTab(1));
+    setTimeout(()=>{
+      this.navigatePage();
+    },2000)
+    
   }
   
   writeNewPost=(uid, postid, date, title, content, timestamp, name, imgURL,category)=>{
@@ -128,8 +131,8 @@ console.log(this.state.category)
     });
   }
   
-  navigatePage=(page)=>{
-    this.props.dispatch(ChangePage(page));
+  navigatePage=async()=>{
+    this.props.dispatch(ChangeTab(1));
   }; 
   
   render() {

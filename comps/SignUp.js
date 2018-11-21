@@ -85,6 +85,7 @@ class SignUp extends React.Component {
                   source={require('../assets/images/backButton.png')}
                 />
         </TouchableOpacity>
+        <KeyboardAvoidingView behavior="position" enabled>
         <View style={styles.center}>
           <View style={styles.pageTitle}>
               <Text style={[styles.titleFont, styles.font]}>Create Account</Text>
@@ -131,6 +132,7 @@ class SignUp extends React.Component {
                   </TouchableOpacity>
           </View>
         </View>
+          </KeyboardAvoidingView>
       </View>
     );
   }

@@ -10,8 +10,11 @@ import { View,
         ScrollView,
         TouchableOpacity, 
         KeyboardAvoidingView, 
-        Modal
+        Modal,
+        Alert
        } from 'react-native';
+
+
 
 import {connect} from 'react-redux';
 import {ChangeTab, UpdateProgress} from '../redux/Actions';
@@ -27,6 +30,7 @@ class PostDetail extends React.Component {
     content: this.props.content,
     button: "progress",
     modal: false,
+    modal2:false,
     progress: this.props.progress
   }
   
@@ -49,20 +53,30 @@ class PostDetail extends React.Component {
   }
   
   viewProgress=()=>{
-    if(this.state.button == "progress"){
-      this.setState({content: this.props.progress, button: "content"})
-    } else {
-      this.setState({content: this.props.content, button: "progress"})
-    }
+    this.setState({modal2:true})
+//    if(this.state.button == "progress"){
+//      this.setState({content: this.props.progress, button: "content"})
+//    } else {
+//      this.setState({content: this.props.content, button: "progress"})
+//    }
   }
+  closeProgress=()=>{
+    this.setState({modal2:false})
+  }
+  
   
   saveProgress=()=>{
     db.ref('posts/' + this.props.postid).update({
       progress: this.state.progress
     });
     this.props.dispatch(UpdateProgress(this.state.progress));
-    this.setState({modal: false})
+    Alert.alert("your progress has been saved!")
+    setTimeout(()=>{
+      this.setState({modal: false})
+    },1000)
+    
   }
+  
 
   render() {
     var editIcon = null;
@@ -103,6 +117,18 @@ class PostDetail extends React.Component {
       )
     } else {}
     
+    var progress = null; 
+    if(this.state.button == "content"){
+      progress = (
+        <View style={{width:'85%',}}>
+  
+          <Text>{this.props.progress}</Text>
+        </View>
+      )
+     
+    } else {
+     
+    }
     
     
     this.check();
@@ -110,26 +136,63 @@ class PostDetail extends React.Component {
       <View style={styles.container}>
         <Modal
           animationType='fade'
-          visible={this.state.modal}
-          >
-        <View>
-          <View style={{width:'90%',marginTop:40}}>
-            <TextInput
-              style={{fontSize:16, height:300}}
-              placeholder='Add Progress'
-              value={this.state.progress}
-              multiline={true}
-              keyboardType='default'
-              onChangeText={(text)=> this.setState({progress: text})}
-            />
-            <TouchableOpacity onPress={this.saveProgress}> 
-              <View style={styles.signBut}>
-                  <Text style={styles.buttonText}>SAVE</Text>
-              </View>
-            </TouchableOpacity>
+          visible={this.state.modal}>
+          
+          <View style={{width:'100%',flex:1, alignItems:'center'}}>
+            <View style={styles.pageTitle}>
+              <Text style={[styles.titleFont, styles.font]}>Add your Progress</Text>
+            </View>
+            <View style={{width:'85%', marginTop:10}}>
+              <TextInput
+                style={{fontSize:16, height:300}}
+                placeholder='Add Progress'
+                value={this.state.progress}
+                multiline={true}
+                keyboardType='default'
+                onChangeText={(text)=> this.setState({progress: text})}
+              />
+              <TouchableOpacity onPress={this.saveProgress}> 
+                <View style={styles.signBut}>
+                    <Text style={styles.buttonText}>SAVE</Text>
+                </View>
+              </TouchableOpacity>
+            </View>
           </View>
-        </View>
         </Modal>
+        
+        <Modal
+          animationType='fade'
+          visible={this.state.modal2}
+          presentationStyle='overFullScreen'
+          transparent={true}
+          >
+          
+          <View 
+            style={{width:'100%', height:'100%', alignItems:'center', justifyContent:'center', backgroundColor:'rgba(0,0,0,0.5)'}}>
+            <View 
+              style={{width:'80%', height:400, padding:15, borderRadius:10,backgroundColor:'rgba(255,255,255,1)'}}>
+              <View 
+                style={{width:'100%', alignItems:'center'}}>
+                 <Text 
+                   style={{fontSize:18, fontWeight:'700', opacity:0.7, marginBottom:5, marginTop:5}}> 
+                   Progress
+                </Text>
+                <TouchableOpacity
+                   style={{position:'absolute', top:5, right:0}}
+                  onPress={this.closeProgress}>
+                  <Text>Close</Text>
+                </TouchableOpacity>
+                
+              </View>
+             
+              <View style={{width:'100%', marginTop:10}}>
+                  <Text>{this.props.progress}</Text>
+              </View>
+            </View>
+            
+          </View>
+        </Modal>
+        
      
         <View style={{ width:'100%'}}>
           <TouchableOpacity 
@@ -157,6 +220,7 @@ class PostDetail extends React.Component {
               </View>
              
               <View style={{width:30}}>
+                
                 <TouchableOpacity>
                   <Image 
                   style={{ width:30, height:30, marginRight:10, resizeMode:'contain'}} 
@@ -164,7 +228,9 @@ class PostDetail extends React.Component {
                 </TouchableOpacity>
               </View>
             </View>
-                
+              <View style={{width:'90%', alignItems:'center'}}>
+               <Text style={{fontWeight:'600', color:'#bbb', marginBottom:5, }}>Category : {this.props.category}</Text>
+              </View>  
             <View style={{width:'85%', marginBottom:10}} >
               <View style={{alignItems:'center'}} refs={this.props.postid}>
                 <Image 
@@ -177,15 +243,15 @@ class PostDetail extends React.Component {
               <Text>{this.state.content}</Text>
             </View>
             
-            <View style={{width:'90%'}}>
-               <Text style={{fontWeight:'600', color:'#bbb', marginBottom:5, }}>Category : {this.props.category}</Text>
-            </View>
+            
             
             <View style={{width:'100%'}}>
                <PickedCommentList pickedComments={this.props.picked}/>
             </View>
             
             {progressBtn}
+            {progress}
+
 
           </View>
           
@@ -287,6 +353,18 @@ const styles = StyleSheet.create({
     fontSize:17,
     color:'#fff',
     fontWeight:"300",
+  },
+  pageTitle: {
+    paddingTop:55,
+    paddingBottom:15,
+    width:'100%',
+    backgroundColor:'#e6e6e6',
+    alignItems:'center',   
+  },
+  titleFont:{
+    fontSize:25,
+    fontWeight: 'bold',
+    color:'#138172'
   },
   
 

@@ -3,7 +3,7 @@ import {Image, Platform, ScrollView, StyleSheet, Text, TouchableOpacity, View, F
 import {db, auth} from '../constants/FConfig';
 import {GoogleSignin, statusCodes} from 'react-native-google-signin';
 import Post from './Post';
-
+import Icon from 'react-native-vector-icons/MaterialIcons'
 import {connect} from 'react-redux';
 import {ChangePage} from '../redux/Actions';
 
@@ -123,20 +123,33 @@ class Home extends React.Component {
     return (
 
       <View style={styles.container}>
-        <View style={{position:'absolute', top:0, left:0, width:'100%', alignItems:'center', height:85}}>
+        <View style={{position:'absolute', top:0, left:0, width:'100%', alignItems:'center', height:107}}>
+          <View style={[styles.searchBar,{backgroundColor:'#FFF', flexDirection:'row'}]}>
+            <Icon
+          name="search"
+          size={18}
+          style={{ marginHorizontal: 5 }}
+        />
           <TextInput
-            style={styles.searchBar}
+            
             autoCapitalize = 'none'
             placeholder="Search"
             autoCorrect={false}
             onChangeText={(text) => this.handleSearch(text)}
           />
+          </View>
+          
+          <View style={{width:'100%'}}>
+             <Text style={{opacity:0.7, marginLeft:10, fontSize:12, marginBottom:5}}>Filtered by</Text>
+          </View>
+         
           <ScrollView 
             horizontal={true} 
             overScrollMode='auto'
-            showsHorizontalScrollIndicator='false'>  
+            showsHorizontalScrollIndicator='false'>
+            
           <View 
-            style={{flexDirection:'row', flexWrap:'wrap', justifyContent:'space-between', marginLeft:10, }}>
+            style={{flexDirection:'row', marginLeft:10, justfyContent:'space-btween' }}>
            
               <TouchableOpacity style={styles.catrgory} onPress={this.readPosts}>
                 <Text style={{color:'#fff'}}>Latest</Text>
@@ -158,10 +171,12 @@ class Home extends React.Component {
               </TouchableOpacity>    
           </View>
           </ScrollView>
+          
         </View>
+        
               
         <Text>{this.state.error}</Text>
-        <View style={{width:"95%",marginTop:80, marginBottom:50, paddingBottom:40}}>
+        <View style={{width:"95%",marginTop:105, marginBottom:50, paddingBottom:40}}>
             <FlatList
               extraData={this.state}
               data={this.state.filterData}
@@ -196,19 +211,35 @@ const styles = StyleSheet.create({
 //    position:'absolute',
 //    top:8,
     width:'90%',
-    marginTop:7,
+    marginTop:10,
     marginBottom:10,
-    padding:10 ,
+    paddingTop:10 ,
+    paddingBottom:10 ,
+    paddingLeft:5 ,
+    paddingRight:5 ,
     backgroundColor:'#fff',
     borderRadius:10,
   },
   catrgory:{
     backgroundColor:'rgba(19,129,114,0.7)', 
-    padding:5, 
-    marginRight:20,
+    paddingLeft:10, 
+    paddingRight:10, 
+    paddingTop:6, 
+    paddingBottom:0, 
+    marginRight:13,
     borderRadius:5, 
     shadowOffset:{ width: 0,  height: 3, },
     shadowRadius: 5,
     shadowColor: '#ccc', 
-    shadowOpacity: 1,}
+    shadowOpacity: 1,
+  },
+  hairline: {
+    position:'absolute',
+    left:0,
+    top:116,
+    backgroundColor: '#A2A2A2',
+    height: 0.8,
+    opacity:0.5,
+    width: '100%'
+},
 });
