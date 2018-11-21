@@ -131,8 +131,8 @@ console.log(this.state.category)
     });
   }
   
-  navigatePage=async()=>{
-    this.props.dispatch(ChangeTab(1));
+  navigatePage=()=>{
+      this.props.dispatch(ChangeTab(1));
   }; 
   
   render() {

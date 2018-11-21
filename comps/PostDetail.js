@@ -65,15 +65,20 @@ class PostDetail extends React.Component {
   }
   
   
-  saveProgress=()=>{
-    db.ref('posts/' + this.props.postid).update({
+  saveProgress=async ()=>{
+    
+    await db.ref('posts/' + this.props.postid).update({
       progress: this.state.progress
     });
     this.props.dispatch(UpdateProgress(this.state.progress));
-    Alert.alert("your progress has been saved!")
-    setTimeout(()=>{
-      this.setState({modal: false})
-    },1000)
+    
+    Alert.alert(
+      "Saved",
+      'My Alert Msg',
+      [
+        {text: 'OK', onPress: () => {this.setState({modal: false})}},
+      ])
+    
     
   }
   

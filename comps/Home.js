@@ -5,7 +5,7 @@ import {GoogleSignin, statusCodes} from 'react-native-google-signin';
 import Post from './Post';
 import Icon from 'react-native-vector-icons/MaterialIcons'
 import {connect} from 'react-redux';
-import {ChangePage} from '../redux/Actions';
+import {ChangePage, ChangeTab} from '../redux/Actions';
 
 const data = []
 listEmptyComponent = () => {
@@ -49,7 +49,7 @@ class Home extends React.Component {
       })
     } 
   }
-  
+
   readInterestPosts=(interest)=>{
     this.setState({refreshing: true});
     db.ref('posts/')
@@ -195,7 +195,8 @@ class Home extends React.Component {
 
 function mapStateToProps(state){
   return {
-    page:state.Page.page
+    page:state.Page.page,
+    tab:state.Page.tab
   }
 }
 export default connect (mapStateToProps)(Home);

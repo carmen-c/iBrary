@@ -49,7 +49,7 @@ class ProfileSetting extends React.Component {
     this.setState({ selectedItems });
   }
 
-  navigatePage=async(page)=>{
+  navigatePage=(page)=>{
     this.props.dispatch(ChangePage(page), ChangeTab(3));
   }
   

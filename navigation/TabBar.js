@@ -11,84 +11,43 @@ import {connect} from 'react-redux';
 import {ChangePage, ChangeTab} from '../redux/Actions';
 
 class TabBar extends React.Component {
-  state={
-    homeImg:require('../assets/images/homeButtonClicked.png'),
-    postImg:require('../assets/images/createButton.png'),
-    profileImg:require('../assets/images/profileButton.png')
-  }
-
-  componentWillMount=()=>{
-    //change icon to colored one
-    if(this.props.tab === 1){
-       this.setState({
-         homeImg:require('../assets/images/homeButtonClicked.png'),
-         postImg:require('../assets/images/createButton.png'),
-         profileImg:require('../assets/images/profileButton.png')
-        })
-    }
-    else if(this.props.tab === 2){
-       this.setState({
-         homeImg:require('../assets/images/homeButton.png'),
-         postImg:require('../assets/images/createButtonClicked.png'),
-         profileImg:require('../assets/images/profileButton.png')
-        })
-    }
-    else{
-       this.setState({
-         homeImg:require('../assets/images/homeButton.png'),
-         postImg:require('../assets/images/createButton.png'),
-         profileImg:require('../assets/images/profileButtonClicked.png')
-        })
-    }
-  }
+  homeImg = [require('../assets/images/homeButton.png'), require('../assets/images/homeButtonClicked.png')];
+  postImg=[require('../assets/images/createButton.png'),require('../assets/images/createButtonClicked.png')];
+  profileImg=[require('../assets/images/profileButton.png'), require('../assets/images/profileButtonClicked.png')];
+  
   
   handleButton=async(tab)=>{
-    
-    //change icon to colored one
-    if(tab === 1){
-       this.setState({
-         homeImg:require('../assets/images/homeButtonClicked.png'),
-         postImg:require('../assets/images/createButton.png'),
-         profileImg:require('../assets/images/profileButton.png')
-        })
-    }
-    else if(tab === 2){
-       this.setState({
-         homeImg:require('../assets/images/homeButton.png'),
-         postImg:require('../assets/images/createButtonClicked.png'),
-         profileImg:require('../assets/images/profileButton.png')
-        })
-    }
-    else{
-       this.setState({
-         homeImg:require('../assets/images/homeButton.png'),
-         postImg:require('../assets/images/createButton.png'),
-         profileImg:require('../assets/images/profileButtonClicked.png')
-        })
-    }
     this.props.dispatch(ChangeTab(tab));
   }
   
   render() {
-    var curtab = null;
+    var rendHome = this.homeImg[0],
+        rendPost = this.postImg[0],
+        rendProf = this.profileImg[0],
+        curTab = null;
     
     //we are changing state to use the global state
     switch(this.props.tab){
 
       case 1:
         curtab = <Home />
+        rendHome = this.homeImg[1];
         break;
       case 2:
         curtab = <CreatePost />
+        rendPost = this.postImg[1];
         break;
       case 3:
         curtab = <Profile />
+        rendProf = this.profileImg[1];
         break;
       case 4:
         curtab = <PostDetail/>
+        rendPost = this.postImg[1];
         break;
       default:
         curtab = <Home />
+        rendHome = this.homeImg[1];
         break;
     }
     
@@ -104,17 +63,17 @@ class TabBar extends React.Component {
             <TouchableOpacity onPress={this.handleButton.bind(this, 2)}>
               <Image
                   style={styles.navIcon}
-                  source={this.state.postImg}/>
+                  source={rendPost}/>
           </TouchableOpacity>
           <TouchableOpacity onPress={this.handleButton.bind(this, 1)}>
               <Image
                   style={styles.navIcon}
-                  source={this.state.homeImg}/>
+                  source={rendHome}/>
           </TouchableOpacity>
           <TouchableOpacity onPress={this.handleButton.bind(this, 3)}>
               <Image
                   style={styles.navIcon}
-                  source={this.state.profileImg}/>
+                  source={rendProf}/>
           </TouchableOpacity>
           </View>
           
