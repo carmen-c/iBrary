@@ -43,7 +43,7 @@ class TabBar extends React.Component {
         break;
       case 4:
         curtab = <PostDetail/>
-        rendPost = this.postImg[1];
+        rendHome = this.homeImg[1];
         break;
       default:
         curtab = <Home />
