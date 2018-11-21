@@ -53,6 +53,10 @@ export function SelectPost(state= selectedPost, action) {
       obj.progress = action.progress;
       return obj;
       
+    case "EDIT_POST":
+      obj.content = action.content;
+      return obj;
+      
     default:
       return state;
   }

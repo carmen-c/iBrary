@@ -17,7 +17,7 @@ import { View,
 
 
 import {connect} from 'react-redux';
-import {ChangeTab, UpdateProgress} from '../redux/Actions';
+import {ChangeTab, UpdateProgress, EditPost} from '../redux/Actions';
 
 import {auth, db} from '../constants/FConfig';
 import CreateComment from './CreateComment';
@@ -31,6 +31,7 @@ class PostDetail extends React.Component {
     button: "progress",
     modal: false,
     modal2:false,
+    editModal: false,
     progress: this.props.progress
   }
   
@@ -38,7 +39,7 @@ class PostDetail extends React.Component {
     if (auth.currentUser.uid == this.props.userid){
       //enable editing stuff
       return (<Text>...</Text>)
-      console.log(this.state.progress)
+//      console.log(this.state.progress)
     } else {
       
     }
@@ -64,9 +65,7 @@ class PostDetail extends React.Component {
     this.setState({modal2:false})
   }
   
-  
   saveProgress=async ()=>{
-    
     await db.ref('posts/' + this.props.postid).update({
       progress: this.state.progress
     });
@@ -78,8 +77,24 @@ class PostDetail extends React.Component {
       [
         {text: 'OK', onPress: () => {this.setState({modal: false})}},
       ])
+  }
+  
+  showEdit=()=>{
+    this.setState({editModal: true})
+  }
+  
+  editPost=async ()=>{
+    await db.ref('posts/' + this.props.postid).update({
+      content: this.state.content
+    });
+    this.props.dispatch(EditPost(this.state.content));
     
-    
+    Alert.alert(
+      "Saved",
+      'Your changes have been saved.',
+      [
+        {text: 'OK', onPress: () => {this.setState({editModal: false})}},
+      ])
   }
   
 
@@ -94,7 +109,7 @@ class PostDetail extends React.Component {
               </Text>
           </TouchableOpacity>
           
-          <TouchableOpacity>
+          <TouchableOpacity onPress={this.showEdit}>
             <Text style={{fontWeight:'600', opacity:0.8, paddingRight:10}}>
               Edit
             </Text>
@@ -167,6 +182,32 @@ class PostDetail extends React.Component {
         
         <Modal
           animationType='fade'
+          visible={this.state.editModal}>
+          
+          <View style={{width:'100%',flex:1, alignItems:'center'}}>
+            <View style={styles.pageTitle}>
+              <Text style={[styles.titleFont, styles.font]}>Edit your Post</Text>
+            </View>
+            <View style={{width:'85%', marginTop:10}}>
+              <TextInput
+                style={{fontSize:16, height:300}}
+                placeholder='Edit your Post'
+                value={this.state.content}
+                multiline={true}
+                keyboardType='default'
+                onChangeText={(text)=> this.setState({content: text})}
+              />
+              <TouchableOpacity onPress={this.editPost}> 
+                <View style={styles.signBut}>
+                    <Text style={styles.buttonText}>SAVE</Text>
+                </View>
+              </TouchableOpacity>
+            </View>
+          </View>
+        </Modal>
+        
+        <Modal
+          animationType='fade'
           visible={this.state.modal2}
           presentationStyle='overFullScreen'
           transparent={true}
@@ -197,6 +238,8 @@ class PostDetail extends React.Component {
             
           </View>
         </Modal>
+        
+        
         
      
         <View style={{ width:'100%'}}>

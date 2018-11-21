@@ -39,6 +39,13 @@ export function UpdateProgress(progress){
   }
 }
 
+export function EditPost(content){
+  return{
+    type:"EDIT_POST",
+    content:content,
+  }
+}
+
 export function SavedProfile( userid, name, bio, img, interest) {
   return {
     type:"SAVED_PROFILE",
