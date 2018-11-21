@@ -30,7 +30,7 @@ class SignUp extends React.Component {
       auth.createUserWithEmailAndPassword(this.state.email, this.state.password).then(user => {
           this.saveNewUserData();
       }).catch(error => {
-        this.setState({error: error.message})
+//        this.setState({error: error.message})
         
       //navigate to welcome screen if there are no errors
       })
@@ -57,7 +57,7 @@ class SignUp extends React.Component {
           name:this.state.name,
           img: ""
       }).catch(error => {
-          this.setState({error: error.message})
+//          this.setState({error: error.message})
       });
     }
   }
