@@ -20,7 +20,9 @@ class Login extends React.Component {
     bio:'',
     img:'',
     uid:'',
-    loading: false
+    loading: false,
+    isSigninInProgress: false,
+    value: ""
   }
   
   componentWillMount=async ()=>{
@@ -35,13 +37,13 @@ class Login extends React.Component {
         })
         // We have data!!
         console.log("NOTFIRSTIME");
-        //change page to 2nd time
       } else {
         //value is null -> firsttime
         await AsyncStorage.setItem('firsttime', "YES");
         //change page to first time page
         console.log("FIRSTTIME");
       }
+      this.setState({value: value})
      } catch (error) {
        this.setState({error: error.message})
      }
@@ -51,78 +53,95 @@ class Login extends React.Component {
     this.setState({loading: true});
     auth.setPersistence(auth2.Auth.Persistence.LOCAL).then(a => {
       
-    return auth.signInWithEmailAndPassword(this.state.email, this.state.password)
-    .then(user => {
-        //store uid to asyncStorage
-        this.handleUserInfo(auth.currentUser);
-    }).catch(error => {
-      this.setState({error: error.message, loading: false})
-      
-    //navigate to app if there are no errors
-    })
-      
+      return auth.signInWithEmailAndPassword(this.state.email, this.state.password)
+      .then(user => {
+          this.handleUserInfo(auth.currentUser);
+      }).catch(error => {
+        this.setState({error: error.message, loading: false})      
+      })
     })
   }
   
   signIn = async () => {
-    this.setState({loading: true});
-    await GoogleSignin.signIn().then((user)=>{
+    this.setState({loading: true, isSigninInProgress: true});
+    await GoogleSignin.signIn()
+    
+    .then((user)=>{
       const credential = auth2.GoogleAuthProvider.credential(user.idToken, user.accessToken);
       auth.signInAndRetrieveDataWithCredential(credential);
       this.handleUserInfo(auth.currentUser);
-//      this.navigateToPage.bind(this, 4);
       
     }).catch((error) =>{
+      this.setState({loading: false, isSigninInProgress: false})
       if (error.code === statusCodes.SIGN_IN_CANCELLED) {
-        // user cancelled the login flow
-        this.setState({error: error.message, loading: false})
+        this.setState({error: "sign in was cancelled"})
+        
       } else if (error.code === statusCodes.IN_PROGRESS) {
-        this.setState({error: error.message, loading: false})
+        this.setState({error: "sign in is already in progress"})
+        
       } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
-        this.setState({error: error.message, loading: false})
+        this.setState({error: error.message})
+        
       } else {
-        // some other error happened
+        this.setState({error: "please try again."})
       }
     });
   }
   
   handleUserInfo=(user)=>{
     this.setState({loading: true});
-    if(user.uid != null){
+
     db.ref('users/'+ user.uid)
       .once('value')
       .then(snapshot => {
-        var thisuser = snapshot.val();
-        var pimg = "";
-      
-        if(thisuser.img == "") {
-          pimg = 'require("../assets/images/profileDefault.png")'
-          
-        } else {
-          pimg = thisuser.img
-        }
+        if(snapshot.val() == null) {
+          db.ref('users/' + user.uid).set({
+          userID: user.uid,
+          email: user.email,
+          name: user.displayName,
+          img: ""
+          }).then(() => {
+            this.props.dispatch(SavedProfile(
+              user.uid,
+              user.displayName,
+              "",
+              "",
+              ""
+            ))
+            this.navigateToPage(2);
+          });
 
-        console.log(thisuser);
-//        serid, name, bio, img
-        this.props.dispatch(SavedProfile(
-          thisuser.userID,
-          thisuser.name,
-          thisuser.bio,
-          pimg,
-          thisuser.interest
-        ))
-      console.log(this.props.interest);
-      
-      }).then(()=>{
-      this.props.dispatch(ChangeTab(1))
-        this.navigateToPage(4);
+        } else {
+          db.ref('users/'+ user.uid)
+          .once('value')
+          .then(snapshot => {
+            var thisuser = snapshot.val();
+            var pimg = "";
+
+            if(thisuser.img == "" || thisuser.img == null) {
+              pimg = 'require("../assets/images/profileDefault.png")'
+
+            } else {
+              pimg = thisuser.img
+            }
+
+            this.props.dispatch(SavedProfile(
+              thisuser.userID,
+              thisuser.name,
+              thisuser.bio,
+              pimg,
+              thisuser.interest
+            ))
+          }).then(()=>{
+            this.props.dispatch(ChangeTab(1))
+            this.navigateToPage(4);
+          });
+        }
       });
-    } else {}
   }
   
   navigateToPage=(page)=>{
     this.props.dispatch(ChangePage(page));
-    //this.setState({loading: false});
   }
 
   render() {
