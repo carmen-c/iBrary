@@ -36,7 +36,9 @@ class Welcome extends React.Component {
                 source={require('../assets/images/sharingIcon.png')}
                 style={styles.featureImg}           
               />
-              <Text style={styles.featureText}>Share your ideas or Ask help</Text>
+              <Text style={styles.featureText}>Share your ideas 
+                or 
+                Ask help</Text>
             </View>
           </View>
 
@@ -52,7 +54,7 @@ class Welcome extends React.Component {
           <View style={{width:'100%', alignItems:'center'}}>
             <View style={styles.box}>
               <Image 
-                source={require('../assets/images/sharingIcon.png')}
+                source={require('../assets/images/progress.gif')}
                 style={styles.featureImg}           
               />
               <Text style={styles.featureText}>Add your progress</Text>
@@ -124,7 +126,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.5,
   },
   featureImg:{
-    width:'90%',
+    width:'95%',
     height:150,
     resizeMode:'contain',
     alignItems:'center',
