@@ -50,14 +50,14 @@ class Login extends React.Component {
   }
   
   handleLogin=()=>{
-    this.setState({loading: true});
+    this.setState({loading: true, isSigninInProgress: true});
     auth.setPersistence(auth2.Auth.Persistence.LOCAL).then(a => {
       
       return auth.signInWithEmailAndPassword(this.state.email, this.state.password)
       .then(user => {
         this.handleUserInfo(auth.currentUser);
       }).catch(error => {
-        this.setState({loading: false})      
+        this.setState({loading: false, isSigninInProgress: false})      
         
         console.log("ERROR CODE: ", error.code)
         if(error.code == "auth/user-not-found"){
@@ -208,7 +208,7 @@ class Login extends React.Component {
         
         <View style={styles.butBox}> 
           
-          <TouchableOpacity onPress={this.handleLogin}> 
+          <TouchableOpacity onPress={this.handleLogin} disabled={this.state.isSigninInProgress}> 
               <View style={[styles.signBut]}>
                   <Text style={[styles.buttonText,styles.font]}>SIGN IN</Text>
               </View>
