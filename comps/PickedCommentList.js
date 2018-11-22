@@ -1,6 +1,5 @@
 import React from 'react';
 import {Image, StyleSheet, Text, TouchableOpacity, View, FlatList} from 'react-native';
-import {db} from '../constants/FConfig';
 
 import {connect} from 'react-redux';
 import PickedComment from './PickedComment';
@@ -13,10 +12,6 @@ class PickedCommentList extends React.Component {
     loading: false,
   }
 
-  readPickedComments=()=>{
-    
-  }
-
   renderList=({item}) =>  {
     return(
       <PickedComment
@@ -24,7 +19,7 @@ class PickedCommentList extends React.Component {
        postid={item.postid}
        comment={item.comment}
        username={item.username}
-       refresh={this.readPickedComments}
+       postAuthor={this.props.postAuthor}
        />
     )
   }
@@ -33,7 +28,7 @@ class PickedCommentList extends React.Component {
     var arr = this.props.comments.filter((obj, i)=>{
       return obj.picked;
     })
-    console.log(this.props.comments)
+//    console.log(this.props.comments)
     return (
 
       <View style={styles.container}>

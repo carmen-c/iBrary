@@ -4,28 +4,28 @@ import Swipeout from 'react-native-swipeout';
 
 import {connect} from 'react-redux';
 import {ChangeTab, DeletePicked} from '../redux/Actions';
-import {db} from '../constants/FConfig';
+import {db, auth} from '../constants/FConfig';
 
 class PickedComment extends React.Component {
   
   deleteFromPost=()=>{
     db.ref('comments/' + this.props.commentid).update({
         picked: false
-    }).then(()=>{
-      this.props.refresh();
-    });
+    })
     this.props.dispatch(DeletePicked());
   }
 
   render() {
     
-    var swipeoutBtns = [
-      {
-       text:'Delete', 
-       backgroundColor:'#138172', 
-       onPress:this.deleteFromPost
-      }
-    ]
+    if(auth.currentUser.uid == this.props.postAuthor) {
+      var swipeoutBtns = [
+        {
+         text:'Delete', 
+         backgroundColor:'#138172', 
+         onPress:this.deleteFromPost
+        }
+      ]
+    }
     
     return (
       

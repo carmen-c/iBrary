@@ -35,15 +35,15 @@ class PostDetail extends React.Component {
     progress: this.props.progress
   }
   
-  check=()=>{
-    if (auth.currentUser.uid == this.props.userid){
-      //enable editing stuff
-      return (<Text>...</Text>)
-//      console.log(this.state.progress)
-    } else {
-      
-    }
-  }
+//  check=()=>{
+//    if (auth.currentUser.uid == this.props.userid){
+//      //enable editing stuff
+//      return (<Text>...</Text>)
+////      console.log(this.state.progress)
+//    } else {
+//      
+//    }
+//  }
   
   navigateToHome=()=>{
     alert("back");
@@ -152,7 +152,7 @@ class PostDetail extends React.Component {
     }
     
     
-    this.check();
+//    this.check();
     return (
       <View style={styles.container}>
         <Modal
@@ -299,7 +299,7 @@ class PostDetail extends React.Component {
             
             
             <View style={{width:'100%'}}>
-               <PickedCommentList pickedComments={this.props.picked}/>
+               <PickedCommentList postAuthor={this.props.userid}/>
             </View>
             
             {progressBtn}
