@@ -154,17 +154,24 @@ class Profile extends React.Component {
           
         <View style={styles.section2}>
           <Text style={styles.sectionTitle}>Interest</Text>
-          <View style={{flexDirection:'row', paddingLeft:10}}>
-            {(this.state.interest) ? <View style={styles.interestList}><Text style={{color:'white'}}> {this.state.interest[0]} </Text></View> : null}
-            {(this.state.interest.length > 1) ? <View style={styles.interestList}><Text style={{color:'white'}}> {this.state.interest[1]} </Text></View> : null}
-            {(this.state.interest.length > 2) ? <View style={styles.interestList}><Text style={{color:'white'}}> {this.state.interest[2]} </Text></View> : null}
-            {(this.state.interest.length > 3) ? <View style={styles.interestList}><Text style={{color:'white'}}> {this.state.interest[3]} </Text></View> : null}
-            {(this.state.interest.length > 4) ? <View style={styles.interestList}><Text style={{color:'white'}}> {this.state.interest[4]} </Text></View> : null}
-             
-              
+          <ScrollView 
+            horizontal={true} 
+            overScrollMode='auto'
+            showsHorizontalScrollIndicator='false'>
             
-          </View>     
-          
+            <View style={{flexDirection:'row', paddingLeft:10, marginBottom:6}}>
+              {(this.state.interest) ? <View style={styles.interestList}><Text style={{color:'white'}}> {this.state.interest[0]} </Text></View> : null}
+              
+              {(this.state.interest.length > 1) ? <View style={styles.interestList}><Text style={{color:'white'}}> {this.state.interest[1]} </Text></View> : null}
+              
+              {(this.state.interest.length > 2) ? <View style={styles.interestList}><Text style={{color:'white'}}> {this.state.interest[2]} </Text></View> : null}
+              
+              {(this.state.interest.length > 3) ? <View style={styles.interestList}><Text style={{color:'white'}}> {this.state.interest[3]} </Text></View> : null}
+              
+              {(this.state.interest.length > 4) ? <View style={styles.interestList}><Text style={{color:'white'}}> {this.state.interest[4]} </Text></View> : null}
+            </View> 
+            
+          </ScrollView>
         </View>
           <View>
         <View style={styles.hairline} />
