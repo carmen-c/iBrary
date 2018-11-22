@@ -55,9 +55,18 @@ class Login extends React.Component {
       
       return auth.signInWithEmailAndPassword(this.state.email, this.state.password)
       .then(user => {
-          this.handleUserInfo(auth.currentUser);
+        this.handleUserInfo(auth.currentUser);
       }).catch(error => {
-        this.setState({error: error.message, loading: false})      
+        this.setState({loading: false})      
+        
+        console.log("ERROR CODE: ", error.code)
+        if(error.code == "auth/user-not-found"){
+          this.setState({error: "User does not exist. Please try again."})      
+        } else if(error.code == "auth/wrong-password"){
+          this.setState({error: "Wrong password."})
+        } else {
+          this.setState({error: error.message})      
+        }
       })
     })
   }
@@ -74,16 +83,16 @@ class Login extends React.Component {
     }).catch((error) =>{
       this.setState({loading: false, isSigninInProgress: false})
       if (error.code === statusCodes.SIGN_IN_CANCELLED) {
-        this.setState({error: "sign in was cancelled"})
+        this.setState({error: "Sign in was cancelled."})
         
       } else if (error.code === statusCodes.IN_PROGRESS) {
-        this.setState({error: "sign in is already in progress"})
+        this.setState({error: "Sign in is already in progress."})
         
       } else if (error.code === statusCodes.PLAY_SERVICES_NOT_AVAILABLE) {
-        this.setState({error: error.message})
+        this.setState({error: "Play services is not available."})
         
       } else {
-        this.setState({error: "please try again."})
+        this.setState({error: "Please try again."})
       }
     });
   }
