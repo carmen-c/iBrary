@@ -198,7 +198,7 @@ class PostDetail extends React.Component {
             <View style={{width:'100%', marginTop:10, flex:0.6,alignItems:'center'}}>
               <View style={{width:'90%', alignItems:'center'}}>
                 <TextInput
-                  style={{fontSize:18,fontWeight:'500',width:'100%', fontFamily:'Avenir', marginBottom:15}}
+                  style={{fontSize:18,fontWeight:'500', fontFamily:'Avenir', marginBottom:15}}
                   placeholder='Edit your post title'
                   value={this.state.title}
                   multiline={true}
