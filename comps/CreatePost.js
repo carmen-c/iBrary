@@ -180,7 +180,7 @@ console.log(this.state.category)
             style={{height: 60, width: 100}}
             itemStyle={{fontSize:15, height:40}}
             onValueChange={(itemValue, itemIndex) => this.setState({category: itemValue})}>
-            <Picker.Item label='Application' value='Graphic Design' />
+            <Picker.Item label='Application' value='Application' />
             <Picker.Item label='Graphic Design' value='Graphic Design' />
             <Picker.Item label='Product' value='Product'/>
             <Picker.Item label='Video' value='Video' />
