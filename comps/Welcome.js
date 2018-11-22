@@ -26,7 +26,7 @@ class Welcome extends React.Component {
             <Text style={styles.titleFont}>Welcome, {this.props.name}!</Text>
         </View>
         <Text style={styles.pageDes}>Browse our features, it will help</Text>
-        <View style={{height:400}}>
+        <View style={{height:390}}>
         <Swiper 
           showsButtons={false} 
           autoplay={false}>
@@ -92,7 +92,7 @@ const styles = StyleSheet.create({
   },
   pageTitle: {
     marginTop:65,
-    marginBottom:10,
+    marginBottom:7,
     width:'100%',
 //    backgroundColor:'#e6e6e6',
 //    alignContent:'center',
@@ -104,8 +104,7 @@ const styles = StyleSheet.create({
     color:'#138172'
   },
   pageDes:{
-    marginTop:5,
-    marginBottom:20,
+    marginTop:0,
     fontSize:16
   },
   box: {
