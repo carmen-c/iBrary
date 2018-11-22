@@ -11,7 +11,9 @@ import { View,
         TouchableOpacity, 
         KeyboardAvoidingView, 
         Modal,
-        Alert
+        Alert,
+        TouchableWithoutFeedback, 
+        Keyboard
        } from 'react-native';
 
 
@@ -24,9 +26,16 @@ import CreateComment from './CreateComment';
 import CommentList from './CommentList';
 import PickedCommentList from './PickedCommentList';
 
+const DismissKeyboard = ({ children })=>(
+  <TouchableWithoutFeedback onPress={()=> Keyboard.dismiss()}>
+    {children}
+  </TouchableWithoutFeedback>
+)
+
 class PostDetail extends React.Component {
   
   state={
+    title:this.props.title,
     content: this.props.content,
     button: "progress",
     modal: false,
@@ -46,7 +55,6 @@ class PostDetail extends React.Component {
 //  }
   
   navigateToHome=()=>{
-    alert("back");
     this.props.dispatch(ChangeTab(1));
   }
   
@@ -56,11 +64,6 @@ class PostDetail extends React.Component {
   
   viewProgress=()=>{
     this.setState({modal2:true})
-//    if(this.state.button == "progress"){
-//      this.setState({content: this.props.progress, button: "content"})
-//    } else {
-//      this.setState({content: this.props.content, button: "progress"})
-//    }
   }
   closeProgress=()=>{
     this.setState({modal2:false})
@@ -74,7 +77,7 @@ class PostDetail extends React.Component {
     
     Alert.alert(
       "Saved",
-      'My Alert Msg',
+      'You progress has been saved',
       [
         {text: 'OK', onPress: () => {this.setState({modal: false})}},
       ])
@@ -86,9 +89,10 @@ class PostDetail extends React.Component {
   
   editPost=async ()=>{
     await db.ref('posts/' + this.props.postid).update({
-      content: this.state.content
+      content: this.state.content,
+      title:this.state.title
     });
-    this.props.dispatch(EditPost(this.state.content));
+    this.props.dispatch(EditPost(this.state.title,this.state.content));
     
     Alert.alert(
       "Saved",
@@ -103,7 +107,7 @@ class PostDetail extends React.Component {
     var editIcon = null;
     if(auth.currentUser.uid == this.props.userid){
       editIcon=(
-        <View style={{position:'absolute', right:10, top:23, flexDirection:'row'}}>
+        <View style={{position:'absolute', right:10, top:25, flexDirection:'row'}}>
           <TouchableOpacity onPress={this.addProgress}>
             <Text style={{fontWeight:'600', opacity:0.8, paddingRight:20}}>
               Add Progress
@@ -122,19 +126,19 @@ class PostDetail extends React.Component {
     var progressBtn = null;
     if(this.state.progress != ""){
       var btntxt = "";
+      
       if(this.state.button == "progress"){
         btntxt = "VIEW PROGRESS";
-      } else {
-        btntxt = "VIEW IDEA";
-      }
+      } 
+      
       progressBtn = (
-      <View>
-        <TouchableOpacity onPress={this.viewProgress}> 
-            <View style={styles.signBut}>
-                <Text style={styles.buttonText}>{btntxt}</Text>
-            </View>
-        </TouchableOpacity>
-      </View>
+        <View style={{width:'100%', alignItems:'center'}}>
+          <TouchableOpacity onPress={this.viewProgress}> 
+              <View style={styles.signBut}>
+                  <Text style={styles.buttonText}>{btntxt}</Text>
+              </View>
+          </TouchableOpacity>
+        </View>
       )
     } else {}
     
@@ -154,57 +158,71 @@ class PostDetail extends React.Component {
     
 //    this.check();
     return (
+      
       <View style={styles.container}>
         <Modal
           animationType='fade'
           visible={this.state.modal}>
-          
+          <DismissKeyboard>
           <View style={{width:'100%',flex:1, alignItems:'center'}}>
             <View style={styles.pageTitle}>
               <Text style={[styles.titleFont, styles.font]}>Add your Progress</Text>
             </View>
-            <View style={{width:'85%', marginTop:10}}>
+            <View style={{width:'85%', marginTop:10,height:300}}>
               <TextInput
-                style={{fontSize:16, height:300}}
+                style={{fontSize:16, width:'85%'}}
                 placeholder='Add Progress'
                 value={this.state.progress}
                 multiline={true}
                 keyboardType='default'
                 onChangeText={(text)=> this.setState({progress: text})}
               />
-              <TouchableOpacity onPress={this.saveProgress}> 
-                <View style={styles.signBut}>
-                    <Text style={styles.buttonText}>SAVE</Text>
-                </View>
-              </TouchableOpacity>
             </View>
+            <TouchableOpacity onPress={this.saveProgress} style={{width:'100%', alignItems:'center'}}> 
+              <View style={styles.signBut}>
+                  <Text style={styles.buttonText}>SAVE</Text>
+              </View>
+            </TouchableOpacity>
           </View>
+          </DismissKeyboard>
         </Modal>
         
         <Modal
           animationType='fade'
           visible={this.state.editModal}>
-          
+          <DismissKeyboard>
           <View style={{width:'100%',flex:1, alignItems:'center'}}>
             <View style={styles.pageTitle}>
               <Text style={[styles.titleFont, styles.font]}>Edit your Post</Text>
             </View>
-            <View style={{width:'85%', marginTop:10}}>
+            <View style={{width:'100%', marginTop:10, flex:0.6,alignItems:'center'}}>
+              <View style={{width:'90%', alignItems:'center'}}>
+                <TextInput
+                  style={{fontSize:18,fontWeight:'500',width:'100%', fontFamily:'Avenir', marginBottom:15}}
+                  placeholder='Edit your post title'
+                  value={this.state.title}
+                  multiline={true}
+                  keyboardType='default'
+                  onChangeText={(text)=> this.setState({title: text})}
+                />
+              </View>
+              <View style={{width:'100%',backgroundColor: '#A2A2A2',height: 0.8,opacity:0.3, marginBottom:10}} />
               <TextInput
-                style={{fontSize:16, height:300}}
-                placeholder='Edit your Post'
+                style={{fontSize:16,width:'90%',fontFamily:'Avenir'}}
+                placeholder='Edit your description'
                 value={this.state.content}
                 multiline={true}
                 keyboardType='default'
                 onChangeText={(text)=> this.setState({content: text})}
-              />
-              <TouchableOpacity onPress={this.editPost}> 
-                <View style={styles.signBut}>
-                    <Text style={styles.buttonText}>SAVE</Text>
-                </View>
-              </TouchableOpacity>
+              />  
             </View>
+            <TouchableOpacity onPress={this.editPost} style={{width:'100%', alignItems:'center'}}> 
+              <View style={styles.signBut}>
+                  <Text style={styles.buttonText}>SAVE</Text>
+              </View>
+            </TouchableOpacity>
           </View>
+          </DismissKeyboard>
         </Modal>
         
         <Modal
@@ -246,8 +264,8 @@ class PostDetail extends React.Component {
         <View style={{ width:'100%'}}>
           <TouchableOpacity 
            onPress={this.navigateToHome}
-            style={{width:30,height:20}}> 
-            <View >
+           > 
+            <View style={{width:40,height:25}}>
               <Image 
               style={styles.backBut}
               source={require('../assets/images/backButton.png')}
@@ -258,7 +276,7 @@ class PostDetail extends React.Component {
            {editIcon}
         </View>
       
-       <KeyboardAvoidingView style={{marginTop:57}} behavior="position" enabled>
+       <KeyboardAvoidingView style={{marginTop:53}} behavior="position" enabled>
         <ScrollView style={{margionTop:0}}>
         <View style={styles.contents}>
           <View style={styles.posting}>
@@ -271,19 +289,10 @@ class PostDetail extends React.Component {
                 
                 <Text style={{fontWeight:'bold', fontSize:18, color:'#7a7979', marginTop:7}}>{(this.props.username) ? this.props.username : "Usename"}</Text>
               </View>
-             
-              <View style={{width:30}}>
-                
-                <TouchableOpacity>
-                  <Image 
-                  style={{ width:30, height:30, marginRight:10, resizeMode:'contain'}} 
-                  source={require('../assets/images/progress.png')}/>
-                </TouchableOpacity>
-              </View>
             </View>
-              <View style={{width:'90%', alignItems:'center'}}>
-               <Text style={{fontWeight:'600', color:'#bbb', marginBottom:5, }}>Category : {this.props.category}</Text>
-              </View>  
+            <View style={{width:'90%', alignItems:'center'}}>
+             <Text style={{fontWeight:'600', color:'#bbb', marginBottom:5, }}>Category : {this.props.category}</Text>
+            </View>  
             <View style={{width:'85%', marginBottom:10}} >
               <View style={{alignItems:'center'}} refs={this.props.postid}>
                 <Image 
@@ -326,6 +335,7 @@ class PostDetail extends React.Component {
       
       </KeyboardAvoidingView>
          </View> 
+  
     );
   }
 }
@@ -387,11 +397,12 @@ const styles = StyleSheet.create({
     height:22,
     position:'absolute',
     left:5,
-    top:23,
+    top:25,
     resizeMode:'contain',
     zIndex:50
   },
   signBut:{
+    width:'80%',
     alignItems:'center',
     margin:5,
     padding:15,

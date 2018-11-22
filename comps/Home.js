@@ -131,7 +131,7 @@ class Home extends React.Component {
           style={{ marginHorizontal: 5 }}
         />
           <TextInput
-            
+            style={{width:200}}
             autoCapitalize = 'none'
             placeholder="Search"
             autoCorrect={false}

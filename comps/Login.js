@@ -33,7 +33,7 @@ class Login extends React.Component {
         auth.onAuthStateChanged(user=>{
           if (user){
             this.handleUserInfo(user);
-          }
+          } 
         })
         // We have data!!
         console.log("NOTFIRSTIME");
@@ -97,6 +97,7 @@ class Login extends React.Component {
     });
   }
   
+
   handleUserInfo=(user)=>{
     this.setState({loading: true});
 
@@ -269,6 +270,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.5,
   },
   inps:{
+    width:'70%',
     margin:15,
     borderColor:'#000000',
   },

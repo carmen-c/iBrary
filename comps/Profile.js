@@ -42,7 +42,7 @@ class Profile extends React.Component {
           })
 
    
-//          console.log(this.state.img);
+          console.log("img",this.props.img);
         }).catch(error => {
           this.setState({error: error.message})
         });
@@ -52,8 +52,9 @@ class Profile extends React.Component {
   }
   
   componentWillMount=()=>{
-    this.readPosts();
     this.readProfile();
+    this.readPosts();
+    
   }
   readPosts=()=>{
     db.ref('posts/')
