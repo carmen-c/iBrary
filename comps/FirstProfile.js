@@ -157,20 +157,19 @@ class FirstProfile extends React.Component {
     console.log(this.props.interest);
 
   Alert.alert('User Profile is Saved');
-      this.navigatePage(4)
-
+     setTimeout(()=>{
+      this.navigatePage(4);
+    },2000)
    
     } else {
-      Alert.alert('Please enter your name and bio.')
+      Alert.alert('Please enter your name, bio, and select at least one interest')
       
     }
     
-
     
 
   }
     
-
 
     
   render() {
@@ -201,10 +200,6 @@ class FirstProfile extends React.Component {
                     style={{width:100, height:100,borderRadius:50, backgroundColor:'#ccc'}}
                     source={(this.state.newImg.path) ? {uri: this.state.newImg.path }: (this.props.img)? this.props.img : require('../assets/images/profileADD.png')}
                   />
-                 <Image
-                   style={{width:40, height:40, position:'absolute', right:-10, bottom:0}}
-                   source={require('../assets/images/add.png')}/>
-
                 </TouchableOpacity>      
             </View>
 
@@ -256,7 +251,7 @@ class FirstProfile extends React.Component {
 const styles = StyleSheet.create({
   container: {
     width:'100%',
-    paddingBottom:100
+    paddingBottom:150,
   },
   backBut: {
     width:22,
@@ -274,7 +269,9 @@ const styles = StyleSheet.create({
     marginBottom:20
   },
   center: {
-    alignItems:'center'
+    alignItems:'center',
+    paddingBottom:30,
+    marginBottom:50
   },
   pageTitle: {
     marginTop:35,
@@ -291,7 +288,7 @@ const styles = StyleSheet.create({
   },
   pageDes:{
     marginTop:10,
-    marginBottom:30,
+    marginBottom:15,
     fontSize:18
   },
   sectionTitle:{
@@ -325,6 +322,7 @@ const styles = StyleSheet.create({
   signBut:{
     alignItems:'center',
     margin:5,
+    marginBottom:30,
     padding:15,
     borderRadius:10,
     backgroundColor:'#138172',
@@ -335,6 +333,7 @@ const styles = StyleSheet.create({
   },
   butBox: {
     flexDirection:'column',
+    marginBottom:30,
     width:'80%'  
   },
   red: {
