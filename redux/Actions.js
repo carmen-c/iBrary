@@ -39,10 +39,12 @@ export function UpdateProgress(progress){
   }
 }
 
-export function EditPost(content){
+export function EditPost(title,content){
   return{
     type:"EDIT_POST",
+    title:title,
     content:content,
+  
   }
 }
 

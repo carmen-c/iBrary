@@ -54,6 +54,7 @@ export function SelectPost(state= selectedPost, action) {
       return obj;
       
     case "EDIT_POST":
+      obj.title = action.title;
       obj.content = action.content;
       return obj;
       

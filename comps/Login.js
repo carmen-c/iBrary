@@ -31,7 +31,7 @@ class Login extends React.Component {
         auth.onAuthStateChanged(user=>{
           if (user){
             this.handleUserInfo(user);
-          }
+          } 
         })
         // We have data!!
         console.log("NOTFIRSTIME");
@@ -96,7 +96,7 @@ class Login extends React.Component {
         var pimg = "";
       
         if(thisuser.img == "") {
-          pimg = 'require("../assets/images/profileDefault.png")'
+          pimg = ''
           
         } else {
           pimg = thisuser.img
@@ -241,6 +241,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.5,
   },
   inps:{
+    width:'70%',
     margin:15,
     borderColor:'#000000',
   },
