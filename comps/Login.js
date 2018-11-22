@@ -129,7 +129,7 @@ class Login extends React.Component {
             var pimg = "";
 
             if(thisuser.img == "" || thisuser.img == null) {
-              pimg = 'require("../assets/images/profileDefault.png")'
+              pimg = ''
 
             } else {
               pimg = thisuser.img
