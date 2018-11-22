@@ -97,20 +97,13 @@ class Login extends React.Component {
     });
   }
   
+
   handleUserInfo=(user)=>{
     this.setState({loading: true});
 
     db.ref('users/'+ user.uid)
       .once('value')
       .then(snapshot => {
-<<<<<<< HEAD
-        var thisuser = snapshot.val();
-        var pimg = "";
-      
-        if(thisuser.img == "") {
-          pimg = ''
-          
-=======
         if(snapshot.val() == null) {
           db.ref('users/' + user.uid).set({
           userID: user.uid,
@@ -128,7 +121,6 @@ class Login extends React.Component {
             this.navigateToPage(2);
           });
 
->>>>>>> e840dd7c189fee59471a475f70911c76c9c904ce
         } else {
           db.ref('users/'+ user.uid)
           .once('value')
