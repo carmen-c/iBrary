@@ -8,6 +8,7 @@ import SignUp from '../comps/SignUp';
 import FirstProfile from '../comps/FirstProfile';
 import ProfileSetting from '../comps/ProfileSetting';
 import TabBar from './TabBar';
+import PostDetail from '../comps/PostDetail';
 
 import {connect} from 'react-redux';
 import {ChangePage} from '../redux/Actions';
@@ -44,6 +45,7 @@ class Main extends React.Component {
         curpage = <TabBar />
         break;
       case 5:
+        curpage = <PostDetail/>
         break;
       case 6:
         curpage = <FirstProfile />

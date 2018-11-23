@@ -264,13 +264,12 @@ class PostDetail extends React.Component {
         <View style={{ width:'100%'}}>
           <TouchableOpacity 
            onPress={this.navigateToHome}
-           > 
-            <View style={{width:40,height:25}}>
-              <Image 
+            style={{width:40, height:30,position:'absolute',left:5,top:22,}}
+           >               
+            <Image 
               style={styles.backBut}
               source={require('../assets/images/backButton.png')}
             /> 
-            </View>
                    
           </TouchableOpacity>
            {editIcon}
@@ -317,7 +316,7 @@ class PostDetail extends React.Component {
 
           </View>
           
-          <View style={{width:'100%',alignItems:'center', paddingBottom:80, backgroundColor:'#fff'}}> 
+          <View style={{width:'100%',alignItems:'center', paddingBottom:90, backgroundColor:'#fff'}}> 
             <View style={{width:'90%'}}>
               <Image 
               style={{width:25, height:20, resizeMode:'contain'}}
@@ -395,9 +394,7 @@ const styles = StyleSheet.create({
   backBut: {
     width:22,
     height:22,
-    position:'absolute',
-    left:5,
-    top:25,
+ 
     resizeMode:'contain',
     zIndex:50
   },

@@ -1,6 +1,6 @@
 import React from 'react';
 
-import { View, StyleSheet, Text, Button, TextInput, TouchableOpacity} from 'react-native';
+import { View, StyleSheet, Text, Button, TextInput, TouchableOpacity, Alert} from 'react-native';
 import {auth, db} from '../constants/FConfig';
 
 import {connect} from 'react-redux';
@@ -13,14 +13,19 @@ class CreateComment extends React.Component {
   }
 
   createNewComment =()=>{
-    var newCommentKey = db.ref().child('comments').push().key;
+    if(this.state.comment !=""){
+      var newCommentKey = db.ref().child('comments').push().key;
     var current = auth.currentUser.uid;
     var date = new Date().toUTCString();
     var timestamp = new Date().getTime();
     var post = this.props.postid;
     
     this.writeNewComment(current, newCommentKey, date, this.state.comment, timestamp, post, this.props.name);
+  }  else{
+     Alert.alert("You should type something.")
   }
+   
+ }
   
   writeNewComment=(uid, commentid, date, comment, timestamp, post, name)=>{
     db.ref('comments/' + commentid).set({
@@ -36,6 +41,8 @@ class CreateComment extends React.Component {
       this.setState({comment: ""})
     });
   }
+    
+ 
   
   render() {
     return (
