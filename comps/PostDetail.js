@@ -177,20 +177,25 @@ class PostDetail extends React.Component {
             <View style={styles.pageTitle}>
               <Text style={[styles.titleFont, styles.font]}>Add your Progress</Text>
             </View>
-            <View style={{width:'100%', alignItems:'center'}}>
-              <Text>Progress</Text>
+            <View style={{width:'80%', marginTop:10}}>
+               <Text>Drag slider to set your progress</Text>
+            </View>
+            
+            <View style={{width:'100%', alignItems:'center', marginTop:10}}>
+             
               <Slider
                 style={{width:'80%'}}
                 thumbTintColor='rgb(19,129,114)'
                 maximumTrackTintColor='#d3d3d3' 
                 minimumTrackTintColor='rgb(19,129,114)'
                 minmunValue={0}
-                maximunValue={1}
+                maximunValue={100}
                 onSlidingComplete={(val) =>this.setState({progressBar:val})}
-                value={this.state.progressBar}
+                value={this.props.progressBar}
               />
             </View>
-            <View style={{width:'90%', marginTop:10,height:300,alignItems:'center'}}>
+            <View style={{width:'100%',backgroundColor: '#A2A2A2',height: 0.8,opacity:0.3, marginBottom:10}} />
+            <View style={{width:'100%', marginTop:10,height:300,alignItems:'center'}}>
               <TextInput
                 style={{fontSize:16, width:'85%'}}
                 placeholder='Add Progress'
