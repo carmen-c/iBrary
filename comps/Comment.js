@@ -41,7 +41,7 @@ class Comment extends React.Component {
         },
         {
          text:'Delete', 
-         backgroundColor:'#138172', 
+         backgroundColor:'#rgba(0,0,0,0.3)',
          onPress:this.deleteComment
         }]
       } else {
@@ -72,7 +72,7 @@ class Comment extends React.Component {
           <View style={styles.hairline}/>
           <TouchableOpacity style={styles.list} refs={this.props.commentid} onPress={this.handleSelected}>
             <View>
-              <View style={{width:'90%',flexDirection:'row',flexWrap:'wrap'}}>
+              <View style={{width:'100%',flexDirection:'row',flexWrap:'wrap'}}>
                 <Text style={styles.username}>{this.props.username}</Text>
                 <Text>{this.props.comment}</Text>
               </View>
