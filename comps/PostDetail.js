@@ -184,14 +184,13 @@ class PostDetail extends React.Component {
                 thumbTintColor='rgb(19,129,114)'
                 maximumTrackTintColor='#d3d3d3' 
                 minimumTrackTintColor='rgb(19,129,114)'
-                
                 minmunValue={0}
-                maximunValue={100}
-                onValueChange={(val) =>this.setState({progressBar:val})}
+                maximunValue={1}
+                onSlidingComplete={(val) =>this.setState({progressBar:val})}
                 value={this.state.progressBar}
               />
             </View>
-            <View style={{width:'85%', marginTop:10,height:300}}>
+            <View style={{width:'90%', marginTop:10,height:300,alignItems:'center'}}>
               <TextInput
                 style={{fontSize:16, width:'85%'}}
                 placeholder='Add Progress'
@@ -273,8 +272,11 @@ class PostDetail extends React.Component {
                 
               </View>
              
-              <View style={{width:'100%', marginTop:10}}>
-                <Text>{this.props.progressBar*100}</Text>
+              <View style={{width:'100%', marginTop:10,alignItems:'center'}}>
+                <View style={{width:200,backgroundColor:'rgba(0,0,0,0.2)', height:15,borderRadius:7.5, overflow: 'hidden', marginBottom:10}}>
+                  <View style={{width:200*this.props.progressBar, height:15, backgroundColor:'rgba(19,129,114,1)'}}/>
+                 
+                </View>
                   <Text>{this.props.progress}</Text>
               </View>
             </View>
@@ -436,7 +438,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 1,
   },
   buttonText:{
-    fontSize:17,
+    fontSize:15,
     color:'#fff',
     fontWeight:"300",
   },

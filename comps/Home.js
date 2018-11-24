@@ -31,7 +31,7 @@ class Home extends React.Component {
   }
   
   storage=async()=>{
-    await AsyncStorage.setItem('firsttime', "YES");
+    await AsyncStorage.setItem('firsttime', "NO");
   }
   
   handleSearch=(keyword)=>{
