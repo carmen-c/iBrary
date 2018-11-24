@@ -73,15 +73,17 @@ class Login extends React.Component {
   
   signIn = async () => {
     this.setState({loading: true, isSigninInProgress: true});
-    await GoogleSignin.signIn()
-    
-    .then((user)=>{
+    try{
+      const user = await GoogleSignin.signIn()
       const credential = auth2.GoogleAuthProvider.credential(user.idToken, user.accessToken);
-      auth.signInAndRetrieveDataWithCredential(credential);
+
+      await auth.signInAndRetrieveDataWithCredential(credential);
+      
       this.handleUserInfo(auth.currentUser);
       
-    }).catch((error) =>{
+    } catch (error) {
       this.setState({loading: false, isSigninInProgress: false})
+      
       if (error.code === statusCodes.SIGN_IN_CANCELLED) {
         this.setState({error: "Sign in was cancelled."})
         
@@ -92,9 +94,10 @@ class Login extends React.Component {
         this.setState({error: "Play services is not available."})
         
       } else {
-        this.setState({error: "Please try again."})
+        console.log(error.code, error.message)
+        this.setState({error: "User is not signed in, please try again."})
       }
-    });
+    }
   }
   
 
