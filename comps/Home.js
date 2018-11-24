@@ -85,7 +85,8 @@ class Home extends React.Component {
             timestamp:child.val().timestamp,
             author:child.val().userID,
             category:child.val().category,
-            progress:child.val().progress
+            progress:child.val().progress,
+            progressBar:child.val().progressBar
           });
           items = items.sort((x,y)=>{
           return x.timestamp - y.timestamp;
@@ -114,6 +115,7 @@ class Home extends React.Component {
        author={item.author}
        category={item.category}
        progress={item.progress}
+       progressBar={item.progressBar}
        />
     )
   }

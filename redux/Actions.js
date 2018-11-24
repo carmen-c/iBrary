@@ -14,7 +14,7 @@ export function ChangeTab(tab) {
   }
 }
 
-export function SelectItem(postid, userid, username, userimg,title, content, img, picked, category, progress) {
+export function SelectItem(postid, userid, username, userimg,title, content, img, picked, category, progress,progressBar) {
   return {
     type:"SELECTED_ITEM",
     postid: postid,
@@ -27,14 +27,16 @@ export function SelectItem(postid, userid, username, userimg,title, content, img
     picked:picked,
     category:category,
     progress:progress,
+    progressBar:progressBar,
     
   }
 }
 
-export function UpdateProgress(progress){
+export function UpdateProgress(progress,progressBar){
   return{
     type:"UPDATE_PROGRESS",
     progress:progress,
+    progressBar:progressBar,
     
   }
 }

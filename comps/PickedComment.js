@@ -41,7 +41,7 @@ class PickedComment extends React.Component {
         backgroundColor="#fff"
         >
           <TouchableOpacity style={styles.list} refs={this.props.commentid}>
-            <View>
+            <View View style={{width:'90%'}}>
              
               <View style={{flexDirection:'row',  backgroundColor:'rgba(86,173,161,0.5)', padding:10, borderRadius:5, width:'100%', flexWrap:'wrap'}}>
                 <View>
