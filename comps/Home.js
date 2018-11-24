@@ -22,7 +22,8 @@ class Home extends React.Component {
     filterData:[],
     loading: false,
     search: "",
-    refreshing: false
+    refreshing: false,
+    category: "Latest",
   }
   
   componentWillMount=()=>{
@@ -51,7 +52,7 @@ class Home extends React.Component {
   }
 
   readInterestPosts=(interest)=>{
-    this.setState({refreshing: true});
+    this.setState({refreshing: true, category: interest});
     db.ref('posts/')
       .orderByChild('category')
       .equalTo(interest)
@@ -59,7 +60,7 @@ class Home extends React.Component {
   }
   
   readPosts=()=>{
-    this.setState({refreshing: true});
+    this.setState({refreshing: true, category: "Latest"});
     db.ref('posts/')
       .limitToLast(100)
       .once('value', this.managePosts);
@@ -153,23 +154,28 @@ class Home extends React.Component {
           <View 
             style={{flexDirection:'row', marginLeft:10, justfyContent:'space-btween' }}>
            
-              <TouchableOpacity style={styles.catrgory} onPress={this.readPosts}>
-                <Text style={{color:'#fff'}}>Latest</Text>
+              <TouchableOpacity style={[styles.catrgory,{backgroundColor:this.state.category === "Latest" ? '#138172': 'rgba(19,129,114,0.5)'}]} onPress={this.readPosts}>
+                <Text style={{color:this.state.category === "Latest" ? '#fff': '#000'}}>Latest</Text>
               </TouchableOpacity>
-              <TouchableOpacity style={styles.catrgory} onPress={this.readInterestPosts.bind(this, 'App')}>
-                <Text>App</Text>
+            
+              <TouchableOpacity style={[styles.catrgory,{backgroundColor:this.state.category === "App" ? '#138172': 'rgba(19,129,114,0.5)'}]} onPress={this.readInterestPosts.bind(this, 'App')}>
+                <Text style={{color:this.state.category === "App" ? '#fff': '#000'}}>App</Text>
               </TouchableOpacity>
-              <TouchableOpacity style={styles.catrgory} onPress={this.readInterestPosts.bind(this, 'Graphic Design')}>
-                <Text>Graphic Design</Text>
+            
+              <TouchableOpacity style={[styles.catrgory,{backgroundColor:this.state.category === "Graphic Design" ? '#138172': 'rgba(19,129,114,0.5)'}]} onPress={this.readInterestPosts.bind(this, 'Graphic Design')}>
+                <Text style={{color:this.state.category === "Graphic Design" ? '#fff': '#000'}}>Graphic Design</Text>
               </TouchableOpacity>
-              <TouchableOpacity style={styles.catrgory} onPress={this.readInterestPosts.bind(this, 'Video')}>
-                <Text>Video</Text>
+            
+              <TouchableOpacity style={[styles.catrgory,{backgroundColor:this.state.category === "Video" ? '#138172': 'rgba(19,129,114,0.5)'}]} onPress={this.readInterestPosts.bind(this, 'Video')}>
+                <Text style={{color:this.state.category === "Video" ? '#fff': '#000'}}>Video</Text>
               </TouchableOpacity>
-              <TouchableOpacity style={styles.catrgory} onPress={this.readInterestPosts.bind(this, 'Product')}>
-                <Text>Product</Text>
+            
+              <TouchableOpacity style={[styles.catrgory,{backgroundColor:this.state.category === "Product" ? '#138172': 'rgba(19,129,114,0.5)'}]} onPress={this.readInterestPosts.bind(this, 'Product')}>
+                <Text style={{color:this.state.category === "Product" ? '#fff': '#000'}}>Product</Text>
               </TouchableOpacity>
-              <TouchableOpacity style={styles.catrgory} onPress={this.readInterestPosts.bind(this, 'Marketing')}>
-                <Text>Marketing</Text>
+            
+              <TouchableOpacity style={[styles.catrgory,{backgroundColor:this.state.category === "Marketing" ? '#138172': 'rgba(19,129,114,0.5)'}]} onPress={this.readInterestPosts.bind(this, 'Marketing')}>
+                <Text style={{color:this.state.category === "Marketing" ? '#fff': '#000'}}>Marketing</Text>
               </TouchableOpacity>    
           </View>
           </ScrollView>
@@ -224,7 +230,6 @@ const styles = StyleSheet.create({
     borderRadius:10,
   },
   catrgory:{
-    backgroundColor:'rgba(19,129,114,0.7)', 
     paddingLeft:10, 
     paddingRight:10, 
     paddingTop:6, 

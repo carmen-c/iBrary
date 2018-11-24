@@ -26,7 +26,9 @@ class Login extends React.Component {
   }
   
   componentWillMount=async ()=>{
-     this.setState({loading: true})
+
+    this.setState({loading: true})
+
     
     try {
       const value = await AsyncStorage.getItem('firsttime');
@@ -36,13 +38,17 @@ class Login extends React.Component {
             this.handleUserInfo(user);
           } 
         })
-      } else {   
+
+      } else {
+
         await AsyncStorage.setItem('firsttime', "YES");
       }
       this.setState({value: value})
       
      } catch (error) {
-       this.setState({error: error.message,loading: false})
+
+       this.setState({error: error.message, loading: false})
+
      }
     
      this.setState({loading: false})
