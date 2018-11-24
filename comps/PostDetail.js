@@ -13,7 +13,8 @@ import { View,
         Modal,
         Alert,
         TouchableWithoutFeedback, 
-        Keyboard
+        Keyboard,
+        Slider
        } from 'react-native';
 
 
@@ -41,9 +42,12 @@ class PostDetail extends React.Component {
     modal: false,
     modal2:false,
     editModal: false,
-    progress: this.props.progress
+    progress: this.props.progress,
+    progressBar:parseInt(this.props.progressBar)
   }
-  
+  componentWillMount=()=>{
+   
+  }
 //  check=()=>{
 //    if (auth.currentUser.uid == this.props.userid){
 //      //enable editing stuff
@@ -63,17 +67,21 @@ class PostDetail extends React.Component {
   }
   
   viewProgress=()=>{
-    this.setState({modal2:true})
+    this.setState({
+      modal2:true,
+    })
   }
   closeProgress=()=>{
     this.setState({modal2:false})
   }
   
   saveProgress=async ()=>{
+    console.log(this.state.progressBar)
     await db.ref('posts/' + this.props.postid).update({
-      progress: this.state.progress
+      progress: this.state.progress,
+      progressBar: this.state.progressBar
     });
-    this.props.dispatch(UpdateProgress(this.state.progress));
+    this.props.dispatch(UpdateProgress(this.state.progress, this.state.progressBar));
     
     Alert.alert(
       "Saved",
@@ -104,6 +112,7 @@ class PostDetail extends React.Component {
   
 
   render() {
+  
     var editIcon = null;
     if(auth.currentUser.uid == this.props.userid){
       editIcon=(
@@ -167,6 +176,20 @@ class PostDetail extends React.Component {
           <View style={{width:'100%',flex:1, alignItems:'center'}}>
             <View style={styles.pageTitle}>
               <Text style={[styles.titleFont, styles.font]}>Add your Progress</Text>
+            </View>
+            <View style={{width:'100%', alignItems:'center'}}>
+              <Text>Progress</Text>
+              <Slider
+                style={{width:'80%'}}
+                thumbTintColor='rgb(19,129,114)'
+                maximumTrackTintColor='#d3d3d3' 
+                minimumTrackTintColor='rgb(19,129,114)'
+                
+                minmunValue={0}
+                maximunValue={100}
+                onValueChange={(val) =>this.setState({progressBar:val})}
+                value={this.state.progressBar}
+              />
             </View>
             <View style={{width:'85%', marginTop:10,height:300}}>
               <TextInput
@@ -251,6 +274,7 @@ class PostDetail extends React.Component {
               </View>
              
               <View style={{width:'100%', marginTop:10}}>
+                <Text>{this.props.progressBar*100}</Text>
                   <Text>{this.props.progress}</Text>
               </View>
             </View>
@@ -352,7 +376,8 @@ function mapStateToProps(state){
     picked:state.SelectPost.picked,
     category:state.SelectPost.category,
     userimg:state.SelectPost.userimg,
-    progress:state.SelectPost.progress
+    progress:state.SelectPost.progress,
+    progressBar:state.SelectPost.progressBar
   }
 }
 export default connect (mapStateToProps)(PostDetail);

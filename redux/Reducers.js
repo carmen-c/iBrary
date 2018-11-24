@@ -30,7 +30,8 @@ const selectedPost ={
   userimg:'',
   img:"",
   category:"",
-  progress: ""
+  progress: "",
+  progressBar: ""
 };
 
 export function SelectPost(state= selectedPost, action) {
@@ -47,10 +48,12 @@ export function SelectPost(state= selectedPost, action) {
       obj.img = action.img;
       obj.category = action.category;
       obj.progress = action.progress;
+      obj.progressBar = action.progressBar;
       return obj;
       
     case "UPDATE_PROGRESS":
       obj.progress = action.progress;
+      obj.progressBar = action.progressBar;
       return obj;
       
     case "EDIT_POST":

@@ -88,15 +88,16 @@ console.log(this.state.category)
   }
        
   createNewPost =()=>{
-    if(this.state.title != "" && this.state.content != "" && this.state.category != ""){
-      var newPostKey = db.ref().child('posts').push().key;
-      var current = auth.currentUser.uid;
-      var date = new Date().toUTCString();
-      var timestamp = new Date().getTime();
-      var imgURL = "";
+
+   if(this.state.title != "" && this.state.content != "" && this.state.category !=""){
+    var newPostKey = db.ref().child('posts').push().key;
+    var current = auth.currentUser.uid;
+    var date = new Date().toUTCString();
+    var timestamp = new Date().getTime();
+    var imgURL = "";
 
       if(Object.keys(this.state.img).length != 0) {
-
+        
         var imgRef = storage.ref().child('postImages/'+newPostKey+"/"+this.state.filename);
 
         imgRef.put(this.blob, {contentType:'image/jpg'}).then((snapshot)=>{
@@ -110,17 +111,20 @@ console.log(this.state.category)
         this.writeNewPost(current, newPostKey, date, this.state.title, this.state.content, timestamp, this.props.name, imgURL, this.state.category);
       }
 
+
       Alert.alert("you posting has been saved!");
       setTimeout(()=>{
         this.navigatePage();
       },2000)
     }
+
     else if(this.state.title == ""){
       Alert.alert("Please enter a title.");
     }else if(this.state.content == ""){
       Alert.alert("Please enter a description.");
     }else if(this.state.category == ""){
       Alert.alert("Please pick a category.");
+
     }
   }
   
