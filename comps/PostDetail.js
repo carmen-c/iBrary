@@ -436,7 +436,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 1,
   },
   buttonText:{
-    fontSize:17,
+    fontSize:15,
     color:'#fff',
     fontWeight:"300",
   },

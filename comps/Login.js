@@ -26,7 +26,8 @@ class Login extends React.Component {
   }
   
   componentWillMount=async ()=>{
-    //check asyncstorage for "firsttime"
+    this.setState({loading: true})
+    
     try {
       const value = await AsyncStorage.getItem('firsttime');
       if (value == "NO") {
@@ -35,18 +36,16 @@ class Login extends React.Component {
             this.handleUserInfo(user);
           } 
         })
-        // We have data!!
-        console.log("NOTFIRSTIME");
       } else {
-        //value is null -> firsttime
         await AsyncStorage.setItem('firsttime', "YES");
-        //change page to first time page
-        console.log("FIRSTTIME");
       }
       this.setState({value: value})
+      
      } catch (error) {
-       this.setState({error: error.message})
+       this.setState({error: error.message, loading: false})
      }
+    
+     this.setState({loading: false})
   }
   
   handleLogin=()=>{
