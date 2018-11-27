@@ -38,7 +38,7 @@ class Welcome extends React.Component {
               />
               <Text style={styles.featureText}>Share your ideas 
                 or 
-                Ask help</Text>
+                Ask for help</Text>
             </View>
           </View>
 

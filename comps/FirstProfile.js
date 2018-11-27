@@ -209,6 +209,7 @@ class FirstProfile extends React.Component {
                     style={[styles.inps]}
                     value={this.state.name}
                     placeholder="name"
+                    maxLength={30}
                     keyboardType='default'
                     onChangeText={(text) => this.setState({name: text})}/>
              
@@ -218,6 +219,7 @@ class FirstProfile extends React.Component {
                     value={this.state.bio}
                     placeholder="write something about yourself"
                     keyboardType="default"
+                    maxLength={255}
                     onChangeText={(text) => this.setState({bio: text})}/>
             </View>
             <View style={{width:'75%', marginBottom:15}}>
