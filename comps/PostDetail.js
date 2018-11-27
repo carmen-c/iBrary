@@ -175,7 +175,7 @@ class PostDetail extends React.Component {
           <DismissKeyboard>
           <View style={{width:'100%',flex:1, alignItems:'center'}}>
             <View style={styles.pageTitle}>
-              <Text style={[styles.titleFont, styles.font]}>Add your Progress</Text>
+              <Text style={[styles.titleFont, styles.font]}>Add Progress</Text>
             </View>
             <View style={{width:'80%', marginTop:10}}>
                <Text>Drag slider to set your progress</Text>
@@ -220,7 +220,7 @@ class PostDetail extends React.Component {
           <DismissKeyboard>
           <View style={{width:'100%',flex:1, alignItems:'center'}}>
             <View style={styles.pageTitle}>
-              <Text style={[styles.titleFont, styles.font]}>Edit your Post</Text>
+              <Text style={[styles.titleFont, styles.font]}>Edit Post</Text>
             </View>
             <View style={{width:'100%', marginTop:10, flex:0.6,alignItems:'center'}}>
               <View style={{width:'90%', alignItems:'center'}}>

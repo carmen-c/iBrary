@@ -108,6 +108,7 @@ class SignUp extends React.Component {
                   placeholder="Re-type password"
                   keyboardType="default"
                   secureTextEntry={true}
+                  maxLength={30}
                   onChangeText={(text) => this.setState({password2: text})}/>
             
             <TextInput 

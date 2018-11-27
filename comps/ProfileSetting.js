@@ -118,7 +118,7 @@ class ProfileSetting extends React.Component {
   
   saveNewUserData=()=>{
  
-    if(this.state.name != "" && this.state.bio !=""){
+    if(this.state.name != "" && this.state.bio !="" && this.state.selectedItems != ""){
       var ref = db.ref('users/' + auth.currentUser.uid);
     
     if(Object.keys(this.state.newImg).length != 0) {
@@ -146,15 +146,20 @@ class ProfileSetting extends React.Component {
         interest:this.state.selectedItems
       });
     }
+      Alert.alert('User Profile is Saved')
     console.log(this.props.img);
     console.log(this.props.interest);
    
-    } else {
-      Alert.alert('Please enter your name and bio.')
-    }
-    
+    } else if(this.state.title == ""){
+      Alert.alert("Please enter a title.");
+    }else if(this.state.content == ""){
+      Alert.alert("Please enter a description.");
+    }else if(this.state.selectedItems == ""){
+      Alert.alert("Please pick a category.");
 
-    Alert.alert('User Profile is Saved')
+    }
+
+   
   }
     
 
@@ -220,6 +225,7 @@ class ProfileSetting extends React.Component {
                     value={this.state.name}
                     placeholder="name"
                     keyboardType='default'
+                    maxLength={30}
                     onChangeText={(text) => this.setState({name: text})}/>
              
               <Text style={styles.sectionTitle}>Bio</Text>     
@@ -228,6 +234,7 @@ class ProfileSetting extends React.Component {
                     value={this.state.bio}
                     placeholder="write something about yourself"
                     keyboardType="default"
+                    maxLength={255}
                     onChangeText={(text) => this.setState({bio: text})}/>
             </View>
             <View style={{width:'75%', marginBottom:15}}>

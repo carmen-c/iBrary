@@ -137,15 +137,15 @@ class Profile extends React.Component {
       
         <ScrollView style={{width:'100%'}}>
         <View style={styles.section}>  
-            <View style={styles.box1}>
+            <View style={[styles.box1, {width:'25%'}]}>
               <Image 
                 source={(this.props.img == "") ? require('../assets/images/profileDefault.png'):{ uri: this.props.img}  }
                 style={styles.profile}            
               /> 
             </View>
-            <View style={styles.box1}>
+            <View style={[styles.box1, {width:'70%'}]}>
               <Text>{this.state.error}</Text>
-              <Text style={{fontWeight:'bold', fontSize:25, marginBottom:5}}>{this.state.userN}</Text>
+              <Text style={{fontWeight:'bold', fontSize:22, marginBottom:5}}>{this.state.userN}</Text>
               <Text>{this.state.bio}</Text>
             </View>
         </View>
@@ -225,6 +225,7 @@ const styles = StyleSheet.create({
     paddingLeft:15,
     paddingTop:5,
     paddingBottom:5,
+    flexWrap:'wrap'
   },
   section2: {
     width:'100%',
@@ -249,9 +250,9 @@ const styles = StyleSheet.create({
     alignItems:'center'
   },
   box1: {
-    height:'40%',
+    
     marginTop:5,
-    paddingBottom:'5%'
+    paddingBottom:15,
   },
   profile: {
     width:80,
