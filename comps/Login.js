@@ -25,34 +25,34 @@ class Login extends React.Component {
     value: ""
   }
   
-  componentWillMount=async ()=>{
-
-    this.setState({loading: true})
-
-    
-    try {
-      const value = await AsyncStorage.getItem('firsttime');
-      if (value == "NO") {
-        auth.onAuthStateChanged(user=>{
-          if (user){
-            this.handleUserInfo(user);
-          } 
-        })
-
-      } else {
-
-        await AsyncStorage.setItem('firsttime', "YES");
-      }
-      this.setState({value: value})
-      
-     } catch (error) {
-
-       this.setState({error: error.message, loading: false})
-
-     }
-    
-     this.setState({loading: false})
-  }
+//  componentWillMount=async ()=>{
+//
+//    this.setState({loading: true})
+//
+//    
+//    try {
+//      const value = await AsyncStorage.getItem('firsttime');
+//      if (value == "NO") {
+//        auth.onAuthStateChanged(user=>{
+//          if (user){
+//            this.handleUserInfo(user);
+//          } 
+//        })
+//
+//      } else {
+//
+//        await AsyncStorage.setItem('firsttime', "YES");
+//      }
+//      this.setState({value: value})
+//      
+//     } catch (error) {
+//
+//       this.setState({error: error.message, loading: false})
+//
+//     }
+//    
+//     this.setState({loading: false})
+//  }
   
   handleLogin=()=>{
     this.setState({loading: true, isSigninInProgress: true});
