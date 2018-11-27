@@ -22,7 +22,7 @@ import { View,
 import {connect} from 'react-redux';
 import {ChangeTab, UpdateProgress, EditPost} from '../redux/Actions';
 
-import {auth, db} from '../constants/FConfig';
+import {auth, db, storage} from '../constants/FConfig';
 import CreateComment from './CreateComment';
 import CommentList from './CommentList';
 import PickedCommentList from './PickedCommentList';
@@ -110,7 +110,26 @@ class PostDetail extends React.Component {
       ])
   }
   
-
+  alertDelete=()=>{
+    Alert.alert(
+      "Delete Post",
+      'Are you sure you want to delete your post?',
+      [
+        {text: 'Yes', onPress: () => {this.deletePost()}},
+        {text: 'Cancel', onPress: () => console.log('Cancel Pressed2'), style: 'cancel'}
+      ])
+  }
+  
+  deletePost=async()=>{
+    await db.ref('posts/' + this.props.postid).remove();
+    Alert.alert(
+      "Deleted",
+      'Your post has been deleted.',
+      [
+        {text: 'OK', onPress: () => {this.navigateToHome()}}
+      ])
+  }
+  
   render() {
   
     var editIcon = null;
@@ -126,6 +145,12 @@ class PostDetail extends React.Component {
           <TouchableOpacity onPress={this.showEdit}>
             <Text style={{fontWeight:'600', opacity:0.8, paddingRight:10}}>
               Edit
+            </Text>
+          </TouchableOpacity>
+          
+          <TouchableOpacity onPress={this.alertDelete}>
+            <Text style={{fontWeight:'600', opacity:0.8, paddingRight:10}}>
+              Delete
             </Text>
           </TouchableOpacity>
         </View>
