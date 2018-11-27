@@ -41,8 +41,8 @@ class Home extends React.Component {
       this.readPosts();
     } else { 
       var newResult = this.state.arrData.filter((post)=>{
-        var matchThis = new RegExp(keyword, 'g');
-        var arr = post.title.match(matchThis);
+        var matchThis = new RegExp(keyword.toLowerCase(), 'g');
+        var arr = post.title.toLowerCase().match(matchThis);
       return arr;
       })
       this.setState({
