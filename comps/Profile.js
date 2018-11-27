@@ -74,7 +74,9 @@ class Profile extends React.Component {
           img:child.val().img,
           pickedComments:child.val().pickedComments,
           timestamp:child.val().timestamp,
-          category:child.val().category
+          category:child.val().category,
+          progress:child.val().progress,
+          progressBar:child.val().progressBar
         })
       })
   
@@ -115,6 +117,8 @@ class Profile extends React.Component {
        userimg = {this.state.img}
        author={item.author}
        category={item.category}
+       progress={item.progress}
+       progressBar={item.progressBar}
        />
     )
   }

@@ -43,10 +43,13 @@ class PostDetail extends React.Component {
     modal2:false,
     editModal: false,
     progress: this.props.progress,
-    progressBar:parseInt(this.props.progressBar)
+    changedProgressBar:0,
+    progressBar:0
   }
   componentWillMount=()=>{
-   
+    this.setState({
+      progressBar:parseInt(this.props.progressBar)
+    })
   }
 //  check=()=>{
 //    if (auth.currentUser.uid == this.props.userid){
@@ -74,14 +77,30 @@ class PostDetail extends React.Component {
   closeProgress=()=>{
     this.setState({modal2:false})
   }
+  closeAddProgress=()=>{
+    this.setState({modal:false})
+  }
+  closeEdit=()=>{
+    this.setState({editModal:false})
+  }
+  
   
   saveProgress=async ()=>{
     console.log(this.state.progressBar)
-    await db.ref('posts/' + this.props.postid).update({
+    
+    if(this.state.changedProgressBar != 0){
+      await db.ref('posts/' + this.props.postid).update({
       progress: this.state.progress,
-      progressBar: this.state.progressBar
+      progressBar: this.state.changedProgressBar
     });
-    this.props.dispatch(UpdateProgress(this.state.progress, this.state.progressBar));
+    this.props.dispatch(UpdateProgress(this.state.progress, this.state.changedProgressBar));
+    } else {
+      await db.ref('posts/' + this.props.postid).update({
+      progress: this.state.progress,
+    });
+    this.props.dispatch(UpdateProgress(this.state.progress, this.props.progressBar));
+    }
+    
     
     Alert.alert(
       "Saved",
@@ -90,6 +109,7 @@ class PostDetail extends React.Component {
         {text: 'OK', onPress: () => {this.setState({modal: false})}},
       ])
   }
+  
   
   showEdit=()=>{
     this.setState({editModal: true})
@@ -177,6 +197,11 @@ class PostDetail extends React.Component {
             <View style={styles.pageTitle}>
               <Text style={[styles.titleFont, styles.font]}>Add Progress</Text>
             </View>
+            <TouchableOpacity
+              style={{position:'absolute', top:60, right:15}}
+              onPress={this.closeAddProgress}>
+              <Text>Cancel</Text>
+            </TouchableOpacity>
             <View style={{width:'80%', marginTop:10}}>
                <Text>Drag slider to set your progress</Text>
             </View>
@@ -190,7 +215,7 @@ class PostDetail extends React.Component {
                 minimumTrackTintColor='rgb(19,129,114)'
                 minmunValue={0}
                 maximunValue={100}
-                onSlidingComplete={(val) =>this.setState({progressBar:val})}
+                onSlidingComplete={(val) =>this.setState({changedProgressBar:val})}
                 value={this.props.progressBar}
               />
             </View>
@@ -222,6 +247,11 @@ class PostDetail extends React.Component {
             <View style={styles.pageTitle}>
               <Text style={[styles.titleFont, styles.font]}>Edit Post</Text>
             </View>
+            <TouchableOpacity
+                style={{position:'absolute', top:60, right:15}}
+                onPress={this.closeEdit}>
+                <Text>Cancel</Text>
+            </TouchableOpacity>
             <View style={{width:'100%', marginTop:10, flex:0.6,alignItems:'center'}}>
               <View style={{width:'90%', alignItems:'center'}}>
                 <TextInput
@@ -231,7 +261,7 @@ class PostDetail extends React.Component {
                   multiline={true}
                   keyboardType='default'
                   onChangeText={(text)=> this.setState({title: text})}
-                />
+                />  
               </View>
               <View style={{width:'100%',backgroundColor: '#A2A2A2',height: 0.8,opacity:0.3, marginBottom:10}} />
               <TextInput
@@ -271,7 +301,7 @@ class PostDetail extends React.Component {
                 </Text>
                 <TouchableOpacity
                    style={{position:'absolute', top:5, right:0}}
-                  onPress={this.closeProgress}>
+                   onPress={this.closeProgress}>
                   <Text>Close</Text>
                 </TouchableOpacity>
                 
@@ -279,10 +309,12 @@ class PostDetail extends React.Component {
              
               <View style={{width:'100%', marginTop:10,alignItems:'center'}}>
                 <View style={{width:200,backgroundColor:'rgba(0,0,0,0.2)', height:15,borderRadius:7.5, overflow: 'hidden', marginBottom:10}}>
-                  <View style={{width:200*this.props.progressBar, height:15, backgroundColor:'rgba(19,129,114,1)'}}/>
-                 
+                  <View style={{width:200*this.props.progressBar, height:15, backgroundColor:'rgba(19,129,114,1)'}}/>  
                 </View>
+                <View style={{width:'100%'}}>
                   <Text>{this.props.progress}</Text>
+                </View>
+                  
               </View>
             </View>
             
