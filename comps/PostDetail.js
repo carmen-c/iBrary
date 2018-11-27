@@ -268,7 +268,7 @@ class PostDetail extends React.Component {
                 onChangeText={(text)=> this.setState({content: text})}
               />  
             </View>
-            <TouchableOpacity onPress={this.editPost} style={{width:'100%', alignItems:'center'}}> 
+            <TouchableOpacity onPress={this.editPost} style={{width:'100%', alignItems:'center', marginTop:40}}> 
               <View style={styles.signBut}>
                   <Text style={styles.buttonText}>SAVE</Text>
               </View>

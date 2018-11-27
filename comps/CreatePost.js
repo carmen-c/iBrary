@@ -168,6 +168,7 @@ console.log(this.state.category)
           <TextInput
               style={[styles.title]}
               placeholder='Title'
+              maxLength={80}
               keyboardType='default'
               onChangeText={(text)=> this.setState({title: text})}
           />
@@ -176,6 +177,7 @@ console.log(this.state.category)
         <View style={[styles.items, styles.content]}>
            <TextInput
               style={{fontSize:16, flex: 1}}
+              maxLength={500}
               placeholder='Description'
               multiline={true}
               keyboardType='default'
@@ -185,12 +187,13 @@ console.log(this.state.category)
         <View style={styles.hairline} />
         
         <View style={styles.category}>
-          <Text style={{padding:10}}>Category</Text>
+          <Text style={{padding:13, fontSize:16}}>Category</Text>
           <Picker
             selectedValue={this.state.category}
             iosHeader="Select one"
+            mode='dropdown'
             style={{height: 60, width: 100}}
-            itemStyle={{fontSize:15, height:40}}
+            itemStyle={{fontSize:16, height:60}}
             onValueChange={(itemValue, itemIndex) => this.setState({category: itemValue})}>
             <Picker.Item label='Application' value='Application' />
             <Picker.Item label='Graphic Design' value='Graphic Design' />
