@@ -175,7 +175,7 @@ console.log(this.state.category)
         <View style={styles.hairline} />
         <View style={[styles.items, styles.content]}>
            <TextInput
-              style={{fontSize:16}}
+              style={{fontSize:16, flex: 1}}
               placeholder='Description'
               multiline={true}
               keyboardType='default'
@@ -259,12 +259,13 @@ const styles = StyleSheet.create({
     justifyContent:'center'
   },
   items: {
-    width:'95%',
+    width:'100%',
     padding:10,
   },
   title: {
     fontSize:18, 
-    fontWeight:'500'
+    fontWeight:'500',
+    width:'100%'
   },
   content: {
     height:'30%' 
