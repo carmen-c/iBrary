@@ -286,6 +286,7 @@ const styles = StyleSheet.create({
     marginBottom:20
   },
   center: {
+    width:'100%',
     alignItems:'center',
     paddingBottom:50,
     marginBottom:50
@@ -327,6 +328,7 @@ const styles = StyleSheet.create({
     shadowOpacity: 0.5,
   },
   inps:{
+    width:'100%',
     padding:10,
     borderColor:'#000000',
     
