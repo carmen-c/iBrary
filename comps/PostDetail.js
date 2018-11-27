@@ -163,7 +163,7 @@ class PostDetail extends React.Component {
           </TouchableOpacity>
           
           <TouchableOpacity onPress={this.showEdit}>
-            <Text style={{fontWeight:'600', opacity:0.8, paddingRight:10}}>
+            <Text style={{fontWeight:'600', opacity:0.8, paddingRight:20}}>
               Edit
             </Text>
           </TouchableOpacity>
