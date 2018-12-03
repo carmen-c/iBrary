@@ -336,9 +336,9 @@ class PostDetail extends React.Component {
                 <View style={{width:200,backgroundColor:'rgba(0,0,0,0.2)', height:15,borderRadius:7.5, overflow: 'hidden', marginBottom:10}}>
                   <View style={{width:200*this.props.progressBar, height:15, backgroundColor:'rgba(19,129,114,1)'}}/>  
                 </View>
-                <View style={{width:'100%'}}>
+                <ScrollView style={{width:'100%',height:300,}}>
                   <Text>{this.props.progress}</Text>
-                </View>
+                </ScrollView>
                   
               </View>
             </View>

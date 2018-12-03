@@ -184,7 +184,7 @@ class Profile extends React.Component {
        
           
         <View style={styles.section2}>
-         <Text style={styles.sectionTitle}>Ideas</Text>
+         <Text style={styles.sectionTitle}>Posts</Text>
           <View style={{width:'95%', marginBottom:50}}>
             <FlatList
               extraData={this.state.arrData}

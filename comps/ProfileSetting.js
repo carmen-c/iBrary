@@ -150,10 +150,10 @@ class ProfileSetting extends React.Component {
     console.log(this.props.img);
     console.log(this.props.interest);
    
-    } else if(this.state.title == ""){
-      Alert.alert("Please enter a title.");
-    }else if(this.state.content == ""){
-      Alert.alert("Please enter a description.");
+    } else if(this.state.name == ""){
+      Alert.alert("Please enter you name.");
+    }else if(this.state.bio == ""){
+      Alert.alert("Please enter your bio.");
     }else if(this.state.selectedItems == ""){
       Alert.alert("Please pick a category.");
 
@@ -225,7 +225,7 @@ class ProfileSetting extends React.Component {
                     value={this.state.name}
                     placeholder="name"
                     keyboardType='default'
-                    maxLength={30}
+                     
                     onChangeText={(text) => this.setState({name: text})}/>
              
               <Text style={styles.sectionTitle}>Bio</Text>     

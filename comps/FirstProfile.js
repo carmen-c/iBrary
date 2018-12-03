@@ -161,10 +161,15 @@ class FirstProfile extends React.Component {
       this.navigatePage(4);
     },2000)
    
-    } else {
-      Alert.alert('Please enter your name, bio, and select at least one interest')
-      
+    } else if(this.state.name == ""){
+      Alert.alert("Please enter you name.");
+    }else if(this.state.bio == ""){
+      Alert.alert("Please enter your bio.");
+    }else if(this.state.selectedItems == ""){
+      Alert.alert("Please pick a category.");
+
     }
+
     
     
 
