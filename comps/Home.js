@@ -158,8 +158,8 @@ class Home extends React.Component {
                 <Text style={{color:this.state.category === "Latest" ? '#fff': '#000'}}>Latest</Text>
               </TouchableOpacity>
             
-              <TouchableOpacity style={[styles.catrgory,{backgroundColor:this.state.category === "App" ? '#138172': 'rgba(19,129,114,0.5)'}]} onPress={this.readInterestPosts.bind(this, 'Application')}>
-                <Text style={{color:this.state.category === "App" ? '#fff': '#000'}}>App</Text>
+              <TouchableOpacity style={[styles.catrgory,{backgroundColor:this.state.category === "Application" ? '#138172': 'rgba(19,129,114,0.5)'}]} onPress={this.readInterestPosts.bind(this, 'Application')}>
+                <Text style={{color:this.state.category === "Application" ? '#fff': '#000'}}>Application</Text>
               </TouchableOpacity>
             
               <TouchableOpacity style={[styles.catrgory,{backgroundColor:this.state.category === "Graphic Design" ? '#138172': 'rgba(19,129,114,0.5)'}]} onPress={this.readInterestPosts.bind(this, 'Graphic Design')}>
